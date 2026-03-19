@@ -397,18 +397,64 @@ export default function YojanaAIPage() {
     const actionUrl = action?.portal_url
       ?? (action as { apply_url?: string })?.apply_url
 
-    const isLikelyFake = (url: string) => {
-      if (!url.startsWith('https://')) return true
-      return (
-        url.includes('/scheme/data_view/') ||
-        url.includes('/view/') ||
-        url.includes('/schemes/view') ||
-        /\/\d{3,}(?:[/?#]|$)/.test(url) ||
-        url.includes('tn.gov.in/scheme')
-      )
+    const isValidUrl = (url?: string): boolean => {
+      if (!url) return false
+      if (!url.startsWith('https://')) return false
+
+      const BAD_PATTERNS = [
+        'tnhb', 'housing.tn', 'tnscb',
+        'cmda.tn', '/scheme/', '/view/',
+        '/data_view/', 'localhost',
+        '/housing/', 'tamilnaduhousing',
+      ]
+      if (BAD_PATTERNS.some(p =>
+        url.toLowerCase().includes(p))) {
+        return false
+      }
+
+      const SAFE_DOMAINS = [
+        'pmkisan.gov.in',
+        'pmjay.gov.in',
+        'pmaymis.gov.in',
+        'pmayg.nic.in',
+        'nrega.nic.in',
+        'nabard.org',
+        'mudra.org.in',
+        'pmfby.gov.in',
+        'pmuy.gov.in',
+        'pmjdy.gov.in',
+        'npscra.nsdl.co.in',
+        'jansuraksha.gov.in',
+        'standupmitra.in',
+        'pmvishwakarma.gov.in',
+        'scholarships.gov.in',
+        'pmkvyofficial.org',
+        'pmsuryaghar.gov.in',
+        'indiapost.gov.in',
+        'pmsvanidhi.mohua.gov.in',
+        'pudumaipenn.tn.gov.in',
+        'naanmudhalvan.tn.gov.in',
+        'mdm.tn.gov.in',
+        'tnhealth.tn.gov.in',
+        'maws.tn.gov.in',
+        'mksy.up.gov.in',
+        'sects.up.gov.in',
+        'sevasindhu.karnataka.gov.in',
+        '7nishchay-yuvaupmission.bihar.gov.in',
+        'medhasoft.bih.nic.in',
+        'ladakibahin.maharashtra.gov.in',
+        'jeevandayee.gov.in',
+        'wbkanyashree.gov.in',
+        'socialsecurity.wb.gov.in',
+        'myscheme.gov.in',
+        'pmkisan.gov.in',
+      ]
+
+      return SAFE_DOMAINS.some(d =>
+        url.includes(d))
     }
 
-    if (actionUrl && !isLikelyFake(actionUrl)) {
+    if (isValidUrl(actionUrl)) {
       return actionUrl
     }
 
