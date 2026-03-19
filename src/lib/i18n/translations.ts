@@ -2,6 +2,8 @@ export const translations = {
   hi: {
     app_name: "YojanaAI",
     tagline: "Sarkari Schemes Dhundho",
+    tagline_line1: "Sarkari Schemes",
+    tagline_line2: "Dhundho",
     subtagline: "Sirf 6 sawaal — poori list 60 seconds mein",
     start_btn: "Shuru Karein →",
     free_note: "Free hai • Login nahi chahiye • 50+ schemes",
@@ -50,6 +52,8 @@ export const translations = {
   en: {
     app_name: "YojanaAI",
     tagline: "Find Your Government Schemes",
+    tagline_line1: "Find Your",
+    tagline_line2: "Government Schemes",
     subtagline: "Just 6 questions — full list in 60 seconds",
     start_btn: "Start Now →",
     free_note: "Free • No login • 50+ schemes covered",
@@ -98,6 +102,8 @@ export const translations = {
   bn: {
     app_name: "YojanaAI",
     tagline: "সরকারি প্রকল্প খুঁজুন",
+    tagline_line1: "সরকারি প্রকল্প খুঁজুন",
+    tagline_line2: "",
     subtagline: "মাত্র ৬টি প্রশ্ন — ৬০ সেকেন্ডে পূর্ণ তালিকা",
     start_btn: "শুরু করুন →",
     free_note: "বিনামূল্যে • লগইন নেই • ৫০+ প্রকল্প",
@@ -146,6 +152,8 @@ export const translations = {
   te: {
     app_name: "YojanaAI",
     tagline: "ప్రభుత్వ పథకాలు వెతకండి",
+    tagline_line1: "ప్రభుత్వ పథకాలు వెతకండి",
+    tagline_line2: "",
     subtagline: "కేవలం 6 ప్రశ్నలు — 60 సెకన్లలో పూర్తి జాబితా",
     start_btn: "ప్రారంభించండి →",
     free_note: "ఉచితం • లాగిన్ అవసరం లేదు • 50+ పథకాలు",
@@ -194,6 +202,8 @@ export const translations = {
   mr: {
     app_name: "YojanaAI",
     tagline: "सरकारी योजना शोधा",
+    tagline_line1: "सरकारी योजना शोधा",
+    tagline_line2: "",
     subtagline: "फक्त ६ प्रश्न — ६० सेकंदात संपूर्ण यादी",
     start_btn: "सुरू करा →",
     free_note: "मोफत • लॉगिन नाही • ५०+ योजना",
@@ -242,6 +252,8 @@ export const translations = {
   ta: {
     app_name: "YojanaAI",
     tagline: "அரசு திட்டங்களை கண்டறியுங்கள்",
+    tagline_line1: "அரசு திட்டங்களை கண்டறியுங்கள்",
+    tagline_line2: "",
     subtagline: "வெறும் 6 கேள்விகள் — 60 வினாடிகளில் முழு பட்டியல்",
     start_btn: "தொடங்குங்கள் →",
     free_note: "இலவசம் • உள்நுழைவு தேவையில்லை • 50+ திட்டங்கள்",
@@ -290,6 +302,8 @@ export const translations = {
   gu: {
     app_name: "YojanaAI",
     tagline: "સરકારી યોજનાઓ શોધો",
+    tagline_line1: "સરકારી યોજનાઓ શોધો",
+    tagline_line2: "",
     subtagline: "માત્ર ૬ સવાલ — ૬૦ સેકન્ડમાં સંપૂર્ણ યાદી",
     start_btn: "શરૂ કરો →",
     free_note: "મફત • લૉગિન નહીં • ૫૦+ યોજનાઓ",
@@ -338,6 +352,8 @@ export const translations = {
   kn: {
     app_name: "YojanaAI",
     tagline: "ಸರ್ಕಾರಿ ಯೋಜನೆಗಳನ್ನು ಹುಡುಕಿ",
+    tagline_line1: "ಸರ್ಕಾರಿ ಯೋಜನೆಗಳನ್ನು ಹುಡುಕಿ",
+    tagline_line2: "",
     subtagline: "ಕೇವಲ 6 ಪ್ರಶ್ನೆಗಳು — 60 ಸೆಕೆಂಡ್ಗಳಲ್ಲಿ ಪೂರ್ಣ ಪಟ್ಟಿ",
     start_btn: "ಪ್ರಾರಂಭಿಸಿ →",
     free_note: "ಉಚಿತ • ಲಾಗಿನ್ ಇಲ್ಲ • 50+ ಯೋಜನೆಗಳು",

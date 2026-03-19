@@ -118,16 +118,11 @@ const SpeakerBtn = ({ text }: { text: string }) => {
       type="button"
       role="button"
       aria-label="Listen"
-      className="speaker-btn"
+      className={`mic-btn ${isPlaying ? 'listening' : ''}`}
       onClick={handleClick}
-      style={{
-        width: '32px', height: '32px', borderRadius: '50%',
-        border: '1px solid var(--gray-200)', background: isPlaying ? 'var(--saffron)' : 'white',
-        display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer',
-        transition: 'all 0.2s ease', position: 'relative', zIndex: 10
-      }}
+      style={{ width: '32px', height: '32px', fontSize: '14px' }}
     >
-      <span aria-hidden="true" style={{ fontSize: '14px' }}>🔊</span>
+      <span aria-hidden="true">🔊</span>
     </button>
   )
 }
@@ -145,7 +140,6 @@ export default function YojanaAIPage() {
   const [pulseAnswerId, setPulseAnswerId] = useState<string | null>(null)
   const [isListeningForAge, setIsListeningForAge] = useState(false)
   const [isReadingResults, setIsReadingResults] = useState(false)
-  const [loadingProgressFill, setLoadingProgressFill] = useState(0)
   const [stateSearchQuery, setStateSearchQuery] = useState('')
 
   const uiCopy = lang === 'en' ? FALLBACK_COPY.en : FALLBACK_COPY.hi
@@ -159,18 +153,11 @@ export default function YojanaAIPage() {
       opt.toLowerCase().includes(stateSearchQuery.toLowerCase())
     )
   }, [currentQuestion, stateSearchQuery])
-  
-  const heroStats = useMemo(() => ([
-    { top: "50+", bottom: t.stat1_label, d: '0.1s' },
-    { top: "6", bottom: t.stat2_label, d: '0.2s' },
-    { top: "60s", bottom: t.stat3_label, d: '0.3s' }
-  ]), [t])
 
   useEffect(() => {
     let interval: any;
     if (screen === 'loading') {
       setActiveWaitTimer(0)
-      setLoadingProgressFill(0)
       let passed = 0
       interval = setInterval(() => {
         passed += 1
@@ -334,50 +321,51 @@ export default function YojanaAIPage() {
     window.print()
   }, [])
 
-  const navBarStyle = {
-    height: '64px',
-    background: 'rgba(250,250,248,0.85)',
-    backdropFilter: 'blur(12px)',
-    WebkitBackdropFilter: 'blur(12px)',
-    borderBottom: '1px solid var(--border)',
-    position: 'sticky' as const,
-    top: 0,
-    zIndex: 50,
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    padding: '0 20px'
-  }
-
-  const renderLangPills = () => (
-    <div className="lang-pills" aria-label="Select language" style={{ display: 'flex', gap: '6px' }}>
-      {SUPPORTED_LANGS.map(l => (
-        <button
-          key={l}
-          data-lang={l}
-          onClick={handleLanguageSelect}
-          className={`lang-pill ${lang === l ? 'active' : ''}`}
-        >
-          {langLabels[l] || l}
-        </button>
-      ))}
-    </div>
-  )
+  const getTranslatedOption = useCallback((q: any, opt: string) => {
+    if (q.id === 'income') {
+      if (opt.includes("0 – 1")) return t.income_opt1 || opt
+      if (opt.includes("1 – 3")) return t.income_opt2 || opt
+      if (opt.includes("3 – 6")) return t.income_opt3 || opt
+      if (opt.includes("6 lakh")) return t.income_opt4 || opt
+    }
+    if (q.id === 'occupation') {
+      if (opt.includes("Kisan")) return t.occ_farmer || opt
+      if (opt.includes("Student")) return t.occ_student || opt
+      if (opt.includes("Sarkari")) return t.occ_govt || opt
+      if (opt.includes("Private")) return t.occ_private || opt
+      if (opt.includes("Business")) return t.occ_business || opt
+      if (opt.includes("Kaam nahi")) return t.occ_unemployed || opt
+    }
+    return opt
+  }, [t])
 
   return (
     <>
       <a href="#main" className="skip-link">Skip to main content</a>
       <main id="main">
         {screen === 'hero' && (
-          <div className="hero-bg" style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-            <div className="tricolor-bar" />
-            <nav style={navBarStyle}>
-              <div style={{ fontSize: '16px', fontWeight: 600, color: 'var(--navy)' }}>🇮🇳 YojanaAI</div>
-              {renderLangPills()}
+          <div className="hero-wrap">
+            <div className="hero-bg">
+              <div className="hero-blob-1"/>
+              <div className="hero-blob-2"/>
+              <div className="hero-blob-3"/>
+            </div>
+            <div className="tricolor"/>
+            <nav className="navbar glass no-print">
+              <span className="nav-logo">🇮🇳 YojanaAI</span>
+              <div className="lang-row" aria-label="Select language">
+                {SUPPORTED_LANGS.map(l => (
+                  <button key={l}
+                    className={`lang-pill ${lang===l?'active':''}`}
+                    onClick={() => setLang(l as LangCode)}>
+                    {langLabels[l]}
+                  </button>
+                ))}
+              </div>
             </nav>
-            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: '15vh', paddingBottom: '40px', paddingLeft: '20px', paddingRight: '20px', maxWidth: '560px', margin: '0 auto', textAlign: 'center' }}>
-              <div className="motif fade-in">
-                <svg viewBox="0 0 80 24" fill="none">
+            <div className="hero-content">
+              <div className="motif anim-fade-in">
+                <svg viewBox="0 0 80 24" fill="none" width="80" height="24">
                   <path d="M38 12 C30 4 16 2 8 8 C16 8 28 10 38 12Z" fill="#F97316" opacity="0.6"/>
                   <path d="M38 12 C30 20 16 22 8 16 C16 16 28 14 38 12Z" fill="#F97316" opacity="0.4"/>
                   <circle cx="40" cy="12" r="2.5" fill="#F97316"/>
@@ -385,26 +373,42 @@ export default function YojanaAIPage() {
                   <path d="M42 12 C50 20 64 22 72 16 C64 16 52 14 42 12Z" fill="#F97316" opacity="0.4"/>
                 </svg>
               </div>
-              <div className="fade-in-up" style={{ animationDelay: '0.1s', display: 'inline-block', background: 'var(--saffron-light)', color: 'var(--saffron)', border: '1px solid rgba(249,115,22,0.2)', padding: '6px 16px', borderRadius: 'var(--radius-full)', fontSize: '12px', fontWeight: 500, marginBottom: '24px' }}>
-                {uiCopy.heroBadge}
+              <div className="hero-badge anim-fade-up"
+                style={{animationDelay:'0.05s'}}>
+                ✦ {uiCopy.heroBadge}
               </div>
-              <h1 className="fade-in-up" style={{ animationDelay: '0.2s', fontSize: 'clamp(32px, 6vw, 56px)', fontWeight: 700, lineHeight: 1.15, color: 'var(--navy)', letterSpacing: '-0.02em', margin: '0 0 16px 0' }}>
-                {t.tagline}
+              <h1 className="hero-heading anim-fade-up"
+                style={{animationDelay:'0.1s'}}>
+                <span>{(t as any).tagline_line1 || t.tagline}</span>{' '}
+                {((t as any).tagline_line2) && (
+                  <span className="hero-heading-accent">
+                    {(t as any).tagline_line2}
+                  </span>
+                )}
               </h1>
-              <p className="fade-in-up" style={{ animationDelay: '0.3s', fontSize: '18px', color: 'var(--gray-600)', lineHeight: 1.6, margin: '0 0 32px 0' }}>
+              <p className="hero-sub anim-fade-up"
+                style={{animationDelay:'0.15s'}}>
                 {t.subtagline}
               </p>
-              <button role="button" className="btn-primary fade-in-up" onClick={handleStart} style={{ animationDelay: '0.4s', width: 'min(100%, 320px)', height: '56px', fontSize: '17px', margin: '0 auto 16px auto' }}>
+              <button className="btn-primary anim-fade-up"
+                style={{animationDelay:'0.2s'}}
+                onClick={handleStart}>
                 {t.start_btn}
               </button>
-              <div className="fade-in-up" style={{ animationDelay: '0.5s', fontSize: '12px', color: 'var(--gray-400)', margin: '0 0 48px 0' }}>
+              <p className="hero-note anim-fade-up"
+                style={{animationDelay:'0.25s'}}>
                 {t.free_note}
-              </div>
-              <div className="fade-in-up" style={{ animationDelay: '0.6s', maxWidth: '360px', width: '100%', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '12px' }}>
-                {heroStats.map((stat, i) => (
-                  <div key={i} className="glass-card" style={{ padding: '16px', textAlign: 'center' }}>
-                    <div style={{ fontSize: '28px', fontWeight: 700, color: 'var(--saffron)' }}>{stat.top}</div>
-                    <div style={{ fontSize: '11px', color: 'var(--gray-400)', marginTop: '4px' }}>{stat.bottom}</div>
+              </p>
+              <div className="stats-row anim-fade-up"
+                style={{animationDelay:'0.3s'}}>
+                {[
+                  {num:'50+', label:t.stat1_label},
+                  {num:'6',   label:t.stat2_label},
+                  {num:'60s', label:t.stat3_label},
+                ].map(s => (
+                  <div key={s.num} className="stat-card glass">
+                    <div className="stat-num">{s.num}</div>
+                    <div className="stat-label">{s.label}</div>
                   </div>
                 ))}
               </div>
@@ -418,79 +422,54 @@ export default function YojanaAIPage() {
           const qText = lang === 'en' ? q.en : t[qTextKey] || q.hi || q.en
           const qEn = q.en
           
-          const getTranslatedOption = (opt: string) => {
-            if (q.id === 'income') {
-              if (opt.includes("0 – 1")) return t.income_opt1 || opt
-              if (opt.includes("1 – 3")) return t.income_opt2 || opt
-              if (opt.includes("3 – 6")) return t.income_opt3 || opt
-              if (opt.includes("6 lakh")) return t.income_opt4 || opt
-            }
-            if (q.id === 'occupation') {
-              if (opt.includes("Kisan")) return t.occ_farmer || opt
-              if (opt.includes("Student")) return t.occ_student || opt
-              if (opt.includes("Sarkari")) return t.occ_govt || opt
-              if (opt.includes("Private")) return t.occ_private || opt
-              if (opt.includes("Business")) return t.occ_business || opt
-              if (opt.includes("Kaam nahi")) return t.occ_unemployed || opt
-            }
-            return opt
-          }
-
           const hasAnswer = answers[q.id] !== undefined && answers[q.id] !== ''
 
           return (
-            <div style={{ minHeight: '100vh', background: 'var(--bg-primary)', display: 'flex', flexDirection: 'column' }}>
-              <nav style={navBarStyle}>
-                <button onClick={handleFormBack} style={{ background: 'none', border: 'none', fontSize: '20px', cursor: 'pointer', color: 'var(--navy)' }}>←</button>
-                <div style={{ fontSize: '14px', fontWeight: 500, color: 'var(--gray-600)' }}>
-                  {t.step_label} {currentStep + 1} {t.step_of} 6
-                </div>
-                <div role="button" onClick={resetToHome} style={{ fontSize: '14px', fontWeight: 600, color: 'var(--navy)', cursor: 'pointer' }}>
+            <div style={{display:'flex',flexDirection:'column', minHeight:'100vh'}}>
+              <div className="tricolor"/>
+              <nav className="navbar glass no-print">
+                <button onClick={handleFormBack} className="btn-outline"
+                  style={{width:'auto',height:'36px', padding:'0 14px',fontSize:'13px', marginBottom:0}}>
+                  ← {t.back_btn}
+                </button>
+                <span style={{fontSize:'13px', color:'var(--gray-400)',fontWeight:500}}>
+                  {t.step_label} {currentStep+1} {t.step_of} 6
+                </span>
+                <span className="nav-logo" onClick={resetToHome} style={{fontSize:'13px'}}>
                   YojanaAI
-                </div>
+                </span>
               </nav>
-              
-              <div className="progress-bar">
-                <div className="progress-fill" style={{ width: `${(currentStep / 6) * 100}%` }} />
+              <div className="progress-track">
+                <div className="progress-fill" style={{width:`${((currentStep)/6)*100}%`}}/>
               </div>
-
-              <div key={currentStep} className="fade-in-up" style={{ padding: '32px 20px 120px', maxWidth: '480px', margin: '0 auto', width: '100%' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-                  <div style={{ background: 'var(--saffron-light)', color: 'var(--saffron)', fontSize: '11px', fontWeight: 600, padding: '4px 10px', borderRadius: 'var(--radius-full)' }}>
-                    Q{currentStep + 1}
+              <div className="form-wrap">
+                <div className="form-inner anim-slide-right" key={currentStep}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '4px' }}>
+                    <div className="q-number">Q{currentStep + 1}</div>
+                    <SpeakerBtn text={qText} />
                   </div>
-                  <SpeakerBtn text={qText} />
-                </div>
-                
-                <h2 style={{ fontSize: '22px', fontWeight: 700, color: 'var(--navy)', marginTop: '8px', marginBottom: '4px' }}>
-                  {lang !== 'en' ? qText : q.en}
-                </h2>
-                {lang !== 'en' && <div style={{ fontSize: '14px', color: 'var(--gray-400)', marginBottom: '24px' }}>{qEn}</div>}
-                {lang === 'en' && <div style={{ height: '24px' }}></div>}
+                  <h2 className="q-heading">{lang !== 'en' ? qText : q.en}</h2>
+                  {lang !== 'en' && <div className="q-sub">{qEn}</div>}
+                  {lang === 'en' && <div style={{ height: '24px' }}></div>}
 
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                   {q.id === 'state' && (
-                    <input
-                      type="text"
-                      autoFocus
-                      aria-label={qText}
-                      aria-required="true"
-                      placeholder={uiCopy.searchPlaceholder}
-                      value={stateSearchQuery}
-                      onChange={handleStateSearchChange}
-                      style={{
-                        width: '100%', height: '44px', borderRadius: 'var(--radius-md)', padding: '0 16px',
-                        border: '1.5px solid var(--gray-200)', fontSize: '15px', marginBottom: '8px',
-                        outline: 'none', color: 'var(--navy)'
-                      }}
-                      onFocus={(e) => e.target.style.borderColor = 'var(--saffron)'}
-                      onBlur={(e) => e.target.style.borderColor = 'var(--gray-200)'}
-                    />
+                    <div className="search-wrap">
+                      <input
+                        type="text"
+                        autoFocus
+                        className="search-input"
+                        aria-label={qText}
+                        placeholder={uiCopy.searchPlaceholder}
+                        value={stateSearchQuery}
+                        onChange={handleStateSearchChange}
+                      />
+                      <span className="search-icon">🔍</span>
+                    </div>
                   )}
 
                   {q.type === 'select' && filteredQuestionOptions.map((opt, idx) => {
                     const isSelected = answers[q.id] === opt
-                    const text = getTranslatedOption(opt)
+                    const text = getTranslatedOption(q, opt)
                     
                     return (
                       <button
@@ -503,67 +482,45 @@ export default function YojanaAIPage() {
                         onClick={handleAnswerSelect}
                       >
                         <span style={{ minWidth: 0 }}>{text}</span>
-                        {isSelected && <span aria-hidden="true" style={{ animation: 'checkPop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)' }}>✓</span>}
+                        {isSelected && <span className="option-check" aria-hidden="true">✓</span>}
                       </button>
                     )
                   })}
 
                   {q.type === 'number' && (
-                    <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                    <div className="num-input-wrap">
                       <input
                         type="number"
-                        aria-required="true"
+                        className="num-input"
                         aria-label={t.q_age_hi || q.en}
                         value={answers[q.id] || ''}
                         onChange={handleAgeChange}
                         placeholder={q.placeholder}
-                        style={{
-                          flex: 1, height: '64px', borderRadius: 'var(--radius-lg)', fontSize: '28px',
-                          textAlign: 'center', border: '2px solid var(--gray-200)',
-                          color: 'var(--navy)', outline: 'none'
-                        }}
-                        onFocus={(e) => e.target.style.borderColor = 'var(--saffron)'}
-                        onBlur={(e) => e.target.style.borderColor = 'var(--gray-200)'}
                       />
                       {q.id === 'age' && (
-                        <button
-                          type="button"
-                          role="button"
-                          aria-label="Speak age"
-                          onClick={startVoiceInputAge}
-                          style={{
-                            width: '44px', height: '44px', borderRadius: '50%', flexShrink: 0,
-                            backgroundColor: isListeningForAge ? 'var(--saffron)' : 'var(--white)',
-                            border: '1px solid var(--border)',
-                            color: isListeningForAge ? 'var(--white)' : 'var(--gray-600)',
-                            fontSize: '20px', cursor: 'pointer', transition: 'all 0.2s ease',
-                            display: 'flex', alignItems: 'center', justifyContent: 'center'
-                          }}
-                        >
-                          <span aria-hidden="true">🎤</span>
-                        </button>
+                        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                          <button
+                            type="button"
+                            role="button"
+                            aria-label="Speak age"
+                            className={`mic-btn ${isListeningForAge ? 'listening' : ''}`}
+                            onClick={startVoiceInputAge}
+                          >
+                            <span aria-hidden="true" style={{ color: isListeningForAge ? 'white' : 'var(--gray-600)' }}>🎤</span>
+                          </button>
+                          {isListeningForAge && <span className="mic-hint">Listening...</span>}
+                        </div>
                       )}
                     </div>
                   )}
-                  {isListeningForAge && <div style={{ fontSize: '13px', color: 'var(--saffron)', textAlign: 'center' }}>Listening...</div>}
                 </div>
               </div>
-
-              <div style={{ 
-                position: 'fixed', bottom: 0, left: 0, right: 0, 
-                backgroundColor: 'rgba(250,250,248,0.9)', backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)',
-                borderTop: '1px solid var(--border)', padding: '16px 20px', paddingBottom: 'calc(16px + env(safe-area-inset-bottom))', zIndex: 100
-              }}>
+              <div className="bottom-bar glass no-print">
                 <button
-                  role="button"
                   className="btn-primary"
-                  aria-label={t.next_btn}
-                  onClick={handleNext}
                   disabled={!hasAnswer}
-                  style={{
-                    width: '100%', maxWidth: '480px', margin: '0 auto', display: 'flex', height: '52px'
-                  }}
-                >
+                  onClick={handleNext}
+                  style={{maxWidth:'100%'}}>
                   {t.next_btn}
                 </button>
               </div>
@@ -571,267 +528,192 @@ export default function YojanaAIPage() {
           )
         })()}
 
-        {screen === 'loading' && (
-          <div className="fade-in" aria-live="polite" aria-label="Loading results" style={{ 
-            minHeight: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center',
-            justifyContent: 'center', padding: '20px', backgroundColor: 'var(--bg-primary)'
-          }}>
-            <div style={{ width: '64px', height: '64px', borderRadius: '50%', border: '3px solid var(--gray-200)', borderTop: '3px solid var(--saffron)', animation: 'spin 0.8s linear infinite', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <div style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: 'var(--saffron)', animation: 'pulse 1.5s infinite' }} />
-            </div>
-            <h2 style={{ fontSize: '20px', fontWeight: 700, color: 'var(--navy)', marginTop: '24px', textAlign: 'center' }}>
-              {t.loading_title}
-            </h2>
-            <div style={{ fontSize: '14px', color: 'var(--gray-400)', marginTop: '8px', textAlign: 'center' }}>{t.loading_sub}</div>
+        {screen === 'loading' && (() => {
+          const agentRows = [
+            { time: 0, doneTime: 3, label: t.agent1 },
+            { time: 3, doneTime: 8, label: t.agent2 },
+            { time: 8, doneTime: 11, label: t.agent3 },
+            { time: 11, doneTime: 999, label: t.agent4 }
+          ].map(r => ({
+            ...r,
+            status: activeWaitTimer >= r.doneTime ? 'done' : activeWaitTimer >= r.time ? 'active' : 'pending'
+          }))
 
-            <div style={{ marginTop: '40px', maxWidth: '320px', width: '100%', display: 'flex', flexDirection: 'column', gap: '0' }}>
-              {[
-                { time: 0, doneTime: 3, text: t.agent1 },
-                { time: 3, doneTime: 8, text: t.agent2 },
-                { time: 8, doneTime: 11, text: t.agent3 },
-                { time: 11, doneTime: 999, text: t.agent4 }
-              ].map((step, i) => {
-                const isActive = activeWaitTimer >= step.time && activeWaitTimer < step.doneTime
-                const isDone = activeWaitTimer >= step.doneTime
-                const isPending = activeWaitTimer < step.time
-                
-                return (
-                  <div key={i} style={{ height: '48px', display: 'flex', alignItems: 'center', gap: '14px' }}>
-                    <div style={{ width: '20px', height: '20px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                      {isPending && <div style={{ width: '20px', height: '20px', borderRadius: '50%', border: '2px solid var(--gray-200)' }} />}
-                      {isActive && <div style={{ width: '20px', height: '20px', borderRadius: '50%', backgroundColor: 'var(--saffron)', animation: 'pulse 1s infinite' }} />}
-                      {isDone && (
-                        <div style={{ width: '20px', height: '20px', borderRadius: '50%', backgroundColor: 'var(--green)', display: 'flex', alignItems: 'center', justifyContent: 'center', animation: 'checkPop 0.4s ease' }}>
-                          <span style={{ color: 'white', fontSize: '12px' }}>✓</span>
-                        </div>
-                      )}
+          return (
+            <div className="loading-wrap no-print">
+              <div className="spinner-ring">
+                <div className="spinner-dot"/>
+              </div>
+              <h2 className="loading-title">{t.loading_title}</h2>
+              <p className="loading-sub">{t.loading_sub}</p>
+              <div className="status-rows" aria-live="polite">
+                {agentRows.map((row, i) => (
+                  <div key={i} className="status-row">
+                    <div className={`status-icon ${row.status}`}>
+                      {row.status==='done' ? '✓' : ''}
                     </div>
-                    <span style={{ fontSize: '14px', fontWeight: isActive ? 500 : 'normal', color: isDone ? 'var(--green)' : isActive ? 'var(--saffron)' : 'var(--gray-400)' }}>
-                      {step.text}
+                    <span className={`status-text ${row.status}`}>
+                      {row.label}
                     </span>
                   </div>
-                )
-              })}
+                ))}
+              </div>
+              <div className="load-bar-track">
+                <div className="load-bar-fill"/>
+              </div>
             </div>
-            
-            <div style={{ position: 'fixed', bottom: 0, left: 0, right: 0, height: '2px', background: 'var(--gray-200)' }}>
-              <div style={{ height: '100%', background: 'linear-gradient(90deg, #F97316, #EA580C)', animation: 'loadProgress 14s linear forwards' }} />
-            </div>
-          </div>
-        )}
+          )
+        })()}
 
         {screen === 'results' && results && (
-          <div aria-label="Scheme results" role="region" style={{ minHeight: '100vh', backgroundColor: 'var(--bg-primary)', display: 'flex', flexDirection: 'column' }}>
-            
-            <nav style={navBarStyle}>
-              <button 
-                role="button"
-                onClick={resetToHome} 
-                style={{ background: 'none', border: 'none', fontSize: '20px', color: 'var(--navy)', cursor: 'pointer', display: 'flex', alignItems: 'center' }}>
-                ←
+          <div style={{minHeight:'100vh', background:'var(--offwhite)'}}>
+            <div className="tricolor"/>
+            <nav className="navbar glass no-print">
+              <button className="btn-outline"
+                style={{width:'auto',height:'36px', padding:'0 14px',fontSize:'13px',marginBottom:0}}
+                onClick={resetToHome}>
+                ← {t.back_btn}
               </button>
-              <div style={{ fontSize: '14px', color: 'var(--gray-600)', fontWeight: 500 }}>
+              <span style={{fontSize:'13px', color:'var(--gray-400)',fontWeight:500}}>
                 {results.matched_schemes?.length || 0} {t.results_title}
-              </div>
-              <button
-                onClick={resetToHome} 
-                style={{ background: 'none', border: 'none', fontSize: '14px', fontWeight: 600, color: 'var(--navy)', cursor: 'pointer' }}
-              >YojanaAI</button>
+              </span>
+              <span className="nav-logo" onClick={resetToHome} style={{fontSize:'13px'}}>
+                YojanaAI
+              </span>
             </nav>
-
-            <div className="confetti-dots" style={{ 
-              background: 'linear-gradient(135deg, #0F172A 0%, #1E293B 50%, #0F172A 100%)', 
-              padding: '32px 20px', borderRadius: '0 0 24px 24px', position: 'relative', overflow: 'hidden'
-            }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', position: 'relative', zIndex: 1 }}>
-                <div>
-                  <h2 style={{ fontSize: '24px', fontWeight: 700, color: 'white', marginBottom: '8px', lineHeight: 1.3 }}>
-                    <span aria-hidden="true">🎉 </span>{results.matched_schemes?.length || 0} schemes mile!
-                  </h2>
-                  <p style={{ fontSize: '14px', color: 'rgba(255,255,255,0.7)', lineHeight: 1.5, wordBreak: 'break-word', overflowWrap: 'anywhere' }}>
-                    Total benefit:{' '}
-                    <strong>
+            <div className="results-banner no-print">
+              <div className="results-banner-inner">
+                <div style={{display:'flex', justifyContent:'space-between', alignItems:'flex-start',gap:'12px'}}>
+                  <div>
+                    <h2 className="results-count">
+                      🎉 {results.matched_schemes?.length || 0} {t.results_title}
+                    </h2>
+                    <p className="results-benefit">
+                      {t.results_sub}{' '}
                       {expandedCards['benefit'] 
-                        ? results.total_annual_benefit 
-                        : (results.total_annual_benefit?.length > 80 
-                            ? results.total_annual_benefit.substring(0, 80) + '...' 
-                            : results.total_annual_benefit)}
-                    </strong>
-                    {results.total_annual_benefit?.length > 80 && (
-                      <button 
-                        data-expand-id="benefit"
-                        onClick={handleToggleExpand}
-                        style={{ background: 'none', border: 'none', color: 'white', textDecoration: 'underline', cursor: 'pointer', fontSize: '13px', marginLeft: '6px' }}
-                      >
-                        {expandedCards['benefit'] ? uiCopy.showLess : uiCopy.showMore}
-                      </button>
-                    )}
-                  </p>
+                        ? (results.total_annual_benefit || '')
+                        : ((results.total_annual_benefit || '').length > 80 
+                            ? (results.total_annual_benefit || '').substring(0, 80) + '...' 
+                            : (results.total_annual_benefit || ''))}
+                      {(results.total_annual_benefit || '').length > 80 && (
+                        <button 
+                          data-expand-id="benefit"
+                          onClick={handleToggleExpand}
+                          style={{ background: 'none', border: 'none', color: 'white', textDecoration: 'underline', cursor: 'pointer', fontSize: '13px', marginLeft: '6px' }}
+                        >
+                          {expandedCards['benefit'] ? uiCopy.showLess : uiCopy.showMore}
+                        </button>
+                      )}
+                    </p>
+                  </div>
+                  <button className="listen-btn" onClick={toggleReadAll}>
+                    {isReadingResults ? `${uiCopy.stopAudio} 🔇` : `🔊 ${uiCopy.listenResults}`}
+                  </button>
                 </div>
-                <button 
-                  role="button"
-                  onClick={toggleReadAll}
-                  style={{
-                    backgroundColor: 'var(--saffron)', color: 'white', border: 'none',
-                    padding: '6px 14px', borderRadius: 'var(--radius-full)', fontSize: '13px', fontWeight: 600, cursor: 'pointer',
-                    display: 'flex', alignItems: 'center', gap: '6px', marginLeft: '12px'
-                  }}
-                >
-                  {isReadingResults ? `${uiCopy.stopAudio} 🔇` : `${uiCopy.listenResults} 🔊`}
-                </button>
               </div>
             </div>
-
-            <div style={{ padding: '16px', maxWidth: '600px', margin: '0 auto', width: '100%' }}>
-              {results.matched_schemes?.map((scheme: any, idx: number) => {
+            
+            <div style={{padding:'16px 16px 32px', maxWidth: '640px', margin: '0 auto'}}>
+              {results.matched_schemes?.map((scheme: any, i: number) => {
                 const schemeDocs = results.documents?.[scheme.id] || []
                 const schemeAction = results.actions?.[scheme.id] || {}
-                const isExpanded = expandedCards[idx.toString()]
+                const isExpanded = expandedCards[i.toString()]
                 
                 const derivedName = scheme.name || scheme.id
-                const schemeReason = scheme.reason || ''
+                const schemeReason = scheme.reason || scheme.reasoning || ''
                 const categoryIcon = getCategoryIcon(derivedName, schemeReason)
                 const isHighConfidence = typeof scheme.confidence === 'number' ? scheme.confidence >= 0.85 : scheme.confidence === 'high'
 
                 return (
-                  <div key={scheme.id} className={`scheme-card fade-in-up ${isHighConfidence ? 'high' : 'medium'}`} style={{ animationDelay: `${idx * 100}ms`, opacity: 0 }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '8px' }}>
-                      <div style={{ display: 'flex', gap: '10px', alignItems: 'flex-start', flex: 1 }}>
-                        <span aria-hidden="true" style={{ fontSize: '20px' }}>{categoryIcon}</span>
-                        <div>
-                          <h3 style={{ fontSize: '16px', fontWeight: 700, color: 'var(--navy)' }}>{derivedName}</h3>
-                        </div>
+                  <div key={scheme.id}
+                    className={`scheme-card ${isHighConfidence ? 'high' : 'medium'} anim-fade-up`}
+                    style={{animationDelay:`${i*80}ms`}}>
+                    
+                    <div className="card-header">
+                      <div className="card-name">
+                        <span className="card-icon" aria-hidden="true">{categoryIcon}</span>
+                        {derivedName}
                       </div>
-                      <div style={{ 
-                        backgroundColor: 'var(--green-light)', color: 'var(--green)', padding: '4px 10px', 
-                        borderRadius: 'var(--radius-full)', fontSize: '12px', fontWeight: 500, marginLeft: '12px', 
-                        border: '1px solid rgba(22,163,74,0.2)', maxWidth: '140px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis'
-                      }}>
+                      <div className="benefit-badge" style={{ whiteSpace: 'normal', wordBreak: 'break-word', overflowWrap: 'anywhere' }}>
                         {scheme.estimated_benefit}
                       </div>
                     </div>
 
-                    <div style={{ marginTop: '8px' }}>
-                      <span style={{ 
-                        display: 'inline-block', padding: '4px 10px', borderRadius: 'var(--radius-full)', fontSize: '12px', fontWeight: 500,
-                        backgroundColor: isHighConfidence ? 'var(--green-light)' : 'var(--saffron-light)',
-                        color: isHighConfidence ? 'var(--green)' : 'var(--saffron)',
-                        border: isHighConfidence ? '1px solid rgba(22,163,74,0.2)' : '1px solid rgba(249,115,22,0.2)'
-                      }}>
-                        {isHighConfidence ? (t.confidence_high || '✓ Pakka Eligible') : (t.confidence_medium || '~ Shayad Eligible')}
-                      </span>
+                    <div className={`confidence-badge ${isHighConfidence ? 'high' : 'medium'}`}>
+                      {isHighConfidence ? (t.confidence_high || '✓ Pakka Eligible') : (t.confidence_medium || '~ Shayad Eligible')}
                     </div>
 
-                    <p style={{ fontSize: '14px', color: 'var(--gray-600)', lineHeight: '1.7', marginTop: '12px' }}>
-                      {schemeReason || scheme.reasoning}
+                    <p className="reason-text">
+                      {schemeReason}
                     </p>
 
-                    <div style={{ borderTop: '1px solid var(--gray-100)', marginTop: '16px', paddingTop: '8px' }}>
-                      <button 
-                        role="button"
-                        data-expand-id={idx.toString()}
-                        aria-expanded={isExpanded}
-                        onClick={handleToggleExpand}
-                        style={{ 
-                          width: '100%', textAlign: 'left', background: 'none', border: 'none',
-                          padding: '0', fontSize: '13px', color: 'var(--navy-soft)', fontWeight: 500, cursor: 'pointer',
-                          display: 'flex', justifyContent: 'space-between', alignItems: 'center', height: '40px'
-                        }}
-                      >
-                        <span>{isExpanded ? uiCopy.hideDetails : uiCopy.showDetails}</span>
-                        <span style={{ transform: isExpanded ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.25s ease' }}>▼</span>
-                      </button>
-                      
-                      <div className={`expandable-content ${isExpanded ? 'open' : ''}`}>
-                        <div style={{ paddingTop: '8px' }}>
-                          <h4 style={{ fontSize: '13px', fontWeight: 600, color: 'var(--navy)', marginBottom: '4px' }}>
-                            📄 {t.documents_label} ({schemeDocs.length})
-                          </h4>
-                          <div style={{ paddingBottom: '16px' }}>
-                            {schemeDocs.map((doc: string, dIdx: number) => (
-                              <div key={dIdx} style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '13px', color: 'var(--gray-600)', padding: '8px 0', borderBottom: '1px solid var(--gray-100)' }}>
-                                <div style={{ color: 'var(--gray-200)', fontSize: '16px' }}>○</div>
-                                {doc}
-                              </div>
-                            ))}
-                          </div>
+                    <button 
+                      className="expand-btn"
+                      data-expand-id={i.toString()}
+                      aria-expanded={isExpanded}
+                      onClick={handleToggleExpand}
+                    >
+                      {isExpanded ? uiCopy.hideDetails : uiCopy.showDetails}
+                      <span className={`expand-arrow ${isExpanded ? 'open' : ''}`}>▼</span>
+                    </button>
+                    
+                    <div className={`expand-content ${isExpanded ? 'open' : ''}`}>
+                      <div style={{ paddingTop: '10px', paddingBottom: '16px' }}>
+                        <h4 style={{ fontSize: '12px', fontWeight: 700, color: 'var(--navy)', marginBottom: '8px', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+                          📄 {t.documents_label} ({schemeDocs.length})
+                        </h4>
+                        <div style={{ paddingBottom: '16px' }}>
+                          {schemeDocs.map((doc: string, dIdx: number) => (
+                            <div key={dIdx} className="doc-item">
+                              <div className="doc-dot"></div>
+                              {doc}
+                            </div>
+                          ))}
+                        </div>
 
-                          <h4 style={{ fontSize: '13px', fontWeight: 600, color: 'var(--navy)', marginBottom: '4px' }}>
-                            📋 {t.apply_steps_label}
-                          </h4>
-                          <div style={{ paddingBottom: '12px' }}>
-                            {schemeAction.steps?.map((step: string, sIdx: number) => (
-                              <div key={sIdx} style={{ display: 'flex', gap: '12px', padding: '10px 0' }}>
-                                <div style={{ 
-                                  width: '20px', height: '20px', borderRadius: '50%', backgroundColor: 'var(--saffron)', 
-                                  color: 'white', fontSize: '10px', display: 'flex', alignItems: 'center', 
-                                  justifyContent: 'center', flexShrink: 0, fontWeight: 600
-                                }}>{sIdx + 1}</div>
-                                <div style={{ fontSize: '13px', color: 'var(--gray-600)', lineHeight: '1.5' }}>{step}</div>
-                              </div>
-                            ))}
-                          </div>
+                        <h4 style={{ fontSize: '12px', fontWeight: 700, color: 'var(--navy)', marginBottom: '8px', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+                          📋 {t.apply_steps_label}
+                        </h4>
+                        <div>
+                          {schemeAction.steps?.map((step: string, sIdx: number) => (
+                            <div key={sIdx} className="step-item">
+                              <div className="step-num">{sIdx + 1}</div>
+                              <div className="step-text">{step}</div>
+                            </div>
+                          ))}
                         </div>
                       </div>
                     </div>
 
                     <div className="card-actions no-print">
                       <button 
-                        role="button"
-                        className="btn-primary card-action-btn"
+                        className="btn-apply"
                         data-url={schemeAction.portal_url || schemeAction.apply_url || scheme.apply_url || 'https://www.myscheme.gov.in'}
                         onClick={handleApplyClick}
-                        style={{ flex: 1, minHeight: '44px', borderRadius: 'var(--radius-md)', fontSize: '14px', padding: '0 16px' }}
                       >
                         {t.apply_btn || 'Apply Karein →'}
                       </button>
                       <button 
-                        role="button"
+                        className="btn-whatsapp"
                         data-scheme-name={derivedName}
                         data-scheme-benefit={scheme.estimated_benefit}
                         onClick={handleShareClick}
-                        style={{ 
-                          flex: 1, minHeight: '44px', backgroundColor: '#25D366', color: 'white', border: 'none',
-                          borderRadius: 'var(--radius-md)', fontSize: '14px', fontWeight: 600, cursor: 'pointer',
-                          display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
-                          boxShadow: '0 2px 8px rgba(37,211,102,0.3)'
-                        }}
                       >
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style={{ verticalAlign: 'middle', marginRight: '6px' }}>
                           <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/>
                         </svg>
                         {t.share_btn}
                       </button>
                     </div>
+
                   </div>
                 )
               })}
-
-              <div className="no-print" style={{ display: 'flex', flexDirection: 'column', gap: '12px', padding: '24px 16px' }}>
-                <button 
-                  role="button"
-                  onClick={resetToHome}
-                  style={{ 
-                    width: '100%', height: '48px', backgroundColor: 'white', color: 'var(--navy-soft)', 
-                    border: '1.5px solid var(--gray-200)', borderRadius: 'var(--radius-md)', fontSize: '14px', fontWeight: 500, cursor: 'pointer',
-                    transition: 'all 0.2s ease'
-                  }}
-                  onMouseEnter={(e) => { e.currentTarget.style.borderColor = 'var(--saffron)'; e.currentTarget.style.color = 'var(--saffron)'; }}
-                  onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'var(--gray-200)'; e.currentTarget.style.color = 'var(--navy-soft)'; }}
-                >
+              <div style={{marginTop:'8px', display: 'flex', flexDirection: 'column', gap: '8px'}}>
+                <button className="btn-outline no-print" onClick={resetToHome}>
                   🔄 {t.retry_btn}
                 </button>
-                <button 
-                  role="button"
-                  onClick={handlePrint}
-                  style={{ 
-                    width: '100%', height: '48px', backgroundColor: 'white', color: 'var(--navy-soft)', 
-                    border: '1.5px solid var(--gray-200)', borderRadius: 'var(--radius-md)', fontSize: '14px', fontWeight: 500, cursor: 'pointer',
-                    transition: 'all 0.2s ease'
-                  }}
-                  onMouseEnter={(e) => { e.currentTarget.style.borderColor = 'var(--saffron)'; e.currentTarget.style.color = 'var(--saffron)'; }}
-                  onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'var(--gray-200)'; e.currentTarget.style.color = 'var(--navy-soft)'; }}
-                >
+                <button className="btn-outline no-print" onClick={handlePrint}>
                   💾 {t.pdf_btn}
                 </button>
               </div>
