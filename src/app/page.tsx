@@ -422,6 +422,19 @@ export default function YojanaAIPage() {
     )}`
   }
 
+  const navBrand = (
+    <>
+      <span className="flag-wrap" aria-hidden="true">
+        <span className="flag-saffron"/>
+        <span className="flag-white">
+          <span className="flag-chakra"/>
+        </span>
+        <span className="flag-green"/>
+      </span>
+      YojanaAI
+    </>
+  )
+
   return (
     <>
       <a href="#main" className="skip-link">Skip to main content</a>
@@ -436,7 +449,7 @@ export default function YojanaAIPage() {
             <nav className="navbar-pill no-print">
               <span className="nav-logo"
                 onClick={() => setScreen('hero')}>
-                🇮🇳 YojanaAI
+                {navBrand}
               </span>
               <div className="lang-row"
                 aria-label="Select language">
@@ -741,7 +754,7 @@ export default function YojanaAIPage() {
                   <span className="nav-logo"
                     style={{fontSize:'13px'}}
                     onClick={() => setScreen('hero')}>
-                    YojanaAI
+                    {navBrand}
                   </span>
                 </div>
               </nav>
@@ -802,14 +815,20 @@ export default function YojanaAIPage() {
                   })}
 
                   {q.type === 'number' && (
-                    <div className="num-row">
+                    <div style={{width:'100%'}}>
                       <input
                         type="number"
+                        inputMode="numeric"
+                        pattern="[0-9]*"
                         className="num-input"
                         aria-label={t.q_age_hi || q.en}
-                        value={answers[q.id] || ''}
-                        onChange={handleAgeChange}
-                        placeholder={q.placeholder}
+                        value={answers.age ?? ''}
+                        onChange={e => setAnswers(prev =>
+                          ({...prev, age: e.target.value}))}
+                        placeholder="35"
+                        min="1"
+                        max="120"
+                        style={{width:'100%'}}
                       />
                     </div>
                   )}
@@ -891,7 +910,7 @@ export default function YojanaAIPage() {
                     setScreen('hero')
                     setResults(null)
                   }}>
-                  YojanaAI
+                  {navBrand}
                 </span>
               </div>
             </nav>
