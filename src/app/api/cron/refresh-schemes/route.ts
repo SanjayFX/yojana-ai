@@ -1,5 +1,4 @@
 import { createClient } from '@supabase/supabase-js'
-import { callAI, FLASH } from '@/lib/ai'
 
 const STATE_GROUPS = [
   ['Uttar Pradesh', 'Maharashtra', 'Bihar'],
@@ -24,6 +23,52 @@ function getAdmin() {
   )
 }
 
+const FLASH_MODEL = 'gemini-2.5-flash'
+
+async function callCronAI(prompt: string): Promise<string> {
+  const apiKey =
+    process.env.GEMINI_API_KEY ??
+    process.env.GOOGLE_GENERATIVE_AI_API_KEY ??
+    ''
+
+  if (!apiKey) return '[]'
+
+  try {
+    const response = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/${FLASH_MODEL}:generateContent?key=${apiKey}`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        signal: AbortSignal.timeout(6000),
+        body: JSON.stringify({
+          contents: [{ role: 'user', parts: [{ text: prompt }] }],
+          generationConfig: {
+            temperature: 0.1,
+            maxOutputTokens: 1024,
+            responseMimeType: 'application/json',
+            thinkingConfig: {
+              thinkingBudget: 0,
+            },
+          },
+        }),
+      }
+    )
+
+    if (!response.ok) return '[]'
+
+    const data = await response.json()
+    const parts = data.candidates?.[0]?.content?.parts
+    const text = parts
+      ?.map((part: { text?: string }) => part.text ?? '')
+      .join('')
+      .trim()
+
+    return text || '[]'
+  } catch {
+    return '[]'
+  }
+}
+
 async function updateState(
   state: string,
   supabase: ReturnType<typeof getAdmin>
@@ -45,6 +90,14 @@ async function updateState(
     return { state, added: 0, skipped: true }
   }
 
+  await supabase
+    .from('update_queue')
+    .upsert({
+      state,
+      last_updated: queue?.last_updated ?? new Date(0).toISOString(),
+      is_processing: true,
+    }, { onConflict: 'state' })
+
   const { data: existing } = await supabase
     .from('schemes')
     .select('id')
@@ -55,13 +108,13 @@ async function updateState(
     .limit(100)
 
   const existingIds =
-    (existing ?? []).map((scheme) => scheme.id)
+    (existing ?? []).map((s) => s.id)
 
   const prompt =
     `List up to 5 NEW Indian government schemes
     for ${state} announced in 2024-2026.
     NOT in this list: ${existingIds.slice(0,20).join(',')}
-
+    
     Return ONLY JSON array, each item:
     {"id":"kebab-id","name":"Name",
     "ministry":"Dept","category":"health",
@@ -78,38 +131,49 @@ async function updateState(
     "apply_url":"https://www.myscheme.gov.in/search",
     "apply_modes":["online"],
     "helpline":null}
-
+    
     If none found return [].
     ONLY JSON. No markdown.`
 
-  const raw = await callAI(FLASH, prompt)
-  const cleaned = raw
-    .replace(/\`\`\`json|\`\`\`/g, '')
-    .trim()
-
-  let schemes: object[] = []
   try {
-    schemes = JSON.parse(cleaned)
-    if (!Array.isArray(schemes)) schemes = []
-  } catch {
-    schemes = []
-  }
+    const raw = await callCronAI(prompt)
+    const cleaned = raw
+      .replace(/\`\`\`json|\`\`\`/g, '')
+      .trim()
 
-  if (schemes.length > 0) {
+    let schemes: object[] = []
+    try {
+      schemes = JSON.parse(cleaned)
+      if (!Array.isArray(schemes)) schemes = []
+    } catch {
+      schemes = []
+    }
+
+    if (schemes.length > 0) {
+      await supabase
+        .from('schemes')
+        .upsert(schemes, { onConflict: 'id' })
+    }
+
     await supabase
-      .from('schemes')
-      .upsert(schemes, { onConflict: 'id' })
+      .from('update_queue')
+      .upsert({
+        state,
+        last_updated: now.toISOString(),
+        is_processing: false
+      }, { onConflict: 'state' })
+
+    return { state, added: schemes.length }
+  } catch {
+    await supabase
+      .from('update_queue')
+      .upsert({
+        state,
+        last_updated: now.toISOString(),
+        is_processing: false
+      }, { onConflict: 'state' })
+    return { state, added: 0, skipped: true }
   }
-
-  await supabase
-    .from('update_queue')
-    .upsert({
-      state,
-      last_updated: now.toISOString(),
-      is_processing: false,
-    }, { onConflict: 'state' })
-
-  return { state, added: schemes.length }
 }
 
 export async function GET(req: Request) {
@@ -133,24 +197,24 @@ export async function GET(req: Request) {
     STATE_GROUPS.length
   const todayStates = STATE_GROUPS[dayGroup]
 
-  const results = await Promise.all(
-    todayStates.map(async (state) => {
-      try {
-        return await updateState(state, supabase)
-      } catch (err) {
-        return {
-          state,
-          added: 0,
-          error: String(err)
-        }
-      }
-    })
-  )
+  const results = []
+  let totalAdded = 0
 
-  const totalAdded = results.reduce(
-    (sum, result) => sum + result.added,
-    0
-  )
+  for (const state of todayStates) {
+    try {
+      const result = await updateState(
+        state, supabase
+      )
+      results.push(result)
+      totalAdded += result.added
+    } catch (err) {
+      results.push({
+        state,
+        added: 0,
+        error: String(err)
+      })
+    }
+  }
 
   return Response.json({
     cron_run: now.toISOString(),
