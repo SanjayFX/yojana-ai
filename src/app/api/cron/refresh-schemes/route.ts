@@ -18,15 +18,21 @@ function getBaseUrl(req: Request) {
   }
 
   return process.env.NEXT_PUBLIC_BASE_URL
-    ?? 'http://localhost:3000'
+    ?? 'https://yojanai-rosy.vercel.app'
 }
 
 export async function GET(req: Request) {
-  const authHeader = req.headers.get('authorization')
+  const authHeader =
+    req.headers.get('authorization') ?? ''
+  const cronSecret =
+    process.env.CRON_SECRET ?? 'yojanacron2026'
+
   if (
-    authHeader !== `Bearer ${process.env.CRON_SECRET}`
-    && process.env.NODE_ENV === 'production'
+    process.env.NODE_ENV === 'production' &&
+    authHeader !== `Bearer ${cronSecret}`
   ) {
+    console.log('Auth failed. Got:', authHeader,
+      'Expected: Bearer', cronSecret)
     return Response.json(
       { error: 'Unauthorized' }, { status: 401 }
     )
@@ -34,32 +40,50 @@ export async function GET(req: Request) {
 
   const baseUrl = getBaseUrl(req)
 
-  const results: Record<string, unknown>[] = []
+  const now = new Date()
+  const dayOfWeek = now.getUTCDay()
 
-  for (const state of TOP_STATES) {
-    try {
-      const res = await fetch(
-        `${baseUrl}/api/schemes/auto-update`,
-        {
-          method: 'POST',
-          headers:
-            { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ state })
+  const STATE_GROUPS = [
+    ['Uttar Pradesh', 'Maharashtra', 'Bihar',
+     'West Bengal', 'Tamil Nadu'],
+    ['Karnataka', 'Gujarat', 'Rajasthan',
+     'Madhya Pradesh', 'Andhra Pradesh'],
+    ['Odisha', 'Telangana', 'Kerala',
+     'Jharkhand', 'Assam'],
+    ['Punjab', 'Chhattisgarh', 'Haryana',
+     'Delhi', 'Uttarakhand'],
+  ]
+
+  const todayStates =
+    STATE_GROUPS[dayOfWeek % STATE_GROUPS.length]
+
+  const results = await Promise.all(
+    todayStates.map(async (state) => {
+      try {
+        const res = await fetch(
+          `${baseUrl}/api/schemes/auto-update`,
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization':
+                `Bearer ${process.env.SEED_SECRET
+                  ?? 'yojana2026secret'}`
+            },
+            body: JSON.stringify({ state }),
+            signal: AbortSignal.timeout(12000),
+          }
+        )
+        const data = await res.json()
+        return { state, ...data }
+      } catch (err) {
+        return {
+          state,
+          error: String(err)
         }
-      )
-      const data = await res.json()
-      results.push({ state, ...data })
-
-      // 2 second delay between states
-      // to avoid Gemini rate limits
-      await new Promise(r => setTimeout(r, 2000))
-    } catch (err) {
-      results.push({
-        state,
-        error: String(err)
-      })
-    }
-  }
+      }
+    })
+  )
 
   const totalAdded = results.reduce(
     (sum, r) =>
@@ -67,45 +91,11 @@ export async function GET(req: Request) {
     0
   )
 
-  try {
-    const statsRes = await fetch(`${baseUrl}/api/schemes/stats`)
-    const stats = await statsRes.json()
-    const totalSchemes = stats.total_schemes ?? 500
-    const validateRes = await fetch(
-      `${baseUrl}/api/schemes/validate`,
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${process.env.SEED_SECRET}`,
-        },
-        body: JSON.stringify({
-          limit: 50,
-          offset: Math.floor(
-            Math.random() * Math.max(1, totalSchemes - 50)
-          ),
-        }),
-      }
-    )
-    const validateData = await validateRes.json()
-
-    return Response.json({
-      cron_run: new Date().toISOString(),
-      states_processed: TOP_STATES.length,
-      total_schemes_added: totalAdded,
-      validation: {
-        schemes_checked: validateData.checked,
-        urls_fixed: validateData.url_fixed,
-        marked_inactive: validateData.marked_inactive,
-      },
-      results,
-    })
-  } catch {
-    return Response.json({
-      cron_run: new Date().toISOString(),
-      states_processed: TOP_STATES.length,
-      total_schemes_added: totalAdded,
-      results,
-    })
-  }
+  return Response.json({
+    cron_run: new Date().toISOString(),
+    day_group: dayOfWeek % STATE_GROUPS.length,
+    states_processed: todayStates,
+    total_schemes_added: totalAdded,
+    results
+  })
 }
