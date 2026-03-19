@@ -67,6 +67,19 @@ export async function POST(request: NextRequest) {
       profile: UserProfile;
     };
 
+    // Fire background scheme update — no await
+    // This runs silently while user gets their results
+    const autoUpdateBaseUrl = process.env.NEXT_PUBLIC_BASE_URL ??
+      (process.env.NODE_ENV === "development" ? "http://localhost:3000" : baseUrl);
+    fetch(`${autoUpdateBaseUrl}/api/schemes/auto-update`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ state: profile.state }),
+    }).catch(() => {})
+
+    // Intentionally fire-and-forget
+    // User never waits for this
+
     // Step 2 — Eligibility Agent
     const eligRes = await fetch(`${baseUrl}/api/eligibility`, {
       method: "POST",

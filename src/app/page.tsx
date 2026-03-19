@@ -453,16 +453,19 @@ export default function YojanaAIPage() {
             <div style={{display:'flex',flexDirection:'column', minHeight:'100vh'}}>
               <div className="tricolor"/>
               <nav className="navbar glass no-print">
-                <button onClick={handleFormBack} className="btn-outline"
-                  style={{width:'auto',height:'36px', padding:'0 14px',fontSize:'13px', marginBottom:0}}>
-                  {t.back_btn}
-                </button>
-                <span style={{fontSize:'13px', color:'var(--gray-400)',fontWeight:500}}>
+                <div className="navbar-left">
+                  <button onClick={handleFormBack} className="nav-back-btn">
+                    ← {t.back_btn}
+                  </button>
+                </div>
+                <span className="navbar-center" aria-hidden="true">
                   {t.step_label} {currentStep+1} {t.step_of} 6
                 </span>
-                <span className="nav-logo" onClick={resetToHome} style={{fontSize:'13px'}}>
-                  YojanaAI
-                </span>
+                <div className="navbar-right">
+                  <span className="nav-logo" onClick={resetToHome} style={{fontSize:'13px'}}>
+                    YojanaAI
+                  </span>
+                </div>
               </nav>
               <div className="progress-track">
                 <div className="progress-fill" style={{width:`${((currentStep)/6)*100}%`}}/>
@@ -600,17 +603,16 @@ export default function YojanaAIPage() {
           <div style={{minHeight:'100vh', background:'var(--offwhite)'}}>
             <div className="tricolor"/>
               <nav className="navbar glass no-print">
-              <button className="btn-outline"
-                style={{width:'auto',height:'36px', padding:'0 14px',fontSize:'13px',marginBottom:0}}
-                onClick={resetToHome}>
-                {t.back_btn}
-              </button>
-              <span style={{fontSize:'13px', color:'var(--gray-400)',fontWeight:500}}>
-                {results.matched_schemes?.length || 0} {t.schemes_found}
-              </span>
-              <span className="nav-logo" onClick={resetToHome} style={{fontSize:'13px'}}>
-                YojanaAI
-              </span>
+              <div className="navbar-left">
+                <button className="nav-back-btn" onClick={resetToHome}>
+                  ← {t.back_btn}
+                </button>
+              </div>
+              <div className="navbar-right">
+                <span className="nav-logo" onClick={resetToHome} style={{fontSize:'13px'}}>
+                  YojanaAI
+                </span>
+              </div>
             </nav>
             <div className="results-banner no-print">
               <div className="results-banner-inner">

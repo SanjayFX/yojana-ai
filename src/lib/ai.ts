@@ -14,7 +14,7 @@ export const GROQ_MODEL = "llama-3.3-70b-versatile";
 export async function callAI(
   model: string,
   prompt: string,
-  maxOutputTokens = 2048
+  maxOutputTokens = 4096
 ): Promise<string> {
   if (!geminiApiKey) {
     console.error("GEMINI_API_KEY is not set in .env.local");

@@ -53,8 +53,7 @@ export async function POST(request: NextRequest) {
             ? 0.9
             : 0.6,
       }))
-      .sort((a, b) => b.confidence - a.confidence)
-      .slice(0, 6);
+      .sort((a, b) => b.confidence - a.confidence);
 
     if (matchedSchemes.length > 0) {
       const ids = matchedSchemes.map((s) => s.id);

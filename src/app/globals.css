@@ -124,6 +124,40 @@ body {
 .navbar.glass {
   background: rgba(248,250,252,0.82);
 }
+.navbar-left {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+.navbar-center {
+  flex-shrink: 0;
+  font-size: 13px;
+  color: var(--gray-400);
+  font-weight: 500;
+  white-space: nowrap;
+}
+.navbar-right {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+.nav-back-btn {
+  background: none;
+  border: none;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--navy-mid);
+  cursor: pointer;
+  padding: 8px 0;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  white-space: nowrap;
+}
+.nav-back-btn:hover {
+  color: var(--saffron);
+}
 .nav-logo {
   font-size: 15px;
   font-weight: 700;

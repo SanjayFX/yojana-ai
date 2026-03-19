@@ -38,6 +38,27 @@ export function buildEligibilityPrompt(
   profile: UserProfile,
   schemes: SchemeData[]
 ): string {
+  const language = (profile.preferred_language || 'en').toLowerCase();
+
+  const reasonLanguage =
+    language === "en" || language === "english"
+      ? "clear simple English"
+      : language === "hi" || language === "hindi"
+      ? "casual Hindi mixed with English (Hinglish)"
+      : language === "bn" || language === "bengali"
+      ? "Bengali mixed with English"
+      : language === "ta" || language === "tamil"
+      ? "Tamil mixed with English"
+      : language === "te" || language === "telugu"
+      ? "Telugu mixed with English"
+      : language === "mr" || language === "marathi"
+      ? "Marathi mixed with English"
+      : language === "gu" || language === "gujarati"
+      ? "Gujarati mixed with English"
+      : language === "kn" || language === "kannada"
+      ? "Kannada mixed with English"
+      : "simple English";
+
   const normalize = (value?: string | null) => value?.toLowerCase().trim() || "";
 
   const preFiltered = schemes
@@ -58,7 +79,7 @@ export function buildEligibilityPrompt(
 
       if (
         e.max_annual_income_inr &&
-        profile.annual_income_inr > e.max_annual_income_inr * 2
+        profile.annual_income_inr > e.max_annual_income_inr * 3
       ) {
         return false;
       }
@@ -93,7 +114,7 @@ export function buildEligibilityPrompt(
     })
     .sort((a, b) => b.score - a.score || a.scheme.name.localeCompare(b.scheme.name));
 
-  const schemesToSend = preFiltered.slice(0, 25).map(({ scheme }) => ({
+  const schemesToSend = preFiltered.slice(0, 35).map(({ scheme }) => ({
     id: scheme.id,
     name: scheme.name,
     category: scheme.category,
@@ -119,9 +140,12 @@ MATCHING RULES:
 6. Prefer direct welfare schemes (agriculture, health, education, women, employment, housing) over generic banking or insurance add-ons when both fit.
 7. For student profiles, prefer scholarships, girls education, youth support, and state education schemes.
 8. For female profiles, include women-focused schemes when they fit.
-9. Return only the 6 strongest matches.
+9. Return ALL schemes the user qualifies for.
+Do not limit the number. If 12 schemes match, return all 12.
+Quality over quantity but do not artificially limit results.
 
-REASON: Write in Hinglish (casual Hindi + English mix).
+REASON: Write the reason in ${reasonLanguage}.
+Keep it 2 sentences max. Be specific about why they qualify — mention their age, income, state, category where relevant.
 Example: "Aap qualify karte hain kyunki income Rs 2L hai jo limit se kam hai."
 
 Return ONLY valid JSON. No markdown.
@@ -181,6 +205,13 @@ export function buildActionPrompt(
   profile: UserProfile,
   schemes: SchemeData[]
 ): string {
+  const language = (profile.preferred_language || 'en').toLowerCase();
+
+  const actionLanguage =
+    language === "en" || language === "english"
+      ? "clear simple English"
+      : "Hinglish (casual Hindi + English mix)";
+
   const relevantSchemes = schemes
     .filter((s) => schemeIds.includes(s.id))
     .map((s) => ({
@@ -253,6 +284,8 @@ For any other scheme use:
   https://www.myscheme.gov.in/search
 
 Rules:
+Rules:
+Steps must be in ${actionLanguage}.
 - Steps should be clear, actionable, and in order
 - Return exactly 3 concise steps per scheme
 - Include both online and offline options where available
