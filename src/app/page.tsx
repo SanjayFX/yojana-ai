@@ -17,6 +17,152 @@ type SchemeExplanation = {
   fallback?: boolean
 }
 
+const STATE_TRANSLATIONS: Record<string, string> = {
+  'தமிழ் நாடு': 'Tamil Nadu',
+  'தமிழ்நாடு': 'Tamil Nadu',
+  'tamilnadu': 'Tamil Nadu',
+  'tamil nadu': 'Tamil Nadu',
+  'উত্তর প্রদেশ': 'Uttar Pradesh',
+  'মহারাষ্ট্র': 'Maharashtra',
+  'বিহার': 'Bihar',
+  'পশ্চিমবঙ্গ': 'West Bengal',
+  'కర్ణాటక': 'Karnataka',
+  'ఆంధ్రప్రదేశ్': 'Andhra Pradesh',
+  'తెలంగాణ': 'Telangana',
+  'కేరళ': 'Kerala',
+  'ಕರ್ನಾಟಕ': 'Karnataka',
+  'ಮಹಾರಾಷ್ಟ್ರ': 'Maharashtra',
+  'ಆಂಧ్ర ಪ್ರದೇಶ': 'Andhra Pradesh',
+  'ગુજરાત': 'Gujarat',
+  'મહારાષ્ટ્ર': 'Maharashtra',
+  'राजस्थान': 'Rajasthan',
+  'मध्य प्रदेश': 'Madhya Pradesh',
+  'उत्तर प्रदेश': 'Uttar Pradesh',
+  'महाराष्ट्र': 'Maharashtra',
+  'बिहार': 'Bihar',
+  'गुजरात': 'Gujarat',
+  'கர்நாடகா': 'Karnataka',
+  'ஆந்திரா': 'Andhra Pradesh',
+  'கேரளா': 'Kerala',
+  'மகாராஷ்டிரா': 'Maharashtra'
+}
+
+const normalizeState = (input: string): string => {
+  const trimmed = input.trim()
+  const lower = trimmed.toLowerCase()
+  if (STATE_TRANSLATIONS[trimmed]) {
+    return STATE_TRANSLATIONS[trimmed]
+  }
+  if (STATE_TRANSLATIONS[lower]) {
+    return STATE_TRANSLATIONS[lower]
+  }
+
+  const KNOWN_STATES = [
+    'Andhra Pradesh','Arunachal Pradesh','Assam',
+    'Bihar','Chhattisgarh','Goa','Gujarat',
+    'Haryana','Himachal Pradesh','Jharkhand',
+    'Karnataka','Kerala','Madhya Pradesh',
+    'Maharashtra','Manipur','Meghalaya','Mizoram',
+    'Nagaland','Odisha','Punjab','Rajasthan',
+    'Sikkim','Tamil Nadu','Telangana','Tripura',
+    'Uttar Pradesh','Uttarakhand','West Bengal',
+    'Delhi','Jammu & Kashmir'
+  ]
+  const match = KNOWN_STATES.find(s =>
+    s.toLowerCase().includes(lower) ||
+    lower.includes(s.toLowerCase())
+  )
+
+  return match ?? trimmed
+}
+
+const OCCUPATION_TO_API: Record<string, string> = {
+  'Kisan (Farmer)': 'farmer',
+  'Farmer': 'farmer',
+  'రైతు': 'farmer',
+  'ರೈತ': 'farmer',
+  'ખેડૂત': 'farmer',
+  'शेतकरी': 'farmer',
+  'விவசாயி': 'farmer',
+  'কৃষক': 'farmer',
+  'Student': 'student',
+  'విద్యార్థి': 'student',
+  'ವಿದ್ಯಾರ್ಥಿ': 'student',
+  'વિદ્યાર્થી': 'student',
+  'विद्यार्थी': 'student',
+  'மாணவர்': 'student',
+  'ছাত্র': 'student',
+  'Sarkari Naukri': 'govt_employee',
+  'Sarkari Naukri (Govt Job)': 'govt_employee',
+  'Government Job': 'govt_employee',
+  'సర్కారీ ఉద్యోగి': 'govt_employee',
+  'ಸರ್ಕಾರಿ ಉದ್ಯೋಗ': 'govt_employee',
+  'સરકારી નોકરી': 'govt_employee',
+  'सरकारी नोकरी': 'govt_employee',
+  'அரசு வேலை': 'govt_employee',
+  'সরকারি চাকরি': 'govt_employee',
+  'Private Job': 'private_job',
+  'ప్రైవేట్ ఉద్యోగి': 'private_job',
+  'ಖಾಸಗಿ ನೌಕರಿ': 'private_job',
+  'ખાનગી નોકરી': 'private_job',
+  'खाजगी नोकरी': 'private_job',
+  'தனியார் வேலை': 'private_job',
+  'বেসরকারি চাকরি': 'private_job',
+  'Business': 'business',
+  'వ్యాపారి': 'business',
+  'ವ್ಯಾಪಾರ': 'business',
+  ' વ્યવસાય': 'business',
+  'व्यवसाय': 'business',
+  'வணிகம்': 'business',
+  'ব্যবসা': 'business',
+  'Kaam nahi (Unemployed)': 'unemployed',
+  'Unemployed': 'unemployed',
+  'నిరుద్యోగి': 'unemployed',
+  'ನಿರುದ್ಯೋಗಿ': 'unemployed',
+  'બેરોઝગાર': 'unemployed',
+  'बेरोजगार': 'unemployed',
+  'வேலையில்லாதவர்': 'unemployed',
+  'বেকার': 'unemployed'
+}
+
+const mapOccupation = (display: string): string =>
+  OCCUPATION_TO_API[display] ?? 'unemployed'
+
+const INCOME_TO_API: Record<string, string> = {
+  '0 – 1 lakh': '0-1 lakh',
+  '1 – 3 lakh': '1-3 lakh',
+  '3 – 6 lakh': '3-6 lakh',
+  '6 lakh se zyada': '6+ lakh',
+  'Above 6 lakh': '6+ lakh',
+  '০ – ১ লাখ': '0-1 lakh',
+  '১ – ৩ লাখ': '1-3 lakh',
+  '৩ – ৬ লাখ': '3-6 lakh',
+  '৬ লাখের বেশি': '6+ lakh',
+  '0 – 1 లక్ష': '0-1 lakh',
+  '1 – 3 లక్షలు': '1-3 lakh',
+  '3 – 6 లక్షలు': '3-6 lakh',
+  '6 లక్షలకు పైగా': '6+ lakh',
+  '0 – 1 ಲಕ್ಷ': '0-1 lakh',
+  '1 – 3 ಲಕ್ಷ': '1-3 lakh',
+  '3 – 6 ಲಕ್ಷ': '3-6 lakh',
+  '6 ಲಕ್ಷಕ್ಕಿಂತ ಹೆಚ್ಚು': '6+ lakh',
+  '0 – 1 লাখ': '0-1 lakh',
+  '1 – 3 লাখ': '1-3 lakh',
+  '3 – 6 লাখ': '3-6 lakh',
+  '6 লাখથી વધુ': '6+ lakh',
+  '० – १ लाख': '0-1 lakh',
+  '१ – ३ लाख': '1-3 lakh',
+  '३ – ६ लाख': '3-6 lakh',
+  '6 लाखांपेक्षा जास्त': '6+ lakh',
+  '0 – 1 லட்சம்': '0-1 lakh',
+  '1 – 3 லட்சம்': '1-3 lakh',
+  '3 – 6 லட்சம்': '3-6 lakh',
+  '6 லட்சத்திற்கு மேல்': '6+ lakh'
+}
+
+const mapIncome = (display: string): string =>
+  INCOME_TO_API[display] ?? display
+
 const QUESTIONS_DATA = [
   { id:"state", hi:"Aap kahan rehte hain?", en:"Which state?",
     type:"select", options:["Andhra Pradesh","Arunachal Pradesh",
@@ -41,16 +187,6 @@ const QUESTIONS_DATA = [
   { id:"gender", hi:"Aapka gender?", en:"Your gender?",
     type:"select", options:["Male","Female","Other"] }
 ]
-
-const mapOccupation = (val: string) => {
-  if (val.includes("Kisan (Farmer)")) return "farmer"
-  if (val.includes("Student")) return "student"
-  if (val.includes("Sarkari Naukri")) return "govt_employee"
-  if (val.includes("Private Job")) return "private_job"
-  if (val.includes("Business")) return "business"
-  if (val.includes("Kaam nahi")) return "unemployed"
-  return val
-}
 
 const langLabels: Record<LangCode, string> = {
   hi: 'हिं',
@@ -132,8 +268,12 @@ export default function YojanaAIPage() {
     if (currentQuestion.id !== 'state' || !stateSearchQuery.trim()) {
       return currentQuestion.options
     }
-    return currentQuestion.options.filter((opt) =>
-      opt.toLowerCase().includes(stateSearchQuery.toLowerCase())
+    const stateSearch = stateSearchQuery.trim()
+    const normalizedStateSearch = normalizeState(stateSearch)
+    return currentQuestion.options.filter(option =>
+      option.toLowerCase().includes(stateSearch.toLowerCase()) ||
+      normalizedStateSearch.toLowerCase().includes(option.toLowerCase()) ||
+      option.toLowerCase().includes(normalizedStateSearch.toLowerCase())
     )
   }, [currentQuestion, stateSearchQuery])
 
@@ -209,17 +349,29 @@ export default function YojanaAIPage() {
 
   const submitForm = useCallback(async (finalAnswers: Record<string, any>) => {
     setScreen('loading')
-    
-    const formattedAnswers = { ...finalAnswers }
-    if (formattedAnswers.occupation) {
-      formattedAnswers.occupation = mapOccupation(formattedAnswers.occupation)
+
+    const answersFromForm = {
+      ...finalAnswers
+    }
+    const apiAnswers = {
+      state: normalizeState(answersFromForm.state ?? ''),
+      age: answersFromForm.age,
+      income: mapIncome(answersFromForm.income ?? ''),
+      category: answersFromForm.category,
+      occupation: mapOccupation(answersFromForm.occupation ?? ''),
+      gender: answersFromForm.gender === 'Male' ||
+      answersFromForm.gender === 'Female' ||
+      answersFromForm.gender === 'Other'
+        ? answersFromForm.gender
+        : 'Male',
+      language: lang
     }
   
     try {
       const response = await fetch('/api/find-schemes', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ answers: formattedAnswers })
+        body: JSON.stringify({ answers: apiAnswers })
       })
       const data = await response.json()
       setResults(data)
@@ -308,8 +460,14 @@ export default function YojanaAIPage() {
     const questionId = event.currentTarget.dataset.questionId
     const value = event.currentTarget.dataset.optionValue
     if (!questionId || !value) return
+    const normalizedValue = questionId === 'state'
+      ? normalizeState(value)
+      : value
     setPulseAnswerId(value)
-    setAnswers((prev) => ({ ...prev, [questionId]: value }))
+    setAnswers((prev) => ({
+      ...prev,
+      [questionId]: normalizedValue
+    }))
     // Automatically proceed to next question for select inputs to save clicks
     setTimeout(() => {
       setPulseAnswerId(null)
