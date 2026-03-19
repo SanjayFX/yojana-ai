@@ -312,52 +312,115 @@ export default function YojanaAIPage() {
     return opt
   }, [t])
 
-  const getApplyUrl = useCallback((schemeId: string): string => {
-    const action = results?.actions?.[schemeId] as { portal_url?: string; apply_url?: string } | undefined
-
-    if (action?.portal_url?.startsWith('http')) {
-      return action.portal_url
-    }
-    if (action?.apply_url?.startsWith('http')) {
-      return action.apply_url
-    }
-
-    const KNOWN_URLS: Record<string, string> = {
+  const getApplyUrl = (schemeId: string): string => {
+    const VERIFIED_URLS: Record<string, string> = {
       pm_kisan: 'https://pmkisan.gov.in',
       ab_pmjay: 'https://pmjay.gov.in',
       pmay_urban: 'https://pmaymis.gov.in',
+      pmay_rural: 'https://pmayg.nic.in',
       mgnrega: 'https://nrega.nic.in',
       kisan_credit_card: 'https://www.nabard.org',
       pm_mudra: 'https://www.mudra.org.in',
       pm_fasal_bima: 'https://pmfby.gov.in',
       pm_ujjwala: 'https://pmuy.gov.in',
+      pm_jan_dhan: 'https://pmjdy.gov.in',
+      atal_pension: 'https://npscra.nsdl.co.in',
+      pm_jeevan_jyoti: 'https://jansuraksha.gov.in',
+      pm_suraksha_bima: 'https://jansuraksha.gov.in',
       stand_up_india: 'https://www.standupmitra.in',
+      pm_vishwakarma: 'https://pmvishwakarma.gov.in',
       national_scholarship: 'https://scholarships.gov.in',
       pm_scholarship_capf: 'https://scholarships.gov.in',
+      pmkvy: 'https://www.pmkvyofficial.org',
+      pm_surya_ghar: 'https://pmsuryaghar.gov.in',
+      sukanya_samriddhi: 'https://www.indiapost.gov.in',
+      pm_svnidhi: 'https://pmsvanidhi.mohua.gov.in',
+      pm_awas_urban: 'https://pmaymis.gov.in',
+      pm_awas_rural: 'https://pmayg.nic.in',
+      mnrega: 'https://nrega.nic.in',
+
       pudhumai_penn: 'https://pudumaipenn.tn.gov.in',
-      'pudhumai-penn-scheme': 'https://pudumaipenn.tn.gov.in',
-      cm_breakfast: 'https://www.tnschools.gov.in',
-      'cm-breakfast-scheme': 'https://www.tnschools.gov.in',
-      kalaignar_magalir: 'https://www.tn.gov.in',
+      'pudhumai-penn-scheme':
+        'https://pudumaipenn.tn.gov.in',
+      cm_breakfast: 'https://mdm.tn.gov.in',
+      'cm-breakfast-scheme': 'https://mdm.tn.gov.in',
+      naan_mudhalvan: 'https://naanmudhalvan.tn.gov.in',
+      'naan-mudhalvan-scheme':
+        'https://naanmudhalvan.tn.gov.in',
+      kalaignar_magalir: 'https://www.maws.tn.gov.in',
       'kalaignar-magalir-urimai-thogai-scheme':
-        'https://www.tn.gov.in',
+        'https://www.maws.tn.gov.in',
+      makkalai_thedi: 'https://www.tnhealth.tn.gov.in',
+      'makkalai-thedi-maruthuvam':
+        'https://www.tnhealth.tn.gov.in',
+
       up_kanya_sumangala: 'https://mksy.up.gov.in',
       'up-kanya-sumangala-yojana': 'https://mksy.up.gov.in',
-      karnataka_yuvanidhi: 'https://sevasindhu.karnataka.gov.in',
+      up_jan_arogya: 'https://sects.up.gov.in',
+      'up-mukhyamantri-jan-arogya-yojana':
+        'https://sects.up.gov.in',
+
+      karnataka_yuvanidhi:
+        'https://sevasindhu.karnataka.gov.in',
       'karnataka-yuvanidhi-scheme':
         'https://sevasindhu.karnataka.gov.in',
+      karnataka_gruha_lakshmi:
+        'https://sevasindhu.karnataka.gov.in',
+      karnataka_gruha_jyoti:
+        'https://sevasindhu.karnataka.gov.in',
+      karnataka_anna_bhagya:
+        'https://ahara.kar.nic.in',
+
       bihar_student_credit_card:
         'https://www.7nishchay-yuvaupmission.bihar.gov.in',
       'bihar-student-credit-card-scheme':
         'https://www.7nishchay-yuvaupmission.bihar.gov.in',
-      atal_pension: 'https://npscra.nsdl.co.in',
-      pm_jeevan_jyoti: 'https://jansuraksha.gov.in',
-      pm_suraksha_bima: 'https://jansuraksha.gov.in',
-      sukanya_samriddhi: 'https://www.indiapost.gov.in',
+      mukhyamantri_kanya_utthan:
+        'https://medhasoft.bih.nic.in',
+      'mukhyamantri-kanya-utthan-yojana':
+        'https://medhasoft.bih.nic.in',
+
+      ladki_bahin:
+        'https://ladakibahin.maharashtra.gov.in',
+      mjpjay: 'https://www.jeevandayee.gov.in',
+
+      west_bengal_lakshmir_bhandar:
+        'https://socialsecurity.wb.gov.in',
+      kanyashree: 'https://wbkanyashree.gov.in',
     }
 
-    return KNOWN_URLS[schemeId] ?? 'https://www.myscheme.gov.in/search'
-  }, [results])
+    if (VERIFIED_URLS[schemeId]) {
+      return VERIFIED_URLS[schemeId]
+    }
+
+    const action = results?.actions?.[schemeId]
+    const actionUrl = action?.portal_url
+      ?? (action as { apply_url?: string })?.apply_url
+
+    const isLikelyFake = (url: string) => {
+      if (!url.startsWith('https://')) return true
+      return (
+        url.includes('/scheme/data_view/') ||
+        url.includes('/view/') ||
+        url.includes('/schemes/view') ||
+        /\/\d{3,}(?:[/?#]|$)/.test(url) ||
+        url.includes('tn.gov.in/scheme')
+      )
+    }
+
+    if (actionUrl && !isLikelyFake(actionUrl)) {
+      return actionUrl
+    }
+
+    const schemeName =
+      results?.matched_schemes?.find(
+        (r: { id: string; name?: string }) =>
+          r.id === schemeId
+      )?.name ?? schemeId
+    return `https://www.myscheme.gov.in/search?keyword=${encodeURIComponent(
+      schemeName
+    )}`
+  }
 
   return (
     <>

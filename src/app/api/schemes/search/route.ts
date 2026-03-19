@@ -15,7 +15,7 @@ export async function GET(req: Request) {
 
   const { data, error } = await supabase
     .from('schemes')
-    .select('id, name, benefit, category, apply_url')
+    .select('id, name, benefit, category, apply_url, eligible_states')
     .or(
       `name.ilike.%${q}%,` +
       `benefit.ilike.%${q}%,` +
@@ -29,7 +29,28 @@ export async function GET(req: Request) {
     return Response.json({ results: [] })
   }
 
-  return Response.json({ results: data ?? [] })
+  const sanitize = (id: string, url: string) => {
+    const fake = [
+      '/scheme/data_view/',
+      '/view/',
+      'localhost',
+      '/schemes/view',
+    ]
+    if (!url?.startsWith('http')) {
+      return `https://www.myscheme.gov.in/search?keyword=${encodeURIComponent(id)}`
+    }
+    if (fake.some(p => url.includes(p))) {
+      return `https://www.myscheme.gov.in/search?keyword=${encodeURIComponent(id)}`
+    }
+    return url
+  }
+
+  return Response.json({
+    results: (data ?? []).map(s => ({
+      ...s,
+      apply_url: sanitize((s as { id: string }).id, (s as { apply_url: string }).apply_url)
+    }))
+  })
 }
 
 export function POST() {

@@ -224,6 +224,25 @@ export function buildActionPrompt(
 
   return `You are an expert guide for Indian government scheme applications.
 
+CRITICAL URL RULES:
+1. NEVER generate a URL with a numeric ID
+   like /view/12345 or /data_view/91265.
+   These are fake and cause 404 errors.
+2. ONLY use official government domain URLs.
+3. If you are not 100% certain of the exact URL,
+   use https://www.myscheme.gov.in/search as the
+   portal_url — this always works.
+4. Never use tn.gov.in/scheme/data_view/
+   Instead use the correct TN scheme portals:
+   - Pudhumai Penn: https://pudumaipenn.tn.gov.in
+   - Naan Mudhalvan: https://naanmudhalvan.tn.gov.in
+   - TN health schemes: https://www.tnhealth.tn.gov.in
+   - TN women schemes: https://www.maws.tn.gov.in
+   - TN scholarships: https://scholarships.gov.in
+5. For ANY scheme where you are unsure:
+   use https://www.myscheme.gov.in/search
+   This is always correct and always works.
+
 Given the citizen's profile and matched schemes, provide step-by-step application guidance.
 
 CITIZEN PROFILE:
