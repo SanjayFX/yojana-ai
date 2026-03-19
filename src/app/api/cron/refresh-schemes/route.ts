@@ -10,6 +10,17 @@ const TOP_STATES = [
   'Uttarakhand'
 ]
 
+function getBaseUrl(req: Request) {
+  if (process.env.NODE_ENV === 'development') {
+    const host = req.headers.get('host') ?? 'localhost:3000'
+    const proto = req.headers.get('x-forwarded-proto') ?? 'http'
+    return `${proto}://${host}`
+  }
+
+  return process.env.NEXT_PUBLIC_BASE_URL
+    ?? 'http://localhost:3000'
+}
+
 export async function GET(req: Request) {
   const authHeader = req.headers.get('authorization')
   if (
@@ -21,8 +32,7 @@ export async function GET(req: Request) {
     )
   }
 
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
-    ?? 'http://localhost:3000'
+  const baseUrl = getBaseUrl(req)
 
   const results: Record<string, unknown>[] = []
 
@@ -57,10 +67,45 @@ export async function GET(req: Request) {
     0
   )
 
-  return Response.json({
-    cron_run: new Date().toISOString(),
-    states_processed: TOP_STATES.length,
-    total_schemes_added: totalAdded,
-    results
-  })
+  try {
+    const statsRes = await fetch(`${baseUrl}/api/schemes/stats`)
+    const stats = await statsRes.json()
+    const totalSchemes = stats.total_schemes ?? 500
+    const validateRes = await fetch(
+      `${baseUrl}/api/schemes/validate`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${process.env.SEED_SECRET}`,
+        },
+        body: JSON.stringify({
+          limit: 50,
+          offset: Math.floor(
+            Math.random() * Math.max(1, totalSchemes - 50)
+          ),
+        }),
+      }
+    )
+    const validateData = await validateRes.json()
+
+    return Response.json({
+      cron_run: new Date().toISOString(),
+      states_processed: TOP_STATES.length,
+      total_schemes_added: totalAdded,
+      validation: {
+        schemes_checked: validateData.checked,
+        urls_fixed: validateData.url_fixed,
+        marked_inactive: validateData.marked_inactive,
+      },
+      results,
+    })
+  } catch {
+    return Response.json({
+      cron_run: new Date().toISOString(),
+      states_processed: TOP_STATES.length,
+      total_schemes_added: totalAdded,
+      results,
+    })
+  }
 }

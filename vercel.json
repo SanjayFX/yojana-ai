@@ -3,6 +3,10 @@
     {
       "path": "/api/cron/refresh-schemes",
       "schedule": "0 2 * * *"
+    },
+    {
+      "path": "/api/cron/validate-schemes",
+      "schedule": "0 3 * * *"
     }
   ]
 }
