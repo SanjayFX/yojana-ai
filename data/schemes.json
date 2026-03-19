@@ -1,0 +1,1886 @@
+[
+  {
+    "id": "pm_kisan",
+    "name": "Pradhan Mantri Kisan Samman Nidhi",
+    "ministry": "Ministry Of Agriculture and Farmers Welfare",
+    "category": "agriculture",
+    "benefit": "Financial benefit of Rs. 6000 per annum per family payable in three equal installments of Rs 2000 each, every four months.",
+    "eligibility": {
+      "min_age": null,
+      "max_age": null,
+      "gender": "Any",
+      "caste_categories": [],
+      "occupations": [
+        "Farmer"
+      ],
+      "max_annual_income_inr": null,
+      "requires_bpl_card": false,
+      "requires_land": true,
+      "eligible_states": [
+        "All"
+      ],
+      "special_conditions": "Landholding farmer family with cultivable land; excludes institutional landholders, income-tax payers and most serving or retired officers and professionals."
+    },
+    "documents_required": [
+      "Aadhaar Card",
+      "Landholding papers",
+      "Savings Bank Account."
+    ],
+    "apply_url": "https://pmkisan.gov.in/registrationformnew.aspx",
+    "apply_modes": [
+      "UMANG"
+    ],
+    "helpline": null
+  },
+  {
+    "id": "ab_pmjay",
+    "name": "Ayushman Bharat - Pradhan Mantri Jan Arogya Yojana",
+    "ministry": "Ministry Of Health & Family Welfare",
+    "category": "health",
+    "benefit": "> Financial Health Insurance Cover: Annual Hospitalization Coverage: Cashless coverage up to Rs. 5,00,000/- per family per year.- Comprehensive Treatment Costs: Covers consultation, medicines, diagnostics, surgery, ICU, implants, accommodation, and food.- Pre and Post Hospitalization Support: Covers 3 days pre-hospital",
+    "eligibility": {
+      "min_age": null,
+      "max_age": null,
+      "gender": "Any",
+      "caste_categories": [],
+      "occupations": [],
+      "max_annual_income_inr": null,
+      "requires_bpl_card": false,
+      "requires_land": false,
+      "eligible_states": [
+        "All"
+      ],
+      "special_conditions": "Target beneficiary households identified under approved deprivation or beneficiary databases for cashless secondary and tertiary care."
+    },
+    "documents_required": [
+      "Age & Identity Proof (Aadhaar Card / PAN Card).",
+      "Proof of Address.",
+      "Contact details (Mobile, e-mail).",
+      "Caste Certificate.",
+      "Income Certificate.",
+      "Document Proof of the Current Status of the Family (Joint or Nuclear).",
+      "Aadhaar Card."
+    ],
+    "apply_url": "https://www.pmjay.gov.in/",
+    "apply_modes": [
+      "UMANG"
+    ],
+    "helpline": null
+  },
+  {
+    "id": "pmay_urban",
+    "name": "Pradhan Mantri Awas Yojana - Urban",
+    "ministry": "Ministry Of Housing & Urban Affairs",
+    "category": "housing",
+    "benefit": "Slum rehabilitation of eligible Slum Dwellers with participation of private developers using land as a resource. Promotion of Affordable Housing through Credit Linked Subsidy Scheme (CLSS). EWS: Annual Household Income up to Rs.3,00,000; house sizes upto 30 sq.m; LIG: Annual Household Income from Rs.3,00,001 to Rs.6,00",
+    "eligibility": {
+      "min_age": null,
+      "max_age": null,
+      "gender": "Any",
+      "caste_categories": [],
+      "occupations": [],
+      "max_annual_income_inr": 1800000,
+      "requires_bpl_card": false,
+      "requires_land": false,
+      "eligible_states": [
+        "All"
+      ],
+      "special_conditions": "EWS, LIG and eligible MIG households meeting component conditions and not owning a pucca house; income and subsidy conditions vary by component."
+    },
+    "documents_required": [
+      "Aadhaar Number (or Aadhaar/ Aadhaar Enrolment ID)",
+      "Self-Certificate / Affidavit as Proof of Income.",
+      "Identity and Residential Proof (PAN card, Voter ID, Driving License)",
+      "Proof of Minority Community (if the applicant belongs to a Minority Community)",
+      "Proof of Nationality",
+      "EWS Certificate / LIG Certificate / MIG Certificate (as applicable)",
+      "Salary Slips",
+      "IT Return Statements",
+      "Property Valuation Certificate",
+      "Bank Details and Account Statement",
+      "Affidavit / Proof that the applicant does not own a 'pucca' house",
+      "Affidavit / Proof that the applicant is constructing a home under the scheme"
+    ],
+    "apply_url": "https://pmaymis.gov.in/",
+    "apply_modes": [
+      "Online"
+    ],
+    "helpline": null
+  },
+  {
+    "id": "pmay_grameen",
+    "name": "Pradhan Mantri Awaas Yojana - Gramin",
+    "ministry": "Ministry Of Rural Development",
+    "category": "housing",
+    "benefit": "Financial Assistance of Rs. 1,20,000 per unit for plain areas; and Rs. 1,30,000 per unit for hilly areas, difficult areas, and IAP districts (Himalayan states, North-Eastern states, and Union Territories of Jammu & Kashmir). A willing beneficiary can avail of institutional finance (loan) of up to Rs. 70,000 at 3% lower",
+    "eligibility": {
+      "min_age": null,
+      "max_age": null,
+      "gender": "Any",
+      "caste_categories": [],
+      "occupations": [],
+      "max_annual_income_inr": null,
+      "requires_bpl_card": true,
+      "requires_land": false,
+      "eligible_states": [
+        "All"
+      ],
+      "special_conditions": "Rural households identified under SECC, Awaas+ or other approved deprivation criteria and without a pucca house."
+    },
+    "documents_required": [
+      "Aadhaar number and a self-attested copy of the Aadhaar Card (If the applicant is illiterate, then in such case a consent letter has to be obtained along with the thumbprint of the applicant)",
+      "Job Card (duly registered with MGNREGA)",
+      "Bank account details - both originals and duplicates.",
+      "Swachh Bharat Mission (SBM) number.",
+      "Affidavit stating the beneficiaries, or their family members do not own a pucca house."
+    ],
+    "apply_url": "https://pmayg.dord.gov.in/",
+    "apply_modes": [
+      "Online"
+    ],
+    "helpline": null
+  },
+  {
+    "id": "pm_ujjwala",
+    "name": "Pradhan Mantri Ujjwala Yojana",
+    "ministry": "Ministry Of Petroleum and Natural Gas",
+    "category": "women",
+    "benefit": "Rs. 1600 for a connection 14.2kg cylinder or Rs. 1150 for a 5 kg cylinder. Additionally, All PMUY beneficiaries will be provided with first LPG refill and Stove (hot plate) both free of cost along with their deposit free connection. <br> Note: Priority would be given to the states which have lower LPG coverage (Compare",
+    "eligibility": {
+      "min_age": null,
+      "max_age": null,
+      "gender": "Female",
+      "caste_categories": [],
+      "occupations": [
+        "Adult Woman"
+      ],
+      "max_annual_income_inr": null,
+      "requires_bpl_card": false,
+      "requires_land": false,
+      "eligible_states": [
+        "All"
+      ],
+      "special_conditions": "Adult woman from an eligible poor household category and the household should not already have an LPG connection."
+    },
+    "documents_required": [
+      "Valid Photo ID",
+      "Ration Card issued by the State from which application is being made/ other State Govt. document certifying family composition/ Self-Declaration as per Annexure I (for migrant applicants)",
+      "Proof of Address - Aadhaar will be taken as Proof of Identity and Proof of Address if the connection is required in the same address. In that case only Aadhaar is sufficient.",
+      "Bank Account Number and IFSC.",
+      "Aadhaar (not mandatory for Assam and Meghalaya)",
+      "Passport size photograph"
+    ],
+    "apply_url": "https://www.pmuy.gov.in/",
+    "apply_modes": [
+      "Online",
+      "Offline through LPG distributor or Common Service Centre"
+    ],
+    "helpline": null
+  },
+  {
+    "id": "sukanya_samriddhi",
+    "name": "Sukanya Samriddhi Account",
+    "ministry": "Ministry of Finance",
+    "category": "women",
+    "benefit": "Government-backed small savings account for a girl child with tax benefits and long-term corpus building.",
+    "eligibility": {
+      "min_age": 0,
+      "max_age": 10,
+      "gender": "Female",
+      "caste_categories": [],
+      "occupations": [
+        "Girl Child"
+      ],
+      "max_annual_income_inr": null,
+      "requires_bpl_card": false,
+      "requires_land": false,
+      "eligible_states": [
+        "All"
+      ],
+      "special_conditions": "Account can be opened by parent or legal guardian before the girl child turns 10; one account per girl, normally up to two girls per family."
+    },
+    "documents_required": [
+      "Girl child birth certificate",
+      "Aadhaar/PAN or KYC of parent/guardian",
+      "Address proof",
+      "Photograph of guardian",
+      "Initial deposit amount"
+    ],
+    "apply_url": "https://www.indiapost.gov.in/VAS/pages/pmodashboard/sukanyasamriddhiaccount.aspx",
+    "apply_modes": [
+      "Offline at post office or authorised bank"
+    ],
+    "helpline": null
+  },
+  {
+    "id": "beti_bachao_beti_padhao",
+    "name": "Beti Bachao Beti Padhao",
+    "ministry": "Ministry of Women and Child Development",
+    "category": "women",
+    "benefit": "Mission-mode intervention to improve the survival, protection and education of the girl child through district and state action plans.",
+    "eligibility": {
+      "min_age": 0,
+      "max_age": 18,
+      "gender": "Female",
+      "caste_categories": [],
+      "occupations": [
+        "Girl Child"
+      ],
+      "max_annual_income_inr": null,
+      "requires_bpl_card": false,
+      "requires_land": false,
+      "eligible_states": [
+        "All"
+      ],
+      "special_conditions": "This is largely an awareness and convergence programme implemented through government departments and districts; there is no standard nationwide direct-benefit application form for an individual beneficiary."
+    },
+    "documents_required": [],
+    "apply_url": "https://spniwcd.wcd.gov.in/beti-bachao-beti-padhao",
+    "apply_modes": [
+      "Offline through district or state implementing agencies"
+    ],
+    "helpline": null
+  },
+  {
+    "id": "pm_mudra",
+    "name": "Pradhan Mantri Mudra Yojana",
+    "ministry": "Ministry Of Finance",
+    "category": "finance",
+    "benefit": "The scheme has been classified under four categories as 'SHISHU', 'KISHORE' , 'TARUN' and 'TARUN PLUS' to signify the stage of growth / development and funding needs of the beneficiary micro unit/ entrepreneur. Shishu: Covering loans upto Rs.50,000/-. Kishore: Covering loans above Rs.50,000/- and upto Rs. 5 lakhs. Taru",
+    "eligibility": {
+      "min_age": null,
+      "max_age": null,
+      "gender": "Any",
+      "caste_categories": [],
+      "occupations": [
+        "Entrepreneur",
+        "Micro-enterprise Owner"
+      ],
+      "max_annual_income_inr": null,
+      "requires_bpl_card": false,
+      "requires_land": false,
+      "eligible_states": [
+        "All"
+      ],
+      "special_conditions": "Non-farm income generating activity in manufacturing, trading or services through eligible lending institutions."
+    },
+    "documents_required": [
+      "For Shishu Loan",
+      "Proof of Identity - Self- attested copy of Voter's ID Card / Driving Licence / PAN Card / Aadhaar Card / Passport / Photo IDs issued by Govt. authority etc.",
+      "Proof of Residence: Recent telephone bill / electricity bill / property tax receipt (not older than 2 months) / Voter's ID Card / Aadhar Card / Passport of Individual / Proprietor / Partners Bank passbook or latest account statement duly attested by Bank Officials / Domicile Certificate / Certificate issued by Govt. Authority / Local Panchayat / Municipality etc. Applicant's recent coloured Photograph (2 copies) not older than 6 months. Quotation of Machinery / other items to be purchased. Name of supplier / details of machinery / price of machinery and / or items to be purchased. Proof of Identity / Address of the Business Enterprise - Copies of relevant Licences / Registration Certificates / Other Documents pertaining to the ownership, identity of address of business unit, if any.",
+      "For Kishore, Tarun and Tarun Plus Loan",
+      "Proof of Identity - Self attested copy of Voter's ID card / Driving License / PAN Card / Aadhar Card/Passport. Proof of Residence - Recent telephone bill, electricity bill, property tax receipt (not older than 2 months), Voter's ID card, Aadhar Card & Passport of Proprietor/Partners/Directors. Applicant's recent coloured Photograph (2 copies) not older than 6 months. Proof of Identity/Address of the Business Enterprise -Copies of relevant licenses/registration certificates/other documents pertaining to the ownership, identity and address of business unit. Applicant should not be defaulter in any Bank/Financial institution.",
+      "Statement of accounts (for the last six months), from the existing banker, if any. Last two years balance sheets of the units along with income tax/sales tax return etc. (Applicable for all cases from Rs.2 Lacs and above). Projected balance sheets for one year in case of working capital limits and for the period of the loan in case of term loan (Applicable for all cases from Rs.2 Lacs and above).",
+      "Sales achieved during the current financial year up to the date of submission of application.",
+      "Project report (for the proposed project) containing details of technical & economic viability.",
+      "Memorandum and Articles of Association of the company/Partnership Deed of Partners etc.",
+      "In absence of third party guarantee, Asset & Liability statement from the borrower including Directors & Partners may be sought to know the net-worth."
+    ],
+    "apply_url": "https://www.mudra.org.in/",
+    "apply_modes": [
+      "Online"
+    ],
+    "helpline": null
+  },
+  {
+    "id": "pm_svanidhi",
+    "name": "PM Street Vendor's AtmaNirbhar Nidhi (PM SVANidhi)",
+    "ministry": "Ministry Of Housing & Urban Affairs",
+    "category": "finance",
+    "benefit": "Financial assistance of up to Rs. 10,000 is provided to street vendors to help them restart and expand their businesses. The loan is provided at a low-interest rate of 7%, making it easier for street vendors to repay the loan. No collateral is required to avail of the loan, making it more accessible to street vendors.",
+    "eligibility": {
+      "min_age": null,
+      "max_age": null,
+      "gender": "Any",
+      "caste_categories": [],
+      "occupations": [
+        "Street Vendor"
+      ],
+      "max_annual_income_inr": null,
+      "requires_bpl_card": false,
+      "requires_land": false,
+      "eligible_states": [
+        "All"
+      ],
+      "special_conditions": "Urban or peri-urban street vendor with vending certificate or identity card, or recommendation from local urban body or town vending committee."
+    },
+    "documents_required": [
+      "For 1st Loan : For Category A and B vendors : Certificate of Vending Identity Card For Category C and D vendors : Letter of Recommendation KYC documents required in addition to CoV/ID/LoR : Aadhaar Card Voter Identity Card Driving License MNREGA Card PAN Card For Letter of Recommendation : Copy of Account Statement/Passbook Copy of Membership Card/any other proof of membership Any other document to substantiate the claim as a vendor Request letter to ULB For Second Loan Loan Closure Document"
+    ],
+    "apply_url": "https://pmsvanidhi.mohua.gov.in/Home/Index",
+    "apply_modes": [
+      "UMANG"
+    ],
+    "helpline": null
+  },
+  {
+    "id": "national_scholarship_portal",
+    "name": "National Scholarship Portal",
+    "ministry": "Ministry of Education",
+    "category": "education",
+    "benefit": "Single-window online platform to discover, apply for, verify and receive scholarship benefits under multiple central scholarship schemes.",
+    "eligibility": {
+      "min_age": null,
+      "max_age": null,
+      "gender": "Any",
+      "caste_categories": [],
+      "occupations": [
+        "Student"
+      ],
+      "max_annual_income_inr": null,
+      "requires_bpl_card": false,
+      "requires_land": false,
+      "eligible_states": [
+        "All"
+      ],
+      "special_conditions": "Portal-level entry: actual age, income, caste, disability and course criteria depend on the scholarship selected on NSP."
+    },
+    "documents_required": [
+      "Aadhaar or NSP One-Time Registration details",
+      "Recent photograph",
+      "Previous academic marksheet",
+      "Income certificate",
+      "Bank account details",
+      "Bonafide or institution verification",
+      "Relevant caste/minority/disability certificate, if applicable"
+    ],
+    "apply_url": "https://scholarships.gov.in/",
+    "apply_modes": [
+      "Online"
+    ],
+    "helpline": null
+  },
+  {
+    "id": "pmkvy",
+    "name": "Pradhan Mantri Kaushal Vikas Yojana",
+    "ministry": "Ministry of Skill Development and Entrepreneurship",
+    "category": "employment",
+    "benefit": "Short-term skill training, Recognition of Prior Learning and special project skilling support aligned with approved job roles.",
+    "eligibility": {
+      "min_age": 15,
+      "max_age": null,
+      "gender": "Any",
+      "caste_categories": [],
+      "occupations": [
+        "Youth",
+        "Job Seeker",
+        "School or College Dropout"
+      ],
+      "max_annual_income_inr": null,
+      "requires_bpl_card": false,
+      "requires_land": false,
+      "eligible_states": [
+        "All"
+      ],
+      "special_conditions": "Applicant must satisfy the age, education and job-role criteria of the approved PMKVY training programme or training centre."
+    },
+    "documents_required": [
+      "Aadhaar",
+      "Bank account details",
+      "Age proof",
+      "Education qualification proof, if required for the course",
+      "Photograph",
+      "Mobile number"
+    ],
+    "apply_url": "https://www.skillindiadigital.gov.in/",
+    "apply_modes": [
+      "Online",
+      "Through approved training centre"
+    ],
+    "helpline": null
+  },
+  {
+    "id": "mgnrega",
+    "name": "Mahatma Gandhi National Rural Employment Guarantee Act",
+    "ministry": "Ministry Of Rural Development",
+    "category": "employment",
+    "benefit": "The applicant receives guaranteed employment within 15 days from the date of application. Work is to be provided within a radius of 5 kilometers of the applicant's residence if possible, and in any case within the Block. If the applicant lives more than 5 km away from the worksite, he/she will be entitled to a travel a",
+    "eligibility": {
+      "min_age": 18,
+      "max_age": null,
+      "gender": "Any",
+      "caste_categories": [],
+      "occupations": [
+        "Rural Household"
+      ],
+      "max_annual_income_inr": null,
+      "requires_bpl_card": false,
+      "requires_land": false,
+      "eligible_states": [
+        "All"
+      ],
+      "special_conditions": "Adult member of a rural household willing to do unskilled manual work and registered for a job card."
+    },
+    "documents_required": [
+      "Photograph of Applicant",
+      "Name, Age, and Gender of all NREGA Job Card Applicants from the applicant's household",
+      "Name of Village, Gram Panchayat, Block",
+      "Proof of Identity (Ration card, Voter ID Card, Aadhaar, PAN)",
+      "Details of whether the applicant is a beneficiary of SC / ST / Indira Awaas Yojana (IAY) / Land Reform (LR)",
+      "Specimen Signature / Thumb impression"
+    ],
+    "apply_url": "https://nrega.nic.in/",
+    "apply_modes": [
+      "UMANG"
+    ],
+    "helpline": null
+  },
+  {
+    "id": "pm_jan_dhan",
+    "name": "Pradhan Mantri Jan Dhan Yojana",
+    "ministry": "Ministry Of Finance",
+    "category": "finance",
+    "benefit": "Basic Savings Bank Deposit Account (BSBDA) Any Indian citizen eligible to open a regular bank account can open a BSBDA. Such an account does not require any minimum balance maintenance. The account holders can use both bank branches, ATMs and Banking Correspondents (BCs) for depositing and withdrawing cash. However, on",
+    "eligibility": {
+      "min_age": 10,
+      "max_age": null,
+      "gender": "Any",
+      "caste_categories": [],
+      "occupations": [],
+      "max_annual_income_inr": null,
+      "requires_bpl_card": false,
+      "requires_land": false,
+      "eligible_states": [
+        "All"
+      ],
+      "special_conditions": "Resident Indian eligible to open a basic savings bank deposit account under PMJDY; small accounts can be opened with simplified KYC."
+    },
+    "documents_required": [
+      "AADHAAR 2. Government ID proofs (Voter Card/PAN Card/Ration card) 3. Permanent Address proof (Passport/Driving License/Electricity Bill/Telephone Bill/Water Bill) 4. Passport size photograph 5. Filled and Signed PMJDY Account opening form 6. Any other document as notified by the Central Government in consultation with the Regulator."
+    ],
+    "apply_url": "https://www.pmjdy.gov.in/",
+    "apply_modes": [
+      "Online"
+    ],
+    "helpline": null
+  },
+  {
+    "id": "atal_pension",
+    "name": "Atal Pension Yojana",
+    "ministry": "Ministry Of Finance",
+    "category": "finance",
+    "benefit": "Upon exit on attaining 60 years The subscriber shall receive the following three benefits on attaining the age of 60: (i) Guaranteed minimum pension amount: Each subscriber under APY shall receive a guaranteed minimum pension of Rs. 1000/- per month or Rs. 2000/- per month or Rs. 3000/- per month or Rs. 4000/- per mont",
+    "eligibility": {
+      "min_age": 18,
+      "max_age": 40,
+      "gender": "Any",
+      "caste_categories": [],
+      "occupations": [],
+      "max_annual_income_inr": null,
+      "requires_bpl_card": false,
+      "requires_land": false,
+      "eligible_states": [
+        "All"
+      ],
+      "special_conditions": "Savings bank or post office account holder eligible to contribute till age 60 for guaranteed pension."
+    },
+    "documents_required": [
+      "KYC details are fetched from active Bank/Post Office Savings account."
+    ],
+    "apply_url": "https://jansuraksha.gov.in/",
+    "apply_modes": [
+      "Online"
+    ],
+    "helpline": null
+  },
+  {
+    "id": "pm_jeevan_jyoti_bima",
+    "name": "Pradhan Mantri Jeevan Jyoti Bima Yojana",
+    "ministry": "Ministry Of Finance",
+    "category": "finance",
+    "benefit": "PMJJBY offers one- year term life cover of Rs. 2.00 Lakh to all the subscribers in the age group of 18-50 years.1. It covers death due to any reason. Premium payable is Rs. 436/- per annum per subscriber, to be auto debited from the subscriber's bank/post office account.",
+    "eligibility": {
+      "min_age": 18,
+      "max_age": 50,
+      "gender": "Any",
+      "caste_categories": [],
+      "occupations": [],
+      "max_annual_income_inr": null,
+      "requires_bpl_card": false,
+      "requires_land": false,
+      "eligible_states": [
+        "All"
+      ],
+      "special_conditions": "Savings bank or post office account holder with auto-debit consent; renewable yearly."
+    },
+    "documents_required": [],
+    "apply_url": "https://jansuraksha.gov.in/",
+    "apply_modes": [
+      "Online"
+    ],
+    "helpline": null
+  },
+  {
+    "id": "pm_suraksha_bima",
+    "name": "Pradhan Mantri Suraksha Bima Yojana",
+    "ministry": "Ministry Of Finance",
+    "category": "finance",
+    "benefit": "On Death- the Nominee shall get Rs. 2 Lakhs. Total and irrecoverable loss of both eyes or loss of use of both hands or feet or loss of sight of one eye and loss of use of hand or foot- Subscriber shall get Rs. 2 Lakhs. Total and irrecoverable loss of sight of one eye or loss of use of one hand or foot -subscriber shall",
+    "eligibility": {
+      "min_age": 18,
+      "max_age": 70,
+      "gender": "Any",
+      "caste_categories": [],
+      "occupations": [],
+      "max_annual_income_inr": null,
+      "requires_bpl_card": false,
+      "requires_land": false,
+      "eligible_states": [
+        "All"
+      ],
+      "special_conditions": "Savings bank or post office account holder with auto-debit consent; renewable yearly."
+    },
+    "documents_required": [],
+    "apply_url": "https://jansuraksha.gov.in/",
+    "apply_modes": [
+      "Online"
+    ],
+    "helpline": null
+  },
+  {
+    "id": "kisan_credit_card",
+    "name": "Kisan Credit Card",
+    "ministry": "Ministry Of Agriculture and Farmers Welfare",
+    "category": "agriculture",
+    "benefit": "The Kisan Credit Card (KCC) scheme was introduced in 1998 for issue of Kisan Credit Cards to farmers on the basis of their holdings for uniform adoption by the banks so that farmers may use them to readily purchase agriculture inputs and draw cash for their production needs.",
+    "eligibility": {
+      "min_age": null,
+      "max_age": null,
+      "gender": "Any",
+      "caste_categories": [],
+      "occupations": [
+        "Farmer",
+        "Animal Husbandry Farmer",
+        "Fisher"
+      ],
+      "max_annual_income_inr": null,
+      "requires_bpl_card": false,
+      "requires_land": false,
+      "eligible_states": [
+        "All"
+      ],
+      "special_conditions": "Farmers, tenant farmers, sharecroppers, SHGs, JLGs and allied activity beneficiaries can avail KCC through banks as per norms."
+    },
+    "documents_required": [
+      "Application Form.",
+      "Two Passport Size Photographs.",
+      "ID proof such as Driving License / Aadhar Card / Voter Identity Card / Passport.",
+      "Address Proof such as Driving License, Aadhar Card.",
+      "Proof of landholding duly certified by the revenue authorities.",
+      "Cropping pattern (Crops grown) with acreage.",
+      "Security documents for loan limit above Rs.1.60 lakhs / Rs.3.00 lakhs, as applicable.",
+      "Any other document as per sanction."
+    ],
+    "apply_url": "https://www.myscheme.gov.in/schemes/kcc",
+    "apply_modes": [
+      "Online"
+    ],
+    "helpline": null
+  },
+  {
+    "id": "pm_garib_kalyan_anna",
+    "name": "Pradhan Mantri Garib Kalyan Anna Yojana",
+    "ministry": "Ministry of Consumer Affairs, Food and Public Distribution",
+    "category": "finance",
+    "benefit": "PMGKAY provides 5 kg of food grain to each family holding a ration card free of cost and the 5 kg of subsidized food grain already offered through the Public Distribution System (PDS). Wheat has been allocated to 6 States/UTs, - Punjab, Haryana, Rajasthan, Chandigarh, Delhi, and Gujarat, and rice has been provided to t",
+    "eligibility": {
+      "min_age": null,
+      "max_age": null,
+      "gender": "Any",
+      "caste_categories": [],
+      "occupations": [],
+      "max_annual_income_inr": null,
+      "requires_bpl_card": true,
+      "requires_land": false,
+      "eligible_states": [
+        "All"
+      ],
+      "special_conditions": "NFSA or Antyodaya ration card beneficiary households receive additional free foodgrain as notified by the Government of India."
+    },
+    "documents_required": [
+      "Ration Card",
+      "Aadhar Card (if seeded with Ration Card)"
+    ],
+    "apply_url": "https://www.myscheme.gov.in/schemes/pm-gkay",
+    "apply_modes": [
+      "Online"
+    ],
+    "helpline": null
+  },
+  {
+    "id": "janani_suraksha",
+    "name": "Janani Suraksha Yojana (JSY)",
+    "ministry": "Ministry Of Health & Family Welfare",
+    "category": "women",
+    "benefit": "> One-Time Cash Assistance for Institutional Delivery (Mother's Package) To meet the cost of delivery, pregnancy-related care, and post-delivery care. In Low Performing States (LPS): Rs. 1,400/- for rural areas and Rs. 1,000/- for urban areas. In High Performing States (HPS): Rs. 700/- for rural areas and Rs. 600/- for",
+    "eligibility": {
+      "min_age": null,
+      "max_age": null,
+      "gender": "Female",
+      "caste_categories": [],
+      "occupations": [
+        "Pregnant Woman"
+      ],
+      "max_annual_income_inr": null,
+      "requires_bpl_card": false,
+      "requires_land": false,
+      "eligible_states": [
+        "All"
+      ],
+      "special_conditions": "Pregnant women meeting Janani Suraksha Yojana institutional delivery conditions; cash assistance varies by state category and beneficiary status."
+    },
+    "documents_required": [
+      "During Application",
+      "Below Poverty Line Certificate (Required in all High Performing States, and for home deliveries in all states).",
+      "Scheduled Caste Certificate (For women in accredited private institutions).",
+      "Scheduled Tribe Certificate (For women in accredited private institutions).",
+      "Maternal And Child Health Card (Required for all beneficiaries, forms part of Janani Suraksha Yojana Registration Card).",
+      "During Benefit Disbursement",
+      "Janani Suraksha Yojana Card (Required for all beneficiaries along with Maternal and Child Health Card).",
+      "Referral Slip (From the Accredited Social Health Activist/Auxiliary Nurse Midwife/Medical Officer, to be carried by the beneficiary for accredited private institutions and for determining cash benefit based on residency).",
+      "Admission Slip For Delivery (To be presented with a voucher for encashment of mother's package plus transport assistance at hospital cash counter).",
+      "Voucher (Amounting to mother's package plus transport assistance money, for encashment at the hospital's cash counter at discharge).",
+      "Vouchers (Issued by the Auxiliary Nurse Midwife to Accredited Social Health Activist for encashment upon certification).",
+      "Monitoring and Reporting Stage:",
+      "Expenditure Statement (Required from the Accredited Social Health Activist/Anganwadi Worker for money advanced, to be provided monthly to the Auxiliary Nurse Midwife).",
+      "Statement Of Janani Suraksha Yojana Delivery / Antenatal Care / Obstetric Complication Cases (Accredited private health centers must prepare and send monthly to the Medical Officer).",
+      "Referral Slips (To be sent along with the monthly statement from accredited private health centers for sample verification)."
+    ],
+    "apply_url": "https://www.myscheme.gov.in/schemes/jsy1",
+    "apply_modes": [
+      "Online"
+    ],
+    "helpline": null
+  },
+  {
+    "id": "cghs",
+    "name": "Central Government Health Scheme (CGHS)",
+    "ministry": "Ministry of Health & Family Welfare",
+    "category": "health",
+    "benefit": "Comprehensive outpatient, inpatient, medicines and diagnostic support for eligible central government beneficiaries through CGHS wellness centres and empanelled hospitals.",
+    "eligibility": {
+      "min_age": null,
+      "max_age": null,
+      "gender": "Any",
+      "caste_categories": [],
+      "occupations": [
+        "Central Government Employee",
+        "Central Government Pensioner"
+      ],
+      "max_annual_income_inr": null,
+      "requires_bpl_card": false,
+      "requires_land": false,
+      "eligible_states": [
+        "All"
+      ],
+      "special_conditions": "Eligibility is limited to notified beneficiary categories such as serving and retired central government personnel and other approved groups in CGHS-covered locations."
+    },
+    "documents_required": [
+      "Service or pension documents",
+      "Aadhaar",
+      "Photographs",
+      "Residence proof",
+      "Pay slip or pension payment order",
+      "Proof for dependants, if applicable"
+    ],
+    "apply_url": "https://cghs.mohfw.gov.in/",
+    "apply_modes": [
+      "Online",
+      "Offline through department or CGHS office"
+    ],
+    "helpline": null
+  },
+  {
+    "id": "esic",
+    "name": "Employees' State Insurance Scheme",
+    "ministry": "Ministry of Labour and Employment",
+    "category": "health",
+    "benefit": "Social security package covering medical care and cash benefits for sickness, maternity, disability, dependants and employment injury under the ESI Act.",
+    "eligibility": {
+      "min_age": null,
+      "max_age": null,
+      "gender": "Any",
+      "caste_categories": [],
+      "occupations": [
+        "Organized Sector Employee"
+      ],
+      "max_annual_income_inr": null,
+      "requires_bpl_card": false,
+      "requires_land": false,
+      "eligible_states": [
+        "All"
+      ],
+      "special_conditions": "Insurable employees working in ESI-covered establishments are eligible subject to wage ceiling and contribution conditions notified under the ESI Act."
+    },
+    "documents_required": [
+      "Employer registration details",
+      "Employee Aadhaar",
+      "Bank account details",
+      "Family details",
+      "Address and contact details",
+      "Establishment documents for employer registration"
+    ],
+    "apply_url": "https://portal.esic.gov.in/ESICInsurance1/ESICInsurancePortal/ESICSignup.aspx",
+    "apply_modes": [
+      "Online through employer registration portal"
+    ],
+    "helpline": "1800-11-2526"
+  },
+  {
+    "id": "pm_vishwakarma",
+    "name": "PM Vishwakarma",
+    "ministry": "Ministry Of Micro, Small and Medium Enterprises",
+    "category": "employment",
+    "benefit": "Benefits Recognition: Recognition as Vishwakarma through Certificate and ID Card 1. Skilling: Skill Verification followed by 5-7 days (40 hours) of Basic Training Interested candidates can also enrol for 15 days (120 hours) of Advanced Training Training Stipend: Rs. 500 per day Toolkit Incentive: Rs. 15,000 grant 1. Cr",
+    "eligibility": {
+      "min_age": 18,
+      "max_age": null,
+      "gender": "Any",
+      "caste_categories": [],
+      "occupations": [
+        "Artisan",
+        "Craftsperson"
+      ],
+      "max_annual_income_inr": null,
+      "requires_bpl_card": false,
+      "requires_land": false,
+      "eligible_states": [
+        "All"
+      ],
+      "special_conditions": "Applicant should belong to one of the notified traditional trades and be engaged in the trade using own hands and tools."
+    },
+    "documents_required": [
+      "Required documents or information :",
+      "Aadhaar, Mobile number, Bank details, Ration card mandatory for the registration.",
+      "Note: 1 In case of a beneficiary not having a ration card, they would be required to produce Aadhaar cards of all family members.",
+      "Note: 2 If beneficiary does not have bank account, they will be first required to open a bank account for which hand holding shall be done by the CSC."
+    ],
+    "apply_url": "https://pmvishwakarma.gov.in/",
+    "apply_modes": [
+      "Online"
+    ],
+    "helpline": null
+  },
+  {
+    "id": "stand_up_india",
+    "name": "Stand-Up India",
+    "ministry": "Ministry Of Finance",
+    "category": "finance",
+    "benefit": "Facilitation of composite loan (inclusive of term loan and working capital) between Rs. 10 Lakhs and Rs. 100 Lakhs. Rupay debit card to be issued for convenience of the borrower. The web portal by SIDBI provides hand-holding support through a network of agencies engaged in training, skill development, mentoring, projec",
+    "eligibility": {
+      "min_age": 18,
+      "max_age": null,
+      "gender": "Any",
+      "caste_categories": [
+        "SC",
+        "ST"
+      ],
+      "occupations": [
+        "Entrepreneur"
+      ],
+      "max_annual_income_inr": null,
+      "requires_bpl_card": false,
+      "requires_land": false,
+      "eligible_states": [
+        "All"
+      ],
+      "special_conditions": "Greenfield enterprise loan for at least one SC or ST borrower or one woman borrower per bank branch."
+    },
+    "documents_required": [
+      "Proof of Identity: Voter's ID Card / Passport / Driving License / PAN Card / Signature identification from present bankers of proprietor, partner of director ( if a company)",
+      "Proof of Residence: Recent telephone bills, electricity bill, property tax receipt /Passport / voter's ID Card of Proprietor, partner of Director (if a company)",
+      "Proof of Business Address",
+      "Proof that the applicant is not a defaulter in any Bank / Financial Institution",
+      "Memorandum and articles of association of the Company / Partnership Deed of partners etc.",
+      "Assets and liabilities statement of promoters and guarantors along with latest income tax returns.",
+      "Rent Agreement (if business premises on rent) and clearance from pollution control board if applicable.",
+      "SSI / MSME registration (if applicable)",
+      "Projected balance sheets for the next two years in case of working capital limits and for the period of the loan in case of term loan.",
+      "Photocopies of lease deeds/ title deeds of all the properties being offered as primary and collateral securities.",
+      "Documents to establish whether the applicant belongs to SC/ST Category, wherever applicable.",
+      "Certificate of incorporation from ROC to establish whether majority stake holding in the company is in the hands of a person who belongs to SC/ST/Woman category.",
+      "For cases with exposure above Rs. 25 Lakhs:",
+      "Profile of the unit (includes names of promoters, other directors in the company, the activity being undertaken addresses of all offices and plants, shareholding pattern etc.",
+      "Last three years balance sheets of the Associate / Group Companies (if any).",
+      "Project report (for the proposed project if term funding is required) containing details of the machinery to be acquired, from whom to be acquired, price, names of suppliers, financial details like capacity of machines, capacity of utilization assumed, production, sales, projected profit and loss and balance sheets for the tenor of the loan, the details of labour, staff to be hired, basis of assumption of such financial details etc.",
+      "Manufacturing process if applicable, major profile of executives in the company, any tie-ups, details about raw material used and their suppliers, details about the buyers, details about major-competitors and the company's strength and weaknesses as compared to their competitors etc."
+    ],
+    "apply_url": "https://standupmitra.in/",
+    "apply_modes": [
+      "Online"
+    ],
+    "helpline": null
+  },
+  {
+    "id": "pmegp",
+    "name": "Prime Minister's Employment Generation Programme",
+    "ministry": "Ministry Of Micro, Small and Medium Enterprises",
+    "category": "employment",
+    "benefit": "> Funds under PMEGP Scheme will be available under two major heads: Margin Money Subsidy a) Funds will be allocated under annual Budget Estimates toward disbursement of Margin Money (subsidy) for setting up new micro-enterprises/units; and b) From the funds allocated under BE for the Margin Money subsidy, Rs. 100 Crore",
+    "eligibility": {
+      "min_age": 18,
+      "max_age": null,
+      "gender": "Any",
+      "caste_categories": [],
+      "occupations": [
+        "Entrepreneur"
+      ],
+      "max_annual_income_inr": null,
+      "requires_bpl_card": false,
+      "requires_land": false,
+      "eligible_states": [
+        "All"
+      ],
+      "special_conditions": "New micro-enterprise project through KVIC or DIC or KVIB; age 18+ for projects above the notified threshold."
+    },
+    "documents_required": [
+      "Caste Certificate",
+      "Special Category Certificate, wherever required",
+      "Rural Area Certificate",
+      "Project Report",
+      "Education / EDP / Skill Development Training Certificate",
+      "Any other applicable document"
+    ],
+    "apply_url": "https://www.kviconline.gov.in/pmegpeportal/pmegphome/index.jsp",
+    "apply_modes": [
+      "UMANG"
+    ],
+    "helpline": null
+  },
+  {
+    "id": "ddu_gky",
+    "name": "Deen Dayal Upadhyaya Grameen Kaushalya Yojana",
+    "ministry": "Ministry Of Rural Development",
+    "category": "employment",
+    "benefit": "Skill Training: The program provides skill training to beneficiaries in a variety of sectors, including agriculture, construction, retail, and hospitality. The training is designed to be industry-relevant and to equip beneficiaries with the skills they need to secure employment.- Placement Assistance: The program provi",
+    "eligibility": {
+      "min_age": 15,
+      "max_age": 35,
+      "gender": "Any",
+      "caste_categories": [],
+      "occupations": [
+        "Rural Youth"
+      ],
+      "max_annual_income_inr": null,
+      "requires_bpl_card": false,
+      "requires_land": false,
+      "eligible_states": [
+        "All"
+      ],
+      "special_conditions": "Poor rural youth from target households; age relaxations apply for SC, ST, women, PwD and other special groups."
+    },
+    "documents_required": [
+      "Proof of Identity",
+      "Proof of Age",
+      "BPL Card (if applicable)",
+      "MGNREGA Card (if applicable)",
+      "RSBY Card (if applicable)",
+      "AAY Card (if applicable)",
+      "SHG Identification (if applicable)",
+      "Disability Certificate, issued by competent authority (if applicable)",
+      "ST/SC Certificate, issued by competent authority (if applicable)",
+      "Self-Certification by the candidate for his/her status as Minority Community (if applicable)"
+    ],
+    "apply_url": "https://kaushalpanjee.nic.in/ddugky/downloadUserManual.html",
+    "apply_modes": [
+      "Online"
+    ],
+    "helpline": null
+  },
+  {
+    "id": "pm_fasal_bima",
+    "name": "Pradhan Mantri Fasal Bima Yojana",
+    "ministry": "Ministry Of Agriculture and Farmers Welfare",
+    "category": "agriculture",
+    "benefit": "Affordable Premiums: The maximum premium payable by the farmer will be 2% for the Kharif food and oilseed crops. For rabi food and oilseeds crop, it is 1.5% and for yearly commercial or horticultural crops it will be 5%. The remaining premium is subsidized by the government. * For the farmers in North-Eastern States, J",
+    "eligibility": {
+      "min_age": null,
+      "max_age": null,
+      "gender": "Any",
+      "caste_categories": [],
+      "occupations": [
+        "Farmer"
+      ],
+      "max_annual_income_inr": null,
+      "requires_bpl_card": false,
+      "requires_land": false,
+      "eligible_states": [
+        "All"
+      ],
+      "special_conditions": "Farmers growing notified crops in notified areas during the relevant season; loanee and non-loanee farmers may enrol as per season rules."
+    },
+    "documents_required": [
+      "Passport-sized Photograph",
+      "Passbook",
+      "Identity Proof (Aadhaar Card/PAN Card/Voter ID/Bank Passbook with Photo, Kisan Photo Book/NREGA Job Card)",
+      "Address Proof (Aadhaar Card/PAN Card/Voter ID/Electricity Bill/Bank Passbook with Photo).",
+      "Evidence of Land records, as per the State Records of Right (RoR), Land Possession Certificate (LPC), and other applicable agreements, contracts notified or permitted by the state.",
+      "Declaration about the crop sown/intended to be sown."
+    ],
+    "apply_url": "https://pmfby.gov.in/",
+    "apply_modes": [
+      "Online"
+    ],
+    "helpline": null
+  },
+  {
+    "id": "soil_health_card",
+    "name": "Soil Health Card Scheme",
+    "ministry": "Ministry of Agriculture and Farmers Welfare",
+    "category": "agriculture",
+    "benefit": "Provides farmers with soil test-based nutrient recommendations and periodic soil health cards to improve balanced fertilizer use.",
+    "eligibility": {
+      "min_age": null,
+      "max_age": null,
+      "gender": "Any",
+      "caste_categories": [],
+      "occupations": [
+        "Farmer"
+      ],
+      "max_annual_income_inr": null,
+      "requires_bpl_card": false,
+      "requires_land": true,
+      "eligible_states": [
+        "All"
+      ],
+      "special_conditions": "Farmer or cultivator seeking soil testing and nutrient recommendation; land or plot details are generally required for sample registration."
+    },
+    "documents_required": [
+      "Aadhaar",
+      "Land record or cultivation details",
+      "Mobile number",
+      "Bank account details, if requested by state agriculture department",
+      "Soil sample or sample registration details"
+    ],
+    "apply_url": "https://soilhealth.dac.gov.in/",
+    "apply_modes": [
+      "Online",
+      "Offline through agriculture department or soil testing laboratory"
+    ],
+    "helpline": null
+  },
+  {
+    "id": "ignoaps",
+    "name": "Indira Gandhi National Old Age Pension Scheme",
+    "ministry": "Ministry Of Rural Development",
+    "category": "elderly",
+    "benefit": "A monthly pension of Rs. 200 up to 79 years and Rs. 500 thereafter.",
+    "eligibility": {
+      "min_age": 60,
+      "max_age": null,
+      "gender": "Any",
+      "caste_categories": [],
+      "occupations": [],
+      "max_annual_income_inr": null,
+      "requires_bpl_card": true,
+      "requires_land": false,
+      "eligible_states": [
+        "All"
+      ],
+      "special_conditions": "Person aged 60 years or above belonging to a poor household under NSAP criteria; higher assistance applies at age 80 and above."
+    },
+    "documents_required": [
+      "Duly filled and self-attested Application Form (proforma given the annexures of the scheme guidelines).",
+      "Domicile Certificate",
+      "Residential Proof (Voter card/ Electricity Bill/Aadhar Card)",
+      "Age Proof (Birth Certificate issued by the School last attended or Municipal authority or SHO or through Medical Board)",
+      "Aadhar Number",
+      "Bank Passbook",
+      "Ration Card",
+      "Affidavit duly attested by Judicial Magistrate/Executive Magistrate that she/he is not in receipt of any pension/ financial assistance from any other source"
+    ],
+    "apply_url": "https://web.umang.gov.in/web_new/department?url=dept%2F353&dept_id=353&dept_name=National%20Social%20Assistance%20Programme%20(NSAP)",
+    "apply_modes": [
+      "UMANG"
+    ],
+    "helpline": null
+  },
+  {
+    "id": "ignwps",
+    "name": "Indira Gandhi National Widow Pension Scheme",
+    "ministry": "Ministry Of Rural Development",
+    "category": "women",
+    "benefit": "A non-contributory pension scheme to provide social security to widows of poor family (BPL) of the society.",
+    "eligibility": {
+      "min_age": 40,
+      "max_age": 79,
+      "gender": "Female",
+      "caste_categories": [],
+      "occupations": [],
+      "max_annual_income_inr": null,
+      "requires_bpl_card": true,
+      "requires_land": false,
+      "eligible_states": [
+        "All"
+      ],
+      "special_conditions": "Widow aged 40 to 79 years belonging to a poor household under NSAP criteria."
+    },
+    "documents_required": [
+      "Death Certificate of husband - With the name of the surviving wife(widow).",
+      "BPL Card.",
+      "Age Proof - For age, the birth certificate or school certificate may be relied on. In their absence ration card and EPIC may be considered. If there is no valid document, any Medical Officer of any government hospital may be authorized to issue the age certificate."
+    ],
+    "apply_url": "https://web.umang.gov.in/web_new/department?url=dept%2F353&dept_id=353&dept_name=National%20Social%20Assistance%20Programme%20(NSAP)",
+    "apply_modes": [
+      "UMANG"
+    ],
+    "helpline": null
+  },
+  {
+    "id": "national_disability_scholarship",
+    "name": "National Scholarship for Students with Disabilities",
+    "ministry": "Ministry of Social Justice and Empowerment",
+    "category": "disability",
+    "benefit": "Scholarship support for students with disabilities through central NSP-linked disability scholarship categories.",
+    "eligibility": {
+      "min_age": null,
+      "max_age": null,
+      "gender": "Any",
+      "caste_categories": [],
+      "occupations": [
+        "Student"
+      ],
+      "max_annual_income_inr": null,
+      "requires_bpl_card": false,
+      "requires_land": false,
+      "eligible_states": [
+        "All"
+      ],
+      "special_conditions": "Portal-level entry representing central disability scholarship categories; exact age, course, income and disability conditions depend on the disability scholarship selected on NSP."
+    },
+    "documents_required": [
+      "Aadhaar or NSP One-Time Registration details",
+      "Benchmark disability certificate",
+      "Income certificate",
+      "Previous academic marksheet",
+      "Bank account details",
+      "Institution verification or bonafide certificate"
+    ],
+    "apply_url": "https://scholarships.gov.in/",
+    "apply_modes": [
+      "Online"
+    ],
+    "helpline": null
+  },
+  {
+    "id": "pm_surya_ghar",
+    "name": "PM Surya Ghar: Muft Bijli Yojana",
+    "ministry": "Ministry Of New and Renewable Energy",
+    "category": "housing",
+    "benefit": "Suitable Rooftop Solar Plant Capacity for households Average Monthly Electricity Consumption (units)Suitable Rooftop Solar Plant CapacitySubsidy Support0-150 1-2 kWRs. 30,000/- to Rs. 60,000/-150-3002-3 kWRs. 60,000/- to Rs. 78,000/-&amp;gt; 300Above 3 kWRs. 78,000/-<br> The benefits of the scheme include: Free ele",
+    "eligibility": {
+      "min_age": null,
+      "max_age": null,
+      "gender": "Any",
+      "caste_categories": [],
+      "occupations": [],
+      "max_annual_income_inr": null,
+      "requires_bpl_card": false,
+      "requires_land": false,
+      "eligible_states": [
+        "All"
+      ],
+      "special_conditions": "Residential household with suitable roof, valid electricity connection and compliance with rooftop solar subsidy norms."
+    },
+    "documents_required": [
+      "Proof of identity.",
+      "Proof of address.",
+      "Electricity bill.",
+      "Roof ownership certificate."
+    ],
+    "apply_url": "https://pmsuryaghar.gov.in/",
+    "apply_modes": [
+      "Online"
+    ],
+    "helpline": null
+  },
+  {
+    "id": "pm_matru_vandana",
+    "name": "Pradhan Mantri Matru Vandana Yojana",
+    "ministry": "Ministry of Women and Child Development",
+    "category": "women",
+    "benefit": "The cash incentives is provided in two instalments for the first child as per the schedule provided in table below: Scheme Condition for First Child Instalment ConditionsAmount (in Rs.)First InstalmentOn registration of pregnancy and at least one Antenatal checkup within six months from last menstrual period date at th",
+    "eligibility": {
+      "min_age": 19,
+      "max_age": null,
+      "gender": "Female",
+      "caste_categories": [],
+      "occupations": [
+        "Pregnant Woman"
+      ],
+      "max_annual_income_inr": null,
+      "requires_bpl_card": false,
+      "requires_land": false,
+      "eligible_states": [
+        "All"
+      ],
+      "special_conditions": "Pregnant and lactating women for the first child and, under current provisions, for the second child if it is a girl, excluding women in regular government or public sector employment with similar benefits."
+    },
+    "documents_required": [
+      "Beneficiaries need documents such as:- Aadhaar card, Aadhaar mapped bank/post office, Bank account details, Eligibility proof, MCP/RCHI card, LMP date, ANC date, Child birth certificate, Child immunization details etc. Mentioned below a list of documents which required to upload at the time of registration (any one of these):- Women whose net family income is less than Rs. 8 Lakh per annum. Women holding MGNREGA Job Card. Women farmers who are beneficiaries under Kisan Samman Nidhi. Women holding e-Shram card. Women Beneficiaries under Pradhan Mantri Jan Aarogya Yojana (PMJAY) under Ayushman Bharat. Women holder of BPL ration Card. Women who are partially (40%) or fully disabled (Divyang Jan). SC Women. ST Women. Pregnant and Lactating AWWS/ AWHS/ASHAS. Women Beneficiaries holding Ration card under National Food Security Act (NFSA), 2013. All the mandatory provisions like Aadhaar, Aadhaar based payment etc. will be checked at the time of registration for smooth and efficient process. Mobile number has been made mandatory for providing information regarding the status of application and disbursement of fund. Mobile App has been introduced for registration under Pradhan Mantri Matru Vandana Yojana (PMMVY)."
+    ],
+    "apply_url": "https://pmmvy.wcd.gov.in/",
+    "apply_modes": [
+      "Online"
+    ],
+    "helpline": null
+  },
+  {
+    "id": "pm_shram_yogi_maandhan",
+    "name": "Pradhan Mantri Shram Yogi Maandhan",
+    "ministry": "Ministry Of Labour and Employment",
+    "category": "elderly",
+    "benefit": "Minimum Assured Pension Rs. 3,000 per month after attaining 60 years of age. Pension is payable for the lifetime of the subscriber. Family Pension On the death of the subscriber after pension commencement, the spouse receives 50% of the pension amount. Family pension is applicable only to the spouse. Government Contrib",
+    "eligibility": {
+      "min_age": 18,
+      "max_age": 40,
+      "gender": "Any",
+      "caste_categories": [],
+      "occupations": [
+        "Unorganized Worker"
+      ],
+      "max_annual_income_inr": 180000,
+      "requires_bpl_card": false,
+      "requires_land": false,
+      "eligible_states": [
+        "All"
+      ],
+      "special_conditions": "Monthly income up to Rs. 15,000 and not covered under EPFO, ESIC or NPS."
+    },
+    "documents_required": [
+      "Aadhaar Card",
+      "Savings Bank Account Passbook / Jan-Dhan Account Passbook",
+      "Mobile Number",
+      "Self-Certification (At the time of enrollment)",
+      "Any other documents as required"
+    ],
+    "apply_url": "https://maandhan.in/",
+    "apply_modes": [
+      "Online"
+    ],
+    "helpline": null
+  },
+  {
+    "id": "pm_kisan_maandhan",
+    "name": "Pradhan Mantri Kisan Maandhan Yojana",
+    "ministry": "Ministry Of Agriculture and Farmers Welfare",
+    "category": "agriculture",
+    "benefit": "Monthly Pension Benefit: The subscriber will receive a minimum assured pension of Rs. 3,000/- per month after attaining the age of 60 years. Family Pension Benefit: In case of death of the subscriber, the spouse will receive 50% of the pension amount as family pension. Family pension is applicable only to the spouse. G",
+    "eligibility": {
+      "min_age": 18,
+      "max_age": 40,
+      "gender": "Any",
+      "caste_categories": [],
+      "occupations": [
+        "Farmer"
+      ],
+      "max_annual_income_inr": null,
+      "requires_bpl_card": false,
+      "requires_land": true,
+      "eligible_states": [
+        "All"
+      ],
+      "special_conditions": "Small and marginal farmer with cultivable land up to 2 hectares and linked enrolment through the pension platform."
+    },
+    "documents_required": [
+      "Aadhaar Card Savings Bank Account Number along with IFSC Code ( Bank Passbook or Cheque Leaf/book or copy of bank statement as evidence of bank account)."
+    ],
+    "apply_url": "https://maandhan.in/",
+    "apply_modes": [
+      "Online"
+    ],
+    "helpline": null
+  },
+  {
+    "id": "naps",
+    "name": "National Apprenticeship Promotion Scheme-2",
+    "ministry": "Ministry Of Skill Development And Entrepreneurship",
+    "category": "employment",
+    "benefit": "Under the scheme, training will be imparted in Designated Trades (DT) and Optional Trades (OT). A. Designated Trades (DT) Designated Trade means any trade or occupation or any subject field in engineering or non-engineering or technology or any vocational course which the Central Government. Duration of apprenticeship",
+    "eligibility": {
+      "min_age": 14,
+      "max_age": null,
+      "gender": "Any",
+      "caste_categories": [],
+      "occupations": [
+        "Apprentice"
+      ],
+      "max_annual_income_inr": null,
+      "requires_bpl_card": false,
+      "requires_land": false,
+      "eligible_states": [
+        "All"
+      ],
+      "special_conditions": "Candidate must meet apprenticeship trade qualification and age norms; hazardous trades require higher minimum age."
+    },
+    "documents_required": [
+      "Aadhaar Card",
+      "Documents required as per selected Trade"
+    ],
+    "apply_url": "https://www.apprenticeshipindia.gov.in/",
+    "apply_modes": [
+      "Online"
+    ],
+    "helpline": null
+  },
+  {
+    "id": "day_nrlm",
+    "name": "Deendayal Antyodaya Yojana - National Rural Livelihoods Mission",
+    "ministry": "Ministry Of Rural Development",
+    "category": "employment",
+    "benefit": "DAY-NRLM is the flagship program of MoRD for promoting poverty reduction through building strong institutions for the poor, particularly women, and enabling these institutions to access a range of financial services and livelihoods. States are enabled to formulate their poverty reduction plans.",
+    "eligibility": {
+      "min_age": null,
+      "max_age": null,
+      "gender": "Any",
+      "caste_categories": [],
+      "occupations": [
+        "Self-help Group Member",
+        "Rural Poor"
+      ],
+      "max_annual_income_inr": null,
+      "requires_bpl_card": false,
+      "requires_land": false,
+      "eligible_states": [
+        "All"
+      ],
+      "special_conditions": "Rural poor households mobilised into SHGs and federations under DAY-NRLM and its livelihood components."
+    },
+    "documents_required": [
+      "Aadhar Number",
+      "Proof of Identity",
+      "Proof of Residence",
+      "Voter ID Card",
+      "Passport Size Photo"
+    ],
+    "apply_url": "https://aajeevika.gov.in/",
+    "apply_modes": [
+      "Online"
+    ],
+    "helpline": null
+  },
+  {
+    "id": "pm_matsya_sampada",
+    "name": "Pradhan Mantri Matsya Sampada Yojana",
+    "ministry": "Ministry of Fisheries, Animal Husbandry and Dairying",
+    "category": "agriculture",
+    "benefit": "Financial assistance for fishing infrastructure: The scheme provides financial assistance to develop fishing infrastructure like fishing harbors, fish landing centers, fish markets, fish feed plants, fish seed farms, and fish processing units.1. Financial assistance for fish farmers: The scheme provides financial assis",
+    "eligibility": {
+      "min_age": null,
+      "max_age": null,
+      "gender": "Any",
+      "caste_categories": [],
+      "occupations": [
+        "Fish Farmer",
+        "Fisher",
+        "Fish Worker",
+        "Entrepreneur"
+      ],
+      "max_annual_income_inr": null,
+      "requires_bpl_card": false,
+      "requires_land": false,
+      "eligible_states": [
+        "All"
+      ],
+      "special_conditions": "Fisheries sector beneficiaries are eligible subject to component-specific norms and project approvals."
+    },
+    "documents_required": [
+      "Aadhaar Card",
+      "PAN Card",
+      "Bank Account Details:",
+      "Business Registration Certificate",
+      "Project Report",
+      "Land Documents: Documents such as land lease agreements, land ownership documents, or NOC from the landowner are required if the project requires land.",
+      "Partnership Deed or Memorandum of Association (MOA)",
+      "Note: The exact list of documents required may vary based on the nature and type of the project. It is advisable to check with the concerned authorities or the official PMMSY website for the complete list of documents required for the specific type of project and application process."
+    ],
+    "apply_url": "https://pmmsy.dof.gov.in/",
+    "apply_modes": [
+      "Online"
+    ],
+    "helpline": null
+  },
+  {
+    "id": "midh",
+    "name": "Mission for Integrated Development of Horticulture",
+    "ministry": "Ministry Of Agriculture and Farmers Welfare",
+    "category": "agriculture",
+    "benefit": "The scheme targets to provide following benefits: 1) Increase in productivity of crops through diversification, from traditional crops to plantations, orchards, vineyards, flowers, vegetable gardens and bamboo plantations; and extension of appropriate technology to farmers. 2) Promotion of R&D technologies for cultivat",
+    "eligibility": {
+      "min_age": null,
+      "max_age": null,
+      "gender": "Any",
+      "caste_categories": [],
+      "occupations": [
+        "Farmer",
+        "Horticulturist"
+      ],
+      "max_annual_income_inr": null,
+      "requires_bpl_card": false,
+      "requires_land": false,
+      "eligible_states": [
+        "All"
+      ],
+      "special_conditions": "Horticulture beneficiaries and projects are eligible subject to MIDH component norms and state implementation guidelines."
+    },
+    "documents_required": [
+      "1) Aadhaar number",
+      "2) Land documents",
+      "3) Caste certificate",
+      "4) Bank details",
+      "5) Photographs",
+      "The specific documents for availing the benefits of the program may vary depending on the type of intervention and the state. It is recommended to consult with the relevant authorities for detailed information on documents to be submitted."
+    ],
+    "apply_url": "https://midh.gov.in/",
+    "apply_modes": [
+      "Online"
+    ],
+    "helpline": null
+  },
+  {
+    "id": "paramparagat_krishi_vikas",
+    "name": "Paramparagat Krishi Vikas Yojana",
+    "ministry": "Ministry Of Agriculture and Farmers Welfare",
+    "category": "agriculture",
+    "benefit": "• Promotion of organic farming, in turn resulting in improvement of soil health • Sustainable production of chemical free and nutritious agriculture produce • Direct linkages with local and national markets • To empower farmers through their own institutional development in the form of clusters and groups with capacity",
+    "eligibility": {
+      "min_age": null,
+      "max_age": null,
+      "gender": "Any",
+      "caste_categories": [],
+      "occupations": [
+        "Farmer"
+      ],
+      "max_annual_income_inr": null,
+      "requires_bpl_card": false,
+      "requires_land": true,
+      "eligible_states": [
+        "All"
+      ],
+      "special_conditions": "Farmer or farmer group willing to adopt cluster-based organic farming and certification norms under PKVY."
+    },
+    "documents_required": [
+      "1) Aadhaar number",
+      "2) Land documents",
+      "3) Caste Certificate (SC/ST/OBC only)",
+      "4) Phone Details",
+      "5) Bank Details",
+      "6) Photographs",
+      "7) DPR",
+      "The specific documents for availing the benefits of the program may vary depending on the type of intervention and the state. It is recommended to consult with the relevant authorities for detailed information on documents to be submitted."
+    ],
+    "apply_url": "https://www.myscheme.gov.in/schemes/pkvy",
+    "apply_modes": [
+      "Online"
+    ],
+    "helpline": null
+  },
+  {
+    "id": "nfsm",
+    "name": "National Food Security Mission",
+    "ministry": "Ministry Of Agriculture and Farmers Welfare",
+    "category": "agriculture",
+    "benefit": "The scheme targets to provide following benefits: 1) Enhance production and productivity of crops 2) Promotion and extension of improved technologies and seed varieties through Cluster Demonstration, Cluster Frontline Demonstration, and Frontline Demonstration 3) Assistance for quality / certified seeds production and",
+    "eligibility": {
+      "min_age": null,
+      "max_age": null,
+      "gender": "Any",
+      "caste_categories": [],
+      "occupations": [
+        "Farmer"
+      ],
+      "max_annual_income_inr": null,
+      "requires_bpl_card": false,
+      "requires_land": true,
+      "eligible_states": [
+        "All"
+      ],
+      "special_conditions": "Support is extended for notified crops, notified districts and approved mission components routed through states."
+    },
+    "documents_required": [
+      "1) Aadhaar number",
+      "2) Caste certificate (SC/ST)",
+      "3) Bank details",
+      "The specific documents for availing the benefits of the program may vary depending on the type of intervention and the state. It is recommended to consult with the relevant authorities for detailed information on documents to be submitted."
+    ],
+    "apply_url": "https://nfsm.gov.in/",
+    "apply_modes": [
+      "Online"
+    ],
+    "helpline": null
+  },
+  {
+    "id": "pmfme",
+    "name": "Pradhan Mantri Formalisation of Micro Food Processing Enterprises",
+    "ministry": "Ministry of Food Processing Industries",
+    "category": "employment",
+    "benefit": "Launched on 29th June 2020, PMFMPE is a Centrally Sponsored Scheme by the MoFPI, designed to address the challenges faced by the micro enterprises and to tap the potential of groups and cooperatives in supporting the upgradation and formalization of these enterprises.",
+    "eligibility": {
+      "min_age": null,
+      "max_age": null,
+      "gender": "Any",
+      "caste_categories": [],
+      "occupations": [
+        "Micro Food Processor",
+        "Entrepreneur",
+        "Self-help Group Member"
+      ],
+      "max_annual_income_inr": null,
+      "requires_bpl_card": false,
+      "requires_land": false,
+      "eligible_states": [
+        "All"
+      ],
+      "special_conditions": "Existing or aspiring micro food processing units, SHGs, FPOs and cooperatives are eligible under component-specific PMFME norms."
+    },
+    "documents_required": [
+      "Checklist for submitting Credit Proposals:",
+      "(New Enterprises- Individual/Firms)",
+      "Mandatory Documents",
+      "PAN Card of concern/all promoters",
+      "Aadhaar Copy & Photo of all promoters/guarantors",
+      "Address Proof:",
+      "I. Utility bill, which is not more than two months old of any service provider, (Electricity, telephone, post-paid mobile phone, piped gas, water bill) or",
+      "ii. Property or Municipal tax paid receipt or",
+      "iii. Ration Card (Individual)",
+      "Photocopy of Bank Statement/ Bank Passbook for the last 6 months",
+      "Optional Documents",
+      "Photocopy of highest academic qualification of promoter/s",
+      "Sanction letter of active loans,",
+      "Loan statement of active loans",
+      "Any other Document",
+      "Checklist for submitting Credit Proposals.",
+      "(Existing Enterprises- Individual/Firms with more than 1 Cr Turn over)",
+      "PAN Card of concern/group concerns/all promoters/guarantors",
+      "I. Utility bill, which is not more than two months old of any service",
+      "provider, (Electricity, telephone, post-paid mobile phone, piped gas,",
+      "water bill) or",
+      "ii. Property or Municipal tax paid receipt",
+      "Udhayam Registration Certificate/s/ IE code- wherever applicable/Licenses (Trade License/Shop & Establishment Registration/Panchayat License/Corporation License/Municipality License)",
+      "Business Partnership Agreement (If Individual/Proprietor- not applicable)",
+      "Photocopy of Bank Statement/ Bank Passbook for the last 6 months of the firm",
+      "Audited balance sheet with annexures of max 3 years with ITR",
+      "Copy of License as per industry (Eg. FSSAI, Pollution Clearance, ESI etc)",
+      "GSTIN Registration Certificate",
+      "GST returns of last financial years",
+      "List of existing machinery and equipment",
+      "Photo of the Existing unit",
+      "Sanction letter of active loans",
+      "Insurance Policy copy of the existing unit & Stock.",
+      "Audited balance sheet of Group/Sister concern with annexures of last 3 years with ITR",
+      "Latest Stock Statement",
+      "Quarterly sales-purchase of previous year and current year",
+      "Any other document.",
+      "(Existing Enterprises- Individual/Firms with less than 1 Cr Turn over)",
+      "PAN Card of concern",
+      "Audited/ Self-affixed balance sheet with annexures of max. 3 years with ITR",
+      "GSTIN Registration Certificate if applicable",
+      "GST returns of last 1 year if applicable",
+      "(Farmers Producer Companies- Existing Enterprises)",
+      "PAN Card of company/ Chairman/Chief Executive",
+      "Aadhaar Copy & Photo of Chairman/Chief Executive",
+      "Certificate of registration",
+      "Memorandum and Articles of Association",
+      "List of Directors and brief bio-data attested by authorised signatory",
+      "Details of share holding pattern attested by authorised signatory",
+      "Board resolution for availing loan/borrowing power/borrowing authority",
+      "Photocopy of Bank Statement/ Bank Passbook for the last 6 months of the company",
+      "Audited balance sheet with annexures of max. 3 years with ITR",
+      "Copy of License as per industry (Eg. FSSAI, Pollution Clearance, ESI etc), if available",
+      "GST returns of last 3 years (for existing unit)",
+      "Photo of the existing unit",
+      "DPR",
+      "Latest Stock Statement/register",
+      "Quarter-wise sales-purchase of previous year and current year",
+      "Copies of Minutes of last AGM and Board meeting",
+      "Copies of recent grants",
+      "Annual Report for the last year",
+      "Agreements made with Buyers",
+      "Any other Documents",
+      "(Co-operative Society- Existing Enterprise)",
+      "PAN Card of Society/Chairman/President/Chief Executive",
+      "Aadhaar Copy & Photo of Chairman/President/Chief Executive",
+      "Certificate of Co-operative Society registration",
+      "Copy of Society Bye laws with its amendments if any",
+      "List of Board Executive Members and brief bio-data attested by authorised signatory",
+      "Photocopy of Bank Statement/ Bank Passbook for the last 6 months of the society",
+      "Estimates and Quotation of all capital machineries and equipment",
+      "Audited balance sheet with annexures of max. 3 years with ITR (for existing unit)",
+      "GST returns of last one year",
+      "Annual report of the Society for the last year",
+      "Agreements made with buyers",
+      "(Self Help Groups)",
+      "Aadhaar Copy of all the Members of the group",
+      "List of all the members of the group with photo, contact no. & address of individual members",
+      "Address Proof of the Unit:",
+      "Resolution copy signed by all the members of SHG to avail loans.",
+      "Details of Group Savings, loans details etc.",
+      "7 DPR",
+      "Copies of Minutes of last meeting of SHG members",
+      "Agreements made with Buyers, if any.",
+      "Copies of any other Government grants received, if any.",
+      "Photocopy of Bank Statement/ Bank Passbook for the last 6 months of the SHG",
+      "Any other documents"
+    ],
+    "apply_url": "https://pmfme.mofpi.gov.in/",
+    "apply_modes": [
+      "Online"
+    ],
+    "helpline": null
+  },
+  {
+    "id": "srms",
+    "name": "Self Employment Scheme for Rehabilitation of Manual Scavengers",
+    "ministry": "Ministry Of Social Justice and Empowerment",
+    "category": "employment",
+    "benefit": "Identified manual scavengers, one from each family, are provided one-time cash assistance of Rs. 40,000. The identified manual scavengers and their dependents are provided project-based upfront capital subsidy up to Rs. 5,00,000 and concessional loans for undertaking self-employment ventures. Sanitation workers and the",
+    "eligibility": {
+      "min_age": null,
+      "max_age": null,
+      "gender": "Any",
+      "caste_categories": [],
+      "occupations": [
+        "Manual Scavenger",
+        "Dependent of Manual Scavenger"
+      ],
+      "max_annual_income_inr": null,
+      "requires_bpl_card": false,
+      "requires_land": false,
+      "eligible_states": [
+        "All"
+      ],
+      "special_conditions": "Identified manual scavengers and their dependants are eligible for skill training and self-employment assistance under SRMS."
+    },
+    "documents_required": [
+      "Aadhaar Card",
+      "Proof of Identity",
+      "Proof of Address",
+      "Proof of Age",
+      "Occupation Certificate from a designated authority.",
+      "Passport Size Photograph",
+      "Bank Details"
+    ],
+    "apply_url": "https://nskfdc.nic.in/en/node/add/srms-projects-loan-form",
+    "apply_modes": [
+      "Online"
+    ],
+    "helpline": null
+  },
+  {
+    "id": "dddrs",
+    "name": "Deen Dayal Disabled Rehabilitation Scheme",
+    "ministry": "Ministry Of Social Justice and Empowerment",
+    "category": "disability",
+    "benefit": "The Deen Dayal Disabled Rehabilitation Scheme (DDRS) provides a wide range of benefits to persons with disabilities, including: Early intervention: The DDRS provides financial assistance to voluntary organizations for early intervention programs for children with disabilities. These programs help to identify and addres",
+    "eligibility": {
+      "min_age": null,
+      "max_age": null,
+      "gender": "Any",
+      "caste_categories": [],
+      "occupations": [],
+      "max_annual_income_inr": null,
+      "requires_bpl_card": false,
+      "requires_land": false,
+      "eligible_states": [
+        "All"
+      ],
+      "special_conditions": "Assistance is routed to approved organisations or institutions providing rehabilitation and support services to persons with disabilities; not a direct cash transfer programme."
+    },
+    "documents_required": [
+      "List of required documents from organization to process grant-in-aid",
+      "Application",
+      "Registration Certificate under Registration of Societies Act",
+      "Registration Certificate under PWD Act 1995/RPwD Act, 2016",
+      "Details of the Managing/Executive Committee",
+      "Attested copy of Rent Agreement indicating validity period and details of accommodation available",
+      "Location of the project",
+      "Staff List",
+      "Certificate of Special Education",
+      "List of Beneficiaries",
+      "Total Budget Estimate",
+      "List of Assets (moveable & immovable)",
+      "Annual Report/Progress Report",
+      "Statement of Accounts (Consolidated and for the project being funded under the scheme) - Balance Sheet, Receipt & Payment Statement and Income & Expenditure Statement",
+      "Item-wise breakup of expenditure",
+      "Utilization Certificate",
+      "Resolution",
+      "Indemnity Bond",
+      "Authorization letter for sending grants-in-aid directly into the Bank Account"
+    ],
+    "apply_url": "https://www.myscheme.gov.in/schemes/dddrs",
+    "apply_modes": [
+      "Online"
+    ],
+    "helpline": null
+  },
+  {
+    "id": "niramaya_health_insurance",
+    "name": "Niramaya Health Insurance Scheme",
+    "ministry": "Ministry Of Social Justice and Empowerment",
+    "category": "disability",
+    "benefit": "Health insurance coverage: Up to Rs. 1,00,000/- for various expenses.1. Outpatient department (OPD) treatment: Covers medicines, pathology, diagnostic tests, etc.1. Regular medical checkups: For non-ailing individuals with disabilities.1. Dental care: Preventive dentistry services.1. Surgery: To prevent further disabil",
+    "eligibility": {
+      "min_age": null,
+      "max_age": null,
+      "gender": "Any",
+      "caste_categories": [],
+      "occupations": [],
+      "max_annual_income_inr": null,
+      "requires_bpl_card": false,
+      "requires_land": false,
+      "eligible_states": [
+        "All"
+      ],
+      "special_conditions": "Person with autism, cerebral palsy, mental retardation or multiple disabilities under the National Trust framework and valid enrolment requirements."
+    },
+    "documents_required": [
+      "Enrollment Process:",
+      "For BPL (Enrolment Fee - Rs. 250/-)",
+      "Disability certificate (Self attested) issued from the District Hospital or appropriate Government authority BPL card Address Proof Proof of payment.",
+      "For APL (if family income up to Rs. 15,000/- Per Month) (Enrolment Fee - Rs. 250/-)",
+      "Disability certificate issued from the District Hospital or appropriate Government authority (Self attested) Address Proof Proof of payment Income certificate of (Self attested) the parent/ guardian competent authority as issued by the State.",
+      "For APL (if family income above Rs. 15,000/- Per Month) (Enrolment Fee - Rs. 550/-)",
+      "Disability certificate (Self attested) issued by the competent authority as issued by the State Address Proof Proof of payment.",
+      "For Renewal:",
+      "For BPL:",
+      "BPL card. Address Proof (in case of change of address).",
+      "For APL (if family income up to Rs. 15,000/- Per Month) (Renewal Fee - Rs. 250/-)",
+      "Address Proof (in case of change of address) Income certificate (self attested) of the parent/ guardian competent authority as issued by the State Proof of payment.",
+      "For APL (if family income above Rs. 15,000/- Per Month) (Renewal Fee - Rs. 500/-)",
+      "Proof of payment Address proof (in case of change of address).",
+      "For Claim Process:",
+      "Copy of Niramaya card or mention Health ID Card number. Self-attested copy of Disability Certificate. All original prescription papers given by the doctor. All original bills of Hospital / Medicine / Doctor fee / Therapy fee / Conveyance etc. All reports in original. Complete bank details of Beneficiary : Name of Account Holder. Account No. / Bank Name / Branch / (City & State). Bank account IFSC Code.",
+      "Note:",
+      "Need for ORIGINAL REPORTS / FILMS LIKE MRI, X-RAY, ULTRASOUNDS ETC.: Original documents are required including the film for settling of Claims. Prescription for Ongoing Therapies: Doctor's prescription at least once in Six months is essential in which the category of therapy and duration of therapy should be clearly mentioned. Thereafter other documents from Rehabilitation Professional for therapy, and related bills will be acceptable. Doctor who prescribes the prescription should be a valid medical Practitioner with valid license/degree as per Medical council rules."
+    ],
+    "apply_url": "https://thenationaltrust.in/auth/Niramaya/HTML/new4.php",
+    "apply_modes": [
+      "Online"
+    ],
+    "helpline": null
+  },
+  {
+    "id": "national_family_benefit",
+    "name": "National Family Benefit Scheme",
+    "ministry": "Ministry Of Rural Development",
+    "category": "finance",
+    "benefit": "Rs. 20000/ - will be given as a lump sum assistance to such surviving member of the household of the deceased poor, who after local inquiry, is found to be the head of the household. The assistance would be given to every case of death of breadwinner in a family.",
+    "eligibility": {
+      "min_age": 18,
+      "max_age": 59,
+      "gender": "Any",
+      "caste_categories": [],
+      "occupations": [],
+      "max_annual_income_inr": null,
+      "requires_bpl_card": true,
+      "requires_land": false,
+      "eligible_states": [
+        "All"
+      ],
+      "special_conditions": "One-time assistance to a poor household on the death of the primary breadwinner aged 18 to 59 years."
+    },
+    "documents_required": [
+      "Documents related to the Deceased Breadwinner -",
+      "Death Certificate.",
+      "Proof of Identity.",
+      "Proof of Address.",
+      "BPL Card / Ration Card of the Family.",
+      "Family ID / Member ID.",
+      "Documents related to the Family Member to be provided Assistance -",
+      "Proof of Age.",
+      "Details of the AADHAAR Seeded Bank Account / Post Office Account.",
+      "Passport Size Photo"
+    ],
+    "apply_url": "https://web.umang.gov.in/web_new/department?url=dept%2F353&dept_id=353&dept_name=National%20Social%20Assistance%20Programme%20(NSAP)",
+    "apply_modes": [
+      "UMANG"
+    ],
+    "helpline": null
+  },
+  {
+    "id": "nmmss",
+    "name": "National Means-cum-Merit Scholarship Scheme",
+    "ministry": "Ministry of Education",
+    "category": "education",
+    "benefit": "Under this scheme, 1,00,000 fresh scholarships @ Rs. 12,000/- per annum (Rs. 1,000 per month) are awarded to the meritorious students every year at Class IX level, which can be continued upto Class Xll. The awardees will be required to open bank accounts preferably in SBI, or any public sector bank or any scheduled ban",
+    "eligibility": {
+      "min_age": null,
+      "max_age": null,
+      "gender": "Any",
+      "caste_categories": [],
+      "occupations": [
+        "Student"
+      ],
+      "max_annual_income_inr": 350000,
+      "requires_bpl_card": false,
+      "requires_land": false,
+      "eligible_states": [
+        "All"
+      ],
+      "special_conditions": "Class 8 pass student meeting NMMSS exam or admission conditions with parental income up to Rs. 3.5 lakh per annum."
+    },
+    "documents_required": [
+      "Aadhaar Card",
+      "Educational Certificates/ marksheet",
+      "Caste Certificate",
+      "Income Certificate of Parents",
+      "Disability Certificate, if applicable",
+      "Domicile Certificate",
+      "Any other supporting documents as required"
+    ],
+    "apply_url": "https://scholarships.gov.in/",
+    "apply_modes": [
+      "Online"
+    ],
+    "helpline": null
+  },
+  {
+    "id": "csss_cus",
+    "name": "Central Sector Scheme of Scholarship for College and University Students",
+    "ministry": "Ministry of Education",
+    "category": "education",
+    "benefit": "Rate of Scholarship Rs. 12,000/-per annum at the Graduation level for the first three years of College and University courses. Rs. 20,000 per annum at the Post-graduation level. Rs. 20,000/-per annum in the 4th and 5th year to the Students pursuing professional courses, in case, where the duration of the course is five",
+    "eligibility": {
+      "min_age": null,
+      "max_age": null,
+      "gender": "Any",
+      "caste_categories": [],
+      "occupations": [
+        "Student"
+      ],
+      "max_annual_income_inr": 800000,
+      "requires_bpl_card": false,
+      "requires_land": false,
+      "eligible_states": [
+        "All"
+      ],
+      "special_conditions": "Student above the 80th percentile in the relevant class 12 board examination and family income up to Rs. 8 lakh per annum; must pursue a regular degree course."
+    },
+    "documents_required": [
+      "The following documents need to be uploaded on the Portal at the time of application:",
+      "a. FRESH: 12th Mark Sheet, Family Income Certificate, Category/ caste Certification for reserved category students, Disability Certificate (if applicable)",
+      "b. RENEWAL: Previous Year Mark Sheet",
+      "The copy of above-mentioned documents must be provided to the institutes at the time of verification, if sought for by the Institute Nodal Officer (INO)."
+    ],
+    "apply_url": "https://scholarships.gov.in/",
+    "apply_modes": [
+      "Online"
+    ],
+    "helpline": null
+  },
+  {
+    "id": "post_matric_disability",
+    "name": "Post-Matric Scholarship for Students with Disabilities",
+    "ministry": "Ministry Of Social Justice and Empowerment",
+    "category": "disability",
+    "benefit": "A scholarship scheme by DoEPwD for students with disabilities pursuing a post-matric qualification from UGC/AICTE recognized universities, i.e. students of Class 11th, Class 12th, including Polytechnics, Post-Matriculation Diploma/Certificates and Bachelor's/Master's Degree/Diploma in India.",
+    "eligibility": {
+      "min_age": null,
+      "max_age": null,
+      "gender": "Any",
+      "caste_categories": [],
+      "occupations": [
+        "Student"
+      ],
+      "max_annual_income_inr": 250000,
+      "requires_bpl_card": false,
+      "requires_land": false,
+      "eligible_states": [
+        "All"
+      ],
+      "special_conditions": "Student with benchmark disability pursuing post-matric studies with family income up to Rs. 2.5 lakh per annum, subject to renewal rules."
+    },
+    "documents_required": [
+      "Photograph.",
+      "Proof of Age.",
+      "Certificate of Disability (Rights of Persons with Disabilities Act 2016).",
+      "Income Certificate.",
+      "Tuition Fee Receipt.",
+      "Last academic qualification certificate.",
+      "Bank Details of the applicant or of the Parent/Guardian."
+    ],
+    "apply_url": "https://scholarships.gov.in/",
+    "apply_modes": [
+      "Online"
+    ],
+    "helpline": null
+  },
+  {
+    "id": "pre_matric_disability",
+    "name": "Pre-Matric Scholarship for Students with Disabilities",
+    "ministry": "Ministry Of Social Justice and Empowerment",
+    "category": "disability",
+    "benefit": "A scholarship scheme by DoEPwDs for Students with Disabilities (SwDs) studying in class 9th and class 10th in a government school or a school recognized by the government or CBSE or State Board. This includes persons with visual, hearing, speech, loco-motor, mental retardation & other disabilities.",
+    "eligibility": {
+      "min_age": null,
+      "max_age": null,
+      "gender": "Any",
+      "caste_categories": [],
+      "occupations": [
+        "Student"
+      ],
+      "max_annual_income_inr": 250000,
+      "requires_bpl_card": false,
+      "requires_land": false,
+      "eligible_states": [
+        "All"
+      ],
+      "special_conditions": "Student with benchmark disability in eligible pre-matric classes with family income up to Rs. 2.5 lakh per annum."
+    },
+    "documents_required": [
+      "Photograph.",
+      "Proof of Age.",
+      "Certificate of Disability (issued by the competent authority)",
+      "Income Certificate.",
+      "Tuition Fee Receipt.",
+      "Last academic qualification certificate.",
+      "Bank Details of the applicant or of the Parent/Guardian.",
+      "The institution in which the candidate is studying should also register itself at NSP and verify the details provided by the candidates."
+    ],
+    "apply_url": "https://scholarships.gov.in/",
+    "apply_modes": [
+      "Online"
+    ],
+    "helpline": null
+  },
+  {
+    "id": "top_class_disability",
+    "name": "Top Class Education for Students with Disabilities",
+    "ministry": "Ministry Of Social Justice and Empowerment",
+    "category": "disability",
+    "benefit": "A scholarship scheme by DoEPwDs for Students with Disabilities (SwDs) pursuing studies beyond class 12th admitted in a full-time course in one of the 'notified institutions'.",
+    "eligibility": {
+      "min_age": null,
+      "max_age": null,
+      "gender": "Any",
+      "caste_categories": [],
+      "occupations": [
+        "Student"
+      ],
+      "max_annual_income_inr": 800000,
+      "requires_bpl_card": false,
+      "requires_land": false,
+      "eligible_states": [
+        "All"
+      ],
+      "special_conditions": "Student with benchmark disability admitted to a notified premier institution or course and family income up to Rs. 8 lakh per annum."
+    },
+    "documents_required": [
+      "Income Certificate.",
+      "Domicile Certificate.",
+      "Self-attested Degree/Mark Sheet of the last qualifying exam.",
+      "Fee Receipt of 'Current Course Year'.",
+      "Bank Details of the applicant or of the Parent/Guardian.",
+      "Aadhaar Number.",
+      "Bonafide Student Certificate from the school/institute.",
+      "Recent colour photograph of the candidate.",
+      "Certificate of Disability (issued by a competent authority).",
+      "Declaration Certificate (issued by HoD or competent authority of the university or institute)."
+    ],
+    "apply_url": "https://scholarships.gov.in/",
+    "apply_modes": [
+      "Online"
+    ],
+    "helpline": null
+  }
+]
