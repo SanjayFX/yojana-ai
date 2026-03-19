@@ -17,6 +17,211 @@ type SchemeExplanation = {
   fallback?: boolean
 }
 
+const SEARCH_TRANSLATIONS: Record<string, string> = {
+  'கிசான்': 'kisan farmer',
+  'விவசாயி': 'farmer kisan',
+  'விவசாயம்': 'agriculture farmer',
+  'சேரல்': 'Kerala',
+  'தமிழ்': 'Tamil Nadu',
+  'ஆரோக்கியம்': 'health',
+  'கல்வி': 'education scholarship',
+  'வீடு': 'housing home',
+  'வேலை': 'employment',
+  'பெண்': 'women',
+  'முதியோர்': 'elderly pension',
+  'ஊனமுற்றோர்': 'disability',
+  'மாணவர்': 'student scholarship',
+  'கடன்': 'loan finance',
+  'காப்பீடு': 'insurance bima',
+  'किसान': 'kisan farmer',
+  'स्वास्थ्य': 'health',
+  'शिक्षा': 'education',
+  'আবাসন': 'housing',
+  'কৃষক': 'farmer',
+  'স্বাস্থ্য': 'health',
+  'రైతు': 'farmer',
+  'ಆರೋಗ್ಯ': 'health',
+  'ರೈತ': 'farmer',
+  'ખેડૂત': 'farmer',
+  'આરોગ્ય': 'health',
+}
+
+const STATE_NAMES: Partial<Record<LangCode, Record<string, string>>> = {
+  hi: {
+    'Andhra Pradesh': 'आंध्र प्रदेश',
+    'Bihar': 'बिहार',
+    'Delhi': 'दिल्ली',
+    'Gujarat': 'गुजरात',
+    'Karnataka': 'कर्नाटक',
+    'Kerala': 'केरल',
+    'Madhya Pradesh': 'मध्य प्रदेश',
+    'Maharashtra': 'महाराष्ट्र',
+    'Rajasthan': 'राजस्थान',
+    'Tamil Nadu': 'तमिलनाडु',
+    'Uttar Pradesh': 'उत्तर प्रदेश',
+    'West Bengal': 'पश्चिम बंगाल',
+    'Punjab': 'पंजाब',
+    'Haryana': 'हरियाणा',
+  },
+  ta: {
+    'Andhra Pradesh': 'ஆந்திர பிரதேசம்',
+    'Bihar': 'பீகார்',
+    'Delhi': 'டெல்லி',
+    'Gujarat': 'குஜராத்',
+    'Karnataka': 'கர்நாடகா',
+    'Kerala': 'கேரளா',
+    'Madhya Pradesh': 'மத்திய பிரதேசம்',
+    'Maharashtra': 'மகாராஷ்டிரா',
+    'Rajasthan': 'ராஜஸ்தான்',
+    'Tamil Nadu': 'தமிழ் நாடு',
+    'Uttar Pradesh': 'உத்தர பிரதேசம்',
+    'West Bengal': 'மேற்கு வங்காளம்',
+    'Chhattisgarh': 'சத்தீஸ்கர்',
+    'Punjab': 'பஞ்சாப்',
+  },
+  bn: {
+    'Bihar': 'বিহার',
+    'West Bengal': 'পশ্চিমবঙ্গ',
+    'Uttar Pradesh': 'উত্তর প্রদেশ',
+    'Delhi': 'দিল্লি',
+    'Assam': 'আসাম',
+    'Odisha': 'ওড়িশা',
+  },
+  te: {
+    'Andhra Pradesh': 'ఆంధ్రప్రదేశ్',
+    'Telangana': 'తెలంగాణ',
+    'Karnataka': 'కర్ణాటక',
+    'Tamil Nadu': 'తమిళనాడు',
+    'Kerala': 'కేరళ',
+  },
+  kn: {
+    'Karnataka': 'ಕರ್ನಾಟಕ',
+    'Andhra Pradesh': 'ಆಂಧ್ರ ಪ್ರದೇಶ',
+    'Tamil Nadu': 'ತಮಿಳು ನಾಡು',
+    'Kerala': 'ಕೇರಳ',
+  },
+  mr: {
+    'Maharashtra': 'महाराष्ट्र',
+    'Goa': 'गोवा',
+  },
+  gu: {
+    'Gujarat': 'ગુજરાત',
+    'Rajasthan': 'રાજસ્થાન',
+  },
+}
+
+const CATEGORY_LABELS: Partial<Record<LangCode, Record<string, string>>> = {
+  en: {
+    General: 'General',
+    OBC: 'OBC',
+    SC: 'SC',
+    ST: 'ST',
+    EWS: 'EWS',
+  },
+  hi: {
+    General: 'General (सामान्य)',
+    OBC: 'OBC (पिछड़ा वर्ग)',
+    SC: 'SC (अनुसूचित जाति)',
+    ST: 'ST (अनुसूचित जनजाति)',
+    EWS: 'EWS (आर्थिक रूप से कमज़ोर)',
+  },
+  ta: {
+    General: 'General (பொது)',
+    OBC: 'OBC (பிற்படுத்தப்பட்டோர்)',
+    SC: 'SC (தாழ்த்தப்பட்டோர்)',
+    ST: 'ST (பழங்குடியினர்)',
+    EWS: 'EWS (பொருளாதார பின்தங்கியோர்)',
+  },
+  bn: {
+    General: 'General (সাধারণ)',
+    OBC: 'OBC (অন্যান্য পিছিয়ে পড়া)',
+    SC: 'SC (তফসিলি জাতি)',
+    ST: 'ST (তফসিলি উপজাতি)',
+    EWS: 'EWS (অর্থনৈতিকভাবে দুর্বল)',
+  },
+  te: {
+    General: 'General (సాధారణ)',
+    OBC: 'OBC (ఇతర వెనుకబడిన వర్గాలు)',
+    SC: 'SC (షెడ్యూల్డ్ కులాలు)',
+    ST: 'ST (షెడ్యూల్డ్ తెగలు)',
+    EWS: 'EWS (ఆర్థికంగా బలహీన వర్గాలు)',
+  },
+  mr: {
+    General: 'General (सामान्य)',
+    OBC: 'OBC (इतर मागासवर्गीय)',
+    SC: 'SC (अनुसूचित जाती)',
+    ST: 'ST (अनुसूचित जमाती)',
+    EWS: 'EWS (आर्थिकदृष्ट्या दुर्बल)',
+  },
+  gu: {
+    General: 'General (સામાન્ય)',
+    OBC: 'OBC (અન્ય પછાત વર્ગ)',
+    SC: 'SC (અનુસૂચિત જાતિ)',
+    ST: 'ST (અનુસૂચિત જનજાતિ)',
+    EWS: 'EWS (આર્થિક રીતે નબળા)',
+  },
+  kn: {
+    General: 'General (ಸಾಮಾನ್ಯ)',
+    OBC: 'OBC (ಇತರ ಹಿಂದುಳಿದ ವರ್ಗಗಳು)',
+    SC: 'SC (ಪರಿಶಿಷ್ಟ ಜಾತಿಗಳು)',
+    ST: 'ST (ಪರಿಶಿಷ್ಟ ಪಂಗಡಗಳು)',
+    EWS: 'EWS (ಆರ್ಥಿಕವಾಗಿ ದುರ್ಬಲ)',
+  },
+}
+
+const GENDER_LABELS: Partial<Record<LangCode, Record<string, string>>> = {
+  en: {
+    Male: 'Male',
+    Female: 'Female',
+    Other: 'Other',
+  },
+  hi: {
+    Male: 'Male (पुरुष)',
+    Female: 'Female (महिला)',
+    Other: 'Other (अन्य)',
+  },
+  ta: {
+    Male: 'Male (ஆண்)',
+    Female: 'Female (பெண்)',
+    Other: 'Other (மற்றவர்)',
+  },
+  bn: {
+    Male: 'Male (পুরুষ)',
+    Female: 'Female (মহিলা)',
+    Other: 'Other (অন্যান্য)',
+  },
+  te: {
+    Male: 'Male (పురుషుడు)',
+    Female: 'Female (స్త్రీ)',
+    Other: 'Other (ఇతరులు)',
+  },
+  mr: {
+    Male: 'Male (पुरुष)',
+    Female: 'Female (महिला)',
+    Other: 'Other (इतर)',
+  },
+  gu: {
+    Male: 'Male (પુરૂષ)',
+    Female: 'Female (મહિલા)',
+    Other: 'Other (અન્ય)',
+  },
+  kn: {
+    Male: 'Male (ಪುರುಷ)',
+    Female: 'Female (ಮಹಿಳೆ)',
+    Other: 'Other (ಇತರರು)',
+  },
+}
+
+const translateSearchQuery = (q: string) => {
+  const lower = q.toLowerCase().trim()
+  for (const [regional, english] of Object.entries(SEARCH_TRANSLATIONS)) {
+    if (lower.includes(regional.toLowerCase())) {
+      return english
+    }
+  }
+  return q
+}
+
 const STATE_TRANSLATIONS: Record<string, string> = {
   'தமிழ் நாடு': 'Tamil Nadu',
   'தமிழ்நாடு': 'Tamil Nadu',
@@ -263,6 +468,33 @@ export default function YojanaAIPage() {
 
   const uiCopy = lang === 'en' ? FALLBACK_COPY.en : FALLBACK_COPY.hi
   const currentQuestion = QUESTIONS_DATA[currentStep]
+  const getStateDisplayName = useCallback((englishName: string): string => {
+    if (lang === 'en') return englishName
+    return STATE_NAMES[lang]?.[englishName] ?? englishName
+  }, [lang])
+
+  const getStateSearchPlaceholder = useCallback((): string => {
+    if (lang === 'ta') return 'மாநிலம் தேடுங்கள்...'
+    if (lang === 'hi') return 'राज्य खोजें...'
+    if (lang === 'bn') return 'রাজ্য খুঁজুন...'
+    if (lang === 'te') return 'రాష్ట్రం వెతకండి...'
+    if (lang === 'kn') return 'ರಾಜ್ಯ ಹುಡುಕಿ...'
+    if (lang === 'mr') return 'राज्य शोधा...'
+    if (lang === 'gu') return 'રાજ્ય શોધો...'
+    return 'Search state...'
+  }, [lang])
+
+  const getReasonPlaceholder = useCallback((): string => {
+    if (lang === 'ta') return 'தகுதி காரணம் ஏற்றப்படுகிறது...'
+    if (lang === 'hi') return 'Eligibility reason load ho raha hai...'
+    if (lang === 'bn') return 'যোগ্যতার কারণ লোড হচ্ছে...'
+    if (lang === 'te') return 'అర్హత కారణం లోడ్ అవుతోంది...'
+    if (lang === 'kn') return 'ಅರ್ಹತಾ ಕಾರಣ ಲೋಡ್ ಆಗುತ್ತಿದೆ...'
+    if (lang === 'mr') return 'पात्रतेचे कारण लोड होत आहे...'
+    if (lang === 'gu') return 'પાત્રતાનું કારણ લોડ થઈ રહ્યું છે...'
+    return 'Loading eligibility reason...'
+  }, [lang])
+
   const filteredQuestionOptions = useMemo(() => {
     if (!currentQuestion?.options) return []
     if (currentQuestion.id !== 'state' || !stateSearchQuery.trim()) {
@@ -270,12 +502,15 @@ export default function YojanaAIPage() {
     }
     const stateSearch = stateSearchQuery.trim()
     const normalizedStateSearch = normalizeState(stateSearch)
+    const lowerStateSearch = stateSearch.toLowerCase()
+    const lowerNormalizedSearch = normalizedStateSearch.toLowerCase()
     return currentQuestion.options.filter(option =>
-      option.toLowerCase().includes(stateSearch.toLowerCase()) ||
-      normalizedStateSearch.toLowerCase().includes(option.toLowerCase()) ||
-      option.toLowerCase().includes(normalizedStateSearch.toLowerCase())
+      option.toLowerCase().includes(lowerStateSearch) ||
+      lowerNormalizedSearch.includes(option.toLowerCase()) ||
+      option.toLowerCase().includes(lowerNormalizedSearch) ||
+      getStateDisplayName(option).toLowerCase().includes(lowerStateSearch)
     )
-  }, [currentQuestion, stateSearchQuery])
+  }, [currentQuestion, getStateDisplayName, stateSearchQuery])
 
   useEffect(() => {
     let interval: any;
@@ -334,8 +569,9 @@ export default function YojanaAIPage() {
     setSearching(true)
     searchTimeout.current = setTimeout(async () => {
       try {
+        const translatedQuery = translateSearchQuery(query.trim())
         const res = await fetch(
-          `/api/schemes/search?q=${encodeURIComponent(query.trim())}`
+          `/api/schemes/search?q=${encodeURIComponent(translatedQuery)}`
         )
         const data = await res.json()
         setSearchResults(data.results ?? [])
@@ -374,6 +610,38 @@ export default function YojanaAIPage() {
         body: JSON.stringify({ answers: apiAnswers })
       })
       const data = await response.json()
+      if (lang !== 'hi' && lang !== 'en' && data?.profile && data?.matched_schemes?.length) {
+        const localizedEntries = await Promise.allSettled(
+          data.matched_schemes.slice(0, 6).map(async (scheme: any) => {
+            const res = await fetch('/api/explain', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                scheme_id: scheme.id,
+                scheme_name: scheme.name ?? scheme.id,
+                benefit: scheme.estimated_benefit,
+                profile: data.profile,
+                ui_lang: lang,
+              })
+            })
+            const explanationData = await res.json() as SchemeExplanation
+            return { schemeId: scheme.id, explanationData }
+          })
+        )
+
+        setExplanation(prev => {
+          const next = { ...prev }
+          for (const entry of localizedEntries) {
+            if (entry.status === 'fulfilled') {
+              next[entry.value.schemeId] = {
+                ...(next[entry.value.schemeId] ?? {}),
+                ...entry.value.explanationData,
+              }
+            }
+          }
+          return next
+        })
+      }
       setResults(data)
     } catch (error) {
       console.error("API Error", error)
@@ -403,6 +671,68 @@ export default function YojanaAIPage() {
       setLoadingExplain(false)
     }
   }
+
+  useEffect(() => {
+    if (screen !== 'results' || !results?.profile || !results?.matched_schemes?.length) {
+      return
+    }
+    if (lang === 'hi' || lang === 'en') {
+      return
+    }
+
+    const missingSchemeIds = results.matched_schemes
+      .map((scheme: any) => scheme.id)
+      .filter((schemeId: string) => !explanation[schemeId]?.why_you_qualify)
+
+    if (missingSchemeIds.length === 0) {
+      return
+    }
+
+    let cancelled = false
+
+    const hydrateLocalizedReasons = async () => {
+      const updates = await Promise.allSettled(
+        results.matched_schemes
+          .filter((scheme: any) => missingSchemeIds.includes(scheme.id))
+          .map(async (scheme: any) => {
+            const res = await fetch('/api/explain', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                scheme_id: scheme.id,
+                scheme_name: scheme.name ?? scheme.id,
+                benefit: scheme.estimated_benefit,
+                profile: results.profile,
+                ui_lang: lang,
+              })
+            })
+            const data = await res.json() as SchemeExplanation
+            return { schemeId: scheme.id, data }
+          })
+      )
+
+      if (cancelled) return
+
+      setExplanation(prev => {
+        const next = { ...prev }
+        for (const update of updates) {
+          if (update.status === 'fulfilled') {
+            next[update.value.schemeId] = {
+              ...(next[update.value.schemeId] ?? {}),
+              ...update.value.data,
+            }
+          }
+        }
+        return next
+      })
+    }
+
+    void hydrateLocalizedReasons()
+
+    return () => {
+      cancelled = true
+    }
+  }, [explanation, lang, results, screen])
 
   const handleStart = useCallback(() => {
     setResults(null)
@@ -491,6 +821,9 @@ export default function YojanaAIPage() {
   }, [])
 
   const getTranslatedOption = useCallback((q: any, opt: string) => {
+    if (q.id === 'state') {
+      return getStateDisplayName(opt)
+    }
     if (q.id === 'income') {
       if (opt.includes("0 – 1")) return t.income_opt1 || opt
       if (opt.includes("1 – 3")) return t.income_opt2 || opt
@@ -505,8 +838,14 @@ export default function YojanaAIPage() {
       if (opt.includes("Business")) return t.occ_business || opt
       if (opt.includes("Kaam nahi")) return t.occ_unemployed || opt
     }
+    if (q.id === 'category') {
+      return CATEGORY_LABELS[lang]?.[opt] ?? CATEGORY_LABELS.en?.[opt] ?? opt
+    }
+    if (q.id === 'gender') {
+      return GENDER_LABELS[lang]?.[opt] ?? GENDER_LABELS.en?.[opt] ?? opt
+    }
     return opt
-  }, [t])
+  }, [getStateDisplayName, lang, t])
 
   const getApplyUrl = (schemeId: string): string => {
     const VERIFIED_URLS: Record<string, string> = {
@@ -1070,7 +1409,7 @@ export default function YojanaAIPage() {
                         autoFocus
                         className="search-input"
                         aria-label={qText as string}
-                        placeholder={uiCopy.searchPlaceholder}
+                        placeholder={getStateSearchPlaceholder()}
                         value={stateSearchQuery}
                         onChange={handleStateSearchChange}
                       />
@@ -1225,6 +1564,10 @@ export default function YojanaAIPage() {
                 
                 const derivedName = s.name || s.id
                 const schemeReason = s.reason || s.reasoning || ''
+                const displayReason =
+                  lang !== 'hi' && lang !== 'en'
+                    ? schemeExpl?.why_you_qualify ?? getReasonPlaceholder()
+                    : schemeReason
                 const categoryIcon = getCategoryIcon(derivedName, schemeReason)
                 const isHighConfidence = typeof s.confidence === 'number' ? s.confidence >= 0.85 : s.confidence === 'high'
 
@@ -1253,7 +1596,7 @@ export default function YojanaAIPage() {
                     </div>
 
                     <p className="reason">
-                      {schemeReason}
+                      {displayReason}
                     </p>
 
                     <button 
