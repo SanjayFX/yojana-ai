@@ -1,0 +1,31 @@
+- generic [ref=e1]:
+  - link "Skip to main content" [ref=e2] [cursor=pointer]:
+    - /url: "#main"
+  - main [ref=e3]:
+    - generic [ref=e60]:
+      - navigation [ref=e62]:
+        - button "← திரும்பு" [ref=e64] [cursor=pointer]
+        - generic [ref=e65]: படி 5 இல் 6
+        - generic [ref=e67] [cursor=pointer]: YojanaAI
+      - generic [ref=e187]:
+        - generic [ref=e189]:
+          - generic [ref=e190]: Q5
+          - heading "நீங்கள் என்ன செய்கிறீர்கள்?" [level=2] [ref=e191]
+          - paragraph [ref=e192]: Your occupation?
+        - button "விவசாயி" [ref=e193] [cursor=pointer]:
+          - generic [ref=e194]: விவசாயி
+        - button "மாணவர்" [active] [pressed] [ref=e195] [cursor=pointer]:
+          - generic [ref=e196]: மாணவர்
+          - generic [ref=e205]: ✓
+        - button "அரசு வேலை" [ref=e197] [cursor=pointer]:
+          - generic [ref=e198]: அரசு வேலை
+        - button "தனியார் வேலை" [ref=e199] [cursor=pointer]:
+          - generic [ref=e200]: தனியார் வேலை
+        - button "வணிகம்" [ref=e201] [cursor=pointer]:
+          - generic [ref=e202]: வணிகம்
+        - button "வேலையில்லாதவர்" [ref=e203] [cursor=pointer]:
+          - generic [ref=e204]: வேலையில்லாதவர்
+      - button "தொடரவும் →" [ref=e144] [cursor=pointer]
+  - button "Open Next.js Dev Tools" [ref=e53] [cursor=pointer]:
+    - img [ref=e54]
+  - alert [ref=e57]

@@ -53,6 +53,25 @@ function normalizeActions(
   ) as Record<string, ActionData>;
 }
 
+function attachSchemeHelplines(
+  actions: Record<string, ActionData>,
+  schemes: SchemeData[]
+) {
+  const helplineLookup = new Map(
+    schemes.map((scheme) => [scheme.id, scheme.helpline ?? undefined] as const)
+  );
+
+  return Object.fromEntries(
+    Object.entries(actions).map(([id, action]) => [
+      id,
+      {
+        ...action,
+        helpline: action.helpline ?? helplineLookup.get(id),
+      },
+    ])
+  ) as Record<string, ActionData>;
+}
+
 export async function POST(request: NextRequest) {
   const startTime = Date.now();
 
@@ -99,7 +118,10 @@ export async function POST(request: NextRequest) {
       })
     );
 
-    const normalizedActions = Object.assign({}, ...actionResponses);
+    const normalizedActions = attachSchemeHelplines(
+      Object.assign({}, ...actionResponses),
+      schemes
+    );
 
     const processingTime = Date.now() - startTime;
     return successResponse({ actions: normalizedActions }, processingTime);

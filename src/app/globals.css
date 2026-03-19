@@ -826,6 +826,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
 }
 
 .flag-chakra {
@@ -833,7 +834,28 @@ body {
   height: 6px;
   border-radius: 50%;
   border: 1px solid #000080;
-  opacity: 0.8;
+  position: relative;
+  opacity: 0.85;
+}
+.flag-chakra::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 1px;
+  height: 100%;
+  background: #000080;
+  transform: translate(-50%, -50%) rotate(0deg);
+  box-shadow:
+    0 0 0 0 #000080,
+    0.8px 0 0 0 #000080,
+    -0.8px 0 0 0 #000080,
+    0 0.8px 0 0 #000080,
+    0 -0.8px 0 0 #000080,
+    0.6px 0.6px 0 0 #000080,
+    -0.6px 0.6px 0 0 #000080,
+    0.6px -0.6px 0 0 #000080,
+    -0.6px -0.6px 0 0 #000080;
 }
 
 .flag-green {

@@ -1,0 +1,221 @@
+- generic [active] [ref=e1]:
+  - link "Skip to main content" [ref=e2] [cursor=pointer]:
+    - /url: "#main"
+  - main [ref=e3]:
+    - generic [ref=e239]:
+      - navigation [ref=e241]:
+        - button "← திரும்பு" [ref=e243] [cursor=pointer]
+        - generic [ref=e245] [cursor=pointer]: YojanaAI
+      - generic [ref=e252]:
+        - paragraph [ref=e253]: Results
+        - heading "🎉 6 திட்டங்கள் கிடைத்தன!" [level=2] [ref=e254]
+        - paragraph [ref=e255]: "மொத்த மதிப்பிடப்பட்ட நலன்: Varies, at least INR 24,000 (from CSSS_CUS and NMMSS if eligible for both) plus potential ..."
+      - generic [ref=e256]:
+        - generic [ref=e257]:
+          - generic [ref=e258]:
+            - generic [ref=e259]:
+              - generic [ref=e260]: 📚
+              - heading "National Scholarship Portal" [level=3] [ref=e261]
+            - generic [ref=e262]: Varies by scholarship
+          - generic [ref=e263]: ✓ நிச்சயமாக தகுதியுடையவர்
+          - paragraph [ref=e264]: The citizen is a student, which is the primary requirement for using the National Scholarship Portal. Actual eligibility for specific scholarships on the portal will depend on her academic performance and other criteria.
+          - button "விவரங்கள் காட்டு ▼" [ref=e265] [cursor=pointer]:
+            - text: விவரங்கள் காட்டு
+            - generic [ref=e266]: ▼
+          - generic [ref=e267]:
+            - heading "📄 தேவையான ஆவணங்கள் (4)" [level=4] [ref=e268]
+            - generic [ref=e269]:
+              - generic [ref=e270]: Aadhaar Card or NSP One-Time Registration details
+              - generic [ref=e272]: Previous academic marksheet
+              - generic [ref=e274]: Income certificate
+              - generic [ref=e276]: Bank account details
+            - heading "📋 விண்ணப்பிப்பது எப்படி" [level=4] [ref=e278]
+            - generic [ref=e279]:
+              - generic [ref=e280]:
+                - generic [ref=e281]: "1"
+                - generic [ref=e282]: "Step 1: Visit the National Scholarship Portal (NSP) website."
+              - generic [ref=e283]:
+                - generic [ref=e284]: "2"
+                - generic [ref=e285]: "Step 2: Register as a new user and fill out the application form with your academic and personal details."
+              - generic [ref=e286]:
+                - generic [ref=e287]: "3"
+                - generic [ref=e288]: "Step 3: Upload required documents, review your application, and submit it online."
+          - generic [ref=e289]:
+            - button "விண்ணப்பிக்கவும் →" [ref=e290] [cursor=pointer]
+            - button "WhatsApp-ல் பகிரவும்" [ref=e291] [cursor=pointer]:
+              - img [ref=e292]
+              - text: WhatsApp-ல் பகிரவும்
+        - generic [ref=e294]:
+          - generic [ref=e295]:
+            - generic [ref=e296]:
+              - generic [ref=e297]: 📚
+              - heading "Pudhumai Penn Scheme (Moovalur Ramamirtham Ammaiyar Higher Education Assurance Scheme)" [level=3] [ref=e298]
+            - generic [ref=e299]: INR 1,000 per month
+          - generic [ref=e300]: ~ ஒருவேளை தகுதியுடையவர்
+          - paragraph [ref=e301]: The citizen is a 19-year-old female student in Tamil Nadu, which aligns with the scheme's gender, age, occupation, and state requirements. Eligibility is likely, but requires confirmation that she studied in government schools from 6th to 12th standard.
+          - button "விவரங்கள் காட்டு ▼" [ref=e302] [cursor=pointer]:
+            - text: விவரங்கள் காட்டு
+            - generic [ref=e303]: ▼
+          - generic [ref=e304]:
+            - heading "📄 தேவையான ஆவணங்கள் (4)" [level=4] [ref=e305]
+            - generic [ref=e306]:
+              - generic [ref=e307]: Aadhaar Card
+              - generic [ref=e309]: Bank Passbook
+              - generic [ref=e311]: School Transfer Certificate
+              - generic [ref=e313]: College Admission Proof
+            - heading "📋 விண்ணப்பிப்பது எப்படி" [level=4] [ref=e315]
+            - generic [ref=e316]:
+              - generic [ref=e317]:
+                - generic [ref=e318]: "1"
+                - generic [ref=e319]: "Step 1: Visit the Pudhumai Penn Scheme official portal."
+              - generic [ref=e320]:
+                - generic [ref=e321]: "2"
+                - generic [ref=e322]: "Step 2: Register and fill out the online application form with your educational and personal details."
+              - generic [ref=e323]:
+                - generic [ref=e324]: "3"
+                - generic [ref=e325]: "Step 3: Upload necessary documents and submit your application, or apply through your educational institution."
+          - generic [ref=e326]:
+            - button "விண்ணப்பிக்கவும் →" [ref=e327] [cursor=pointer]
+            - button "WhatsApp-ல் பகிரவும்" [ref=e328] [cursor=pointer]:
+              - img [ref=e329]
+              - text: WhatsApp-ல் பகிரவும்
+        - generic [ref=e331]:
+          - generic [ref=e332]:
+            - generic [ref=e333]:
+              - generic [ref=e334]: 💰
+              - heading "Kalaignar Magalir Urimai Thogai Scheme" [level=3] [ref=e335]
+            - generic [ref=e336]: INR 1,000 per month
+          - generic [ref=e337]: ~ ஒருவேளை தகுதியுடையவர்
+          - paragraph [ref=e338]: The citizen is a female in Tamil Nadu with an annual income of INR 50,000, which is below the INR 2.5 lakh limit. However, she is 19, and the scheme requires a minimum age of 21, making her currently ineligible by age.
+          - button "விவரங்கள் காட்டு ▼" [ref=e339] [cursor=pointer]:
+            - text: விவரங்கள் காட்டு
+            - generic [ref=e340]: ▼
+          - generic [ref=e341]:
+            - heading "📄 தேவையான ஆவணங்கள் (4)" [level=4] [ref=e342]
+            - generic [ref=e343]:
+              - generic [ref=e344]: Aadhaar Card
+              - generic [ref=e346]: Ration Card
+              - generic [ref=e348]: Bank Passbook
+              - generic [ref=e350]: Self-declaration of income and assets
+            - heading "📋 விண்ணப்பிப்பது எப்படி" [level=4] [ref=e352]
+            - generic [ref=e353]:
+              - generic [ref=e354]:
+                - generic [ref=e355]: "1"
+                - generic [ref=e356]: "Step 1: Visit the official Tamil Nadu government scheme portal or a designated camp."
+              - generic [ref=e357]:
+                - generic [ref=e358]: "2"
+                - generic [ref=e359]: "Step 2: Obtain and fill out the application form with your personal and family details."
+              - generic [ref=e360]:
+                - generic [ref=e361]: "3"
+                - generic [ref=e362]: "Step 3: Submit the completed form along with required documents at the designated collection points or online if available."
+          - generic [ref=e363]:
+            - button "விண்ணப்பிக்கவும் →" [ref=e364] [cursor=pointer]
+            - button "WhatsApp-ல் பகிரவும்" [ref=e365] [cursor=pointer]:
+              - img [ref=e366]
+              - text: WhatsApp-ல் பகிரவும்
+        - generic [ref=e368]:
+          - generic [ref=e369]:
+            - generic [ref=e370]:
+              - generic [ref=e371]: 📚
+              - heading "Central Sector Scheme of Scholarship for College and University Students" [level=3] [ref=e372]
+            - generic [ref=e373]: INR 12,000 per annum
+          - generic [ref=e374]: ~ ஒருவேளை தகுதியுடையவர்
+          - paragraph [ref=e375]: The citizen is a student with an annual income of INR 50,000, well below the INR 8 lakh limit. Eligibility is likely, but requires confirmation of being above the 80th percentile in the Class 12 board examination and pursuing a regular degree course.
+          - button "விவரங்கள் காட்டு ▼" [ref=e376] [cursor=pointer]:
+            - text: விவரங்கள் காட்டு
+            - generic [ref=e377]: ▼
+          - generic [ref=e378]:
+            - heading "📄 தேவையான ஆவணங்கள் (4)" [level=4] [ref=e379]
+            - generic [ref=e380]:
+              - generic [ref=e381]: 12th Mark Sheet
+              - generic [ref=e383]: Family Income Certificate
+              - generic [ref=e385]: Category/ caste Certification (for reserved category students)
+              - generic [ref=e387]: Disability Certificate (if applicable)
+            - heading "📋 விண்ணப்பிப்பது எப்படி" [level=4] [ref=e389]
+            - generic [ref=e390]:
+              - generic [ref=e391]:
+                - generic [ref=e392]: "1"
+                - generic [ref=e393]: "Step 1: Access the National Scholarship Portal and register or log in."
+              - generic [ref=e394]:
+                - generic [ref=e395]: "2"
+                - generic [ref=e396]: "Step 2: Navigate to the 'Central Sector Scheme of Scholarship for College and University Students' and fill in the application."
+              - generic [ref=e397]:
+                - generic [ref=e398]: "3"
+                - generic [ref=e399]: "Step 3: Upload necessary academic certificates and income proof, then submit your application."
+          - generic [ref=e400]:
+            - button "விண்ணப்பிக்கவும் →" [ref=e401] [cursor=pointer]
+            - button "WhatsApp-ல் பகிரவும்" [ref=e402] [cursor=pointer]:
+              - img [ref=e403]
+              - text: WhatsApp-ல் பகிரவும்
+        - generic [ref=e405]:
+          - generic [ref=e406]:
+            - generic [ref=e407]:
+              - generic [ref=e408]: 📚
+              - heading "National Means-cum-Merit Scholarship Scheme" [level=3] [ref=e409]
+            - generic [ref=e410]: INR 12,000 per annum
+          - generic [ref=e411]: ~ ஒருவேளை தகுதியுடையவர்
+          - paragraph [ref=e412]: The citizen is a student with a parental income of INR 50,000, which is below the INR 3.5 lakh limit. Eligibility is likely, but requires confirmation of having passed Class 8 and meeting NMMSS exam or admission conditions, which may not apply to a 19-year-old.
+          - button "விவரங்கள் காட்டு ▼" [ref=e413] [cursor=pointer]:
+            - text: விவரங்கள் காட்டு
+            - generic [ref=e414]: ▼
+          - generic [ref=e415]:
+            - heading "📄 தேவையான ஆவணங்கள் (4)" [level=4] [ref=e416]
+            - generic [ref=e417]:
+              - generic [ref=e418]: Aadhaar Card
+              - generic [ref=e420]: Educational Certificates/ marksheet
+              - generic [ref=e422]: Caste Certificate
+              - generic [ref=e424]: Income Certificate of Parents
+            - heading "📋 விண்ணப்பிப்பது எப்படி" [level=4] [ref=e426]
+            - generic [ref=e427]:
+              - generic [ref=e428]:
+                - generic [ref=e429]: "1"
+                - generic [ref=e430]: "Step 1: Go to the National Scholarship Portal and register or log in."
+              - generic [ref=e431]:
+                - generic [ref=e432]: "2"
+                - generic [ref=e433]: "Step 2: Find the 'National Means-cum-Merit Scholarship Scheme' and complete the application form."
+              - generic [ref=e434]:
+                - generic [ref=e435]: "3"
+                - generic [ref=e436]: "Step 3: Attach required documents like income certificate and academic records, then submit."
+          - generic [ref=e437]:
+            - button "விண்ணப்பிக்கவும் →" [ref=e438] [cursor=pointer]
+            - button "WhatsApp-ல் பகிரவும்" [ref=e439] [cursor=pointer]:
+              - img [ref=e440]
+              - text: WhatsApp-ல் பகிரவும்
+        - generic [ref=e442]:
+          - generic [ref=e443]:
+            - generic [ref=e444]:
+              - generic [ref=e445]: 📚
+              - heading "Tamil Nadu Rural Livelihood Mission (TNRLM) - Expansion of Self-Help Groups" [level=3] [ref=e446]
+            - generic [ref=e447]: Support for SHGs, skill training, access to credit
+          - generic [ref=e448]: ~ ஒருவேளை தகுதியுடையவர்
+          - paragraph [ref=e449]: The citizen is a 19-year-old female in Tamil Nadu, meeting the gender and state criteria. While she is a student, if she is also a rural woman and forms or joins a Self-Help Group, she could be eligible.
+          - button "விவரங்கள் காட்டு ▼" [ref=e450] [cursor=pointer]:
+            - text: விவரங்கள் காட்டு
+            - generic [ref=e451]: ▼
+          - generic [ref=e452]:
+            - heading "📄 தேவையான ஆவணங்கள் (2)" [level=4] [ref=e453]
+            - generic [ref=e454]:
+              - generic [ref=e455]: Aadhaar Card
+              - generic [ref=e457]: Ration Card
+            - heading "📋 விண்ணப்பிப்பது எப்படி" [level=4] [ref=e459]
+            - generic [ref=e460]:
+              - generic [ref=e461]:
+                - generic [ref=e462]: "1"
+                - generic [ref=e463]: "Step 1: Contact your local Panchayat office or Block Development Officer (BDO) for information on SHG formation."
+              - generic [ref=e464]:
+                - generic [ref=e465]: "2"
+                - generic [ref=e466]: "Step 2: Participate in the formation of a Self-Help Group (SHG) with other rural women in your area."
+              - generic [ref=e467]:
+                - generic [ref=e468]: "3"
+                - generic [ref=e469]: "Step 3: Attend skill training programs and apply for credit access through your SHG as guided by TNRLM officials."
+          - generic [ref=e470]:
+            - button "விண்ணப்பிக்கவும் →" [ref=e471] [cursor=pointer]
+            - button "WhatsApp-ல் பகிரவும்" [ref=e472] [cursor=pointer]:
+              - img [ref=e473]
+              - text: WhatsApp-ல் பகிரவும்
+        - generic [ref=e475]:
+          - button "🔄 மீண்டும் சரிபார்க்கவும்" [ref=e476] [cursor=pointer]
+          - button "💾 PDF ஆக சேமிக்கவும்" [ref=e477] [cursor=pointer]
+  - button "Open Next.js Dev Tools" [ref=e53] [cursor=pointer]:
+    - img [ref=e54]
+  - alert [ref=e57]

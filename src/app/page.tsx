@@ -6,6 +6,17 @@ import { useLang } from '@/lib/context/LanguageContext'
 
 type Screen = 'hero' | 'form' | 'loading' | 'results'
 
+type SchemeExplanation = {
+  why_you_qualify?: string
+  first_step?: string
+  watch_out_for?: string
+  success_tip?: string
+  estimated_time?: string
+  difficulty?: 'easy' | 'medium' | 'hard'
+  error?: string
+  fallback?: boolean
+}
+
 const QUESTIONS_DATA = [
   { id:"state", hi:"Aap kahan rehte hain?", en:"Which state?",
     type:"select", options:["Andhra Pradesh","Arunachal Pradesh",
@@ -94,6 +105,9 @@ export default function YojanaAIPage() {
   const [answers, setAnswers] = useState<Record<string, any>>({})
   const [results, setResults] = useState<any>(null)
   const [schemeCount, setSchemeCount] = useState<number>(558)
+  const [explanation, setExplanation] =
+    useState<Record<string, SchemeExplanation>>({})
+  const [loadingExplain, setLoadingExplain] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
   const [searchResults, setSearchResults] = useState<Array<{
     id: string
@@ -216,9 +230,31 @@ export default function YojanaAIPage() {
     }
   }, [])
 
+  const getExplanation = async (scheme: any) => {
+    if (!results?.profile) return
+    setLoadingExplain(true)
+    try {
+      const res = await fetch('/api/explain', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          scheme_id: scheme.id,
+          scheme_name: scheme.name ?? scheme.id,
+          benefit: scheme.estimated_benefit,
+          profile: results.profile,
+        })
+      })
+      const data = await res.json() as SchemeExplanation
+      setExplanation(prev => ({ ...(prev ?? {}), [scheme.id]: data }))
+    } finally {
+      setLoadingExplain(false)
+    }
+  }
+
   const handleStart = useCallback(() => {
     setResults(null)
     setAnswers({})
+    setExplanation({})
     setExpandedCards({})
     setCurrentStep(0)
     setStateSearchQuery('')
@@ -248,6 +284,7 @@ export default function YojanaAIPage() {
   const resetToHome = useCallback(() => {
     setScreen('hero')
     setAnswers({})
+    setExplanation({})
     setExpandedCards({})
     setResults(null)
     setCurrentStep(0)
@@ -473,7 +510,37 @@ export default function YojanaAIPage() {
       <span className="flag-wrap" aria-hidden="true">
         <span className="flag-saffron"/>
         <span className="flag-white">
-          <span className="flag-chakra"/>
+          <svg
+            width="6"
+            height="6"
+            viewBox="0 0 24 24"
+            style={{
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)'
+            }}
+            aria-hidden="true"
+          >
+            <circle cx="12" cy="12" r="10"
+              fill="none" stroke="#000080"
+              strokeWidth="1.5"/>
+            <circle cx="12" cy="12" r="2"
+              fill="#000080"/>
+            {Array.from({ length: 24 }).map((_, i) => {
+              const angle = (i * 15 * Math.PI) / 180
+              return (
+                <line
+                  key={i}
+                  x1="12" y1="12"
+                  x2={12 + 9 * Math.cos(angle)}
+                  y2={12 + 9 * Math.sin(angle)}
+                  stroke="#000080"
+                  strokeWidth="0.8"
+                />
+              )
+            })}
+          </svg>
         </span>
         <span className="flag-green"/>
       </span>
@@ -573,15 +640,27 @@ export default function YojanaAIPage() {
                     pointerEvents: 'none',
                     opacity: 0.4
                   }}>🔍</span>
-                  <input
-                    type="text"
-                    value={searchQuery}
-                    onChange={e => handleSearch(e.target.value)}
-                    placeholder={
-                      lang === 'en'
-                        ? 'Search any scheme... e.g. PM Kisan'
-                        : 'Koi bhi yojana dhundho...'
-                    }
+                    <input
+                      type="text"
+                      value={searchQuery}
+                      onChange={e => handleSearch(e.target.value)}
+                      placeholder={
+                        lang === 'hi'
+                          ? 'किसान, स्वास्थ्य, शिक्षा...'
+                          : lang === 'bn'
+                            ? 'কৃষক, স্বাস্থ্য, শিক্ষা...'
+                            : lang === 'ta'
+                              ? 'விவசாயி, ஆரோக்கியம்...'
+                              : lang === 'te'
+                                ? 'రైతు, ఆరోగ్యం...'
+                                : lang === 'mr'
+                                  ? 'शेतकरी, आरोग्य...'
+                                  : lang === 'gu'
+                                    ? 'ખેડૂત, આરોગ્ય...'
+                                    : lang === 'kn'
+                                      ? 'ರೈತ, ಆರೋಗ್ಯ...'
+                                      : 'Search schemes... e.g. PM Kisan'
+                      }
                     style={{
                       width: '100%',
                       height: '50px',
@@ -982,6 +1061,7 @@ export default function YojanaAIPage() {
               {results.matched_schemes.map((s: any, i: number) => {
                 const schemeDocs = results.documents?.[s.id] || []
                 const schemeAction = results.actions?.[s.id] || {}
+                const schemeExpl = explanation[s.id]
                 const isExpanded = expandedCards[i.toString()]
                 
                 const derivedName = s.name || s.id
@@ -1052,6 +1132,83 @@ export default function YojanaAIPage() {
                             </div>
                           ))}
                         </div>
+
+                        <button
+                          onClick={() => getExplanation(s)}
+                          style={{
+                            background: 'none',
+                            border: 'none',
+                            color: 'var(--saffron)',
+                            fontSize: '12px',
+                            fontWeight: 600,
+                            cursor: 'pointer',
+                            padding: '4px 0',
+                            textDecoration: 'underline'
+                          }}>
+                          {loadingExplain
+                            ? '...'
+                            : lang === 'hi'
+                              ? 'Mujhe kyon qualify karta hai? →'
+                              : 'Why do I qualify? →'}
+                        </button>
+
+                        {schemeExpl && (
+                          <div style={{
+                            marginTop: '10px',
+                            borderTop: '1px solid var(--border)',
+                            paddingTop: '10px'
+                          }}>
+                            <div style={{
+                              fontSize: '12px',
+                              color: 'var(--ink-soft)',
+                              marginBottom: '6px',
+                              fontWeight: 700
+                            }}>{schemeExpl.difficulty}</div>
+                            {schemeExpl.why_you_qualify && (
+                              <p style={{ marginBottom: '6px', fontSize: '12px' }}>
+                                {(schemeExpl.why_you_qualify as string)}
+                              </p>
+                            )}
+                            {schemeExpl.first_step && (
+                              <p style={{ marginBottom: '6px', fontSize: '12px' }}>
+                                {(schemeExpl.first_step as string)}
+                              </p>
+                            )}
+                            {schemeExpl.watch_out_for && (
+                              <p style={{ marginBottom: '6px', fontSize: '12px' }}>
+                                {(schemeExpl.watch_out_for as string)}
+                              </p>
+                            )}
+                            {schemeExpl.success_tip && (
+                              <p style={{ marginBottom: '4px', fontSize: '12px', color: 'var(--saffron)' }}>
+                                {(schemeExpl.success_tip as string)}
+                              </p>
+                            )}
+                          </div>
+                        )}
+
+                        {schemeAction.helpline && (
+                          <div style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '6px',
+                            marginTop: '8px',
+                            fontSize: '12px',
+                            color: 'var(--muted)'
+                          }}>
+                            <span>📞</span>
+                            <a
+                              href={`tel:${String(schemeAction.helpline).replace(/[^0-9+]/g, '')}`}
+                              style={{
+                                color: 'var(--saffron)',
+                                fontWeight: 600,
+                                textDecoration: 'none'
+                              }}
+                            >
+                              {(schemeAction.helpline as string)}
+                            </a>
+                          </div>
+                        )}
                       </div>
                     </div>
 

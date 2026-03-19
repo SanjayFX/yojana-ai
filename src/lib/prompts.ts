@@ -144,6 +144,24 @@ MATCHING RULES:
 Do not limit the number. If 12 schemes match, return all 12.
 Quality over quantity but do not artificially limit results.
 
+ADDITIONAL ACCURACY RULES:
+7. For income-based schemes:
+   - annual_income_inr < 100000 = BPL category
+   - annual_income_inr < 300000 = EWS category
+   - annual_income_inr < 600000 = LIG category
+   Apply these automatically even if user did not mention BPL card.
+
+8. Farmers (occupation=farmer) automatically qualify for: PM Kisan, PM Fasal Bima, Kisan Credit Card, Soil Health Card, PM Krishi Sinchai unless explicitly excluded.
+
+9. Students (occupation=student) automatically qualify for: National Scholarship Portal, Post Matric Scholarship (if SC/ST/OBC), Skill India schemes.
+
+10. Women (gender=Female) additionally qualify for all women-specific schemes regardless of other criteria unless age restricted.
+
+11. SC/ST citizens qualify for all general schemes PLUS all SC/ST specific schemes.
+    Never exclude SC/ST from general schemes.
+
+12. If state has state-specific schemes in the database, always include relevant ones.
+
 REASON: Write the reason in ${reasonLanguage}.
 Keep it 2 sentences max. Be specific about why they qualify — mention their age, income, state, category where relevant.
 Example: "Aap qualify karte hain kyunki income Rs 2L hai jo limit se kam hai."
@@ -220,6 +238,7 @@ export function buildActionPrompt(
       benefit: s.benefit,
       apply_url: s.apply_url,
       apply_modes: s.apply_modes,
+      helpline: s.helpline,
     }));
 
   return `You are an expert guide for Indian government scheme applications.
@@ -306,6 +325,7 @@ Steps must be in ${actionLanguage}.
 - Return exactly 3 concise steps per scheme
 - easiest_mode must be one of: online, offline, CSC Center, bank
 - portal_url must be a real official URL or https://www.myscheme.gov.in/search
+- If a scheme already has a helpline in MATCHED SCHEMES, copy it exactly and do not return null for helpline
 - Mention nearest CSC (Common Service Center) as an option when relevant
 - Include state-specific portals where applicable for ${profile.state}
 - Keep time_to_apply to one short sentence

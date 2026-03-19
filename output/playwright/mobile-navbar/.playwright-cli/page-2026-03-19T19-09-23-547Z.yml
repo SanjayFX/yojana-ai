@@ -1,0 +1,19 @@
+- generic [active] [ref=e1]:
+  - link "Skip to main content" [ref=e2] [cursor=pointer]:
+    - /url: "#main"
+  - main [ref=e3]:
+    - generic [ref=e60]:
+      - navigation [ref=e62]:
+        - button "← திரும்பு" [ref=e64] [cursor=pointer]
+        - generic [ref=e65]: படி 2 இல் 6
+        - generic [ref=e67] [cursor=pointer]: YojanaAI
+      - generic [ref=e147]:
+        - generic [ref=e149]:
+          - generic [ref=e150]: Q2
+          - heading "உங்கள் வயது என்ன?" [level=2] [ref=e151]
+          - paragraph [ref=e152]: What is your age?
+        - spinbutton "உங்கள் வயது என்ன?" [ref=e154]
+      - button "தொடரவும் →" [disabled] [ref=e144]
+  - button "Open Next.js Dev Tools" [ref=e53] [cursor=pointer]:
+    - img [ref=e54]
+  - alert [ref=e57]
