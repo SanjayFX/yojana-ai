@@ -91,28 +91,6 @@ function getCategoryIcon(name: string, reason: string): string {
   return '💰'
 }
 
-const SpeakerBtn = ({ onSpeak }: { onSpeak: () => void }) => {
-  const [isPlaying, setIsPlaying] = useState(false)
-  const handleClick = useCallback(() => {
-    onSpeak()
-    setIsPlaying(true)
-    setTimeout(() => setIsPlaying(false), 2000)
-  }, [onSpeak])
-
-  return (
-    <button 
-      type="button"
-      role="button"
-      aria-label="Listen"
-      className={`mic-btn ${isPlaying ? 'listening' : ''}`}
-      onClick={handleClick}
-      style={{ width: '32px', height: '32px', fontSize: '14px' }}
-    >
-      <span aria-hidden="true">🔊</span>
-    </button>
-  )
-}
-
 export default function YojanaAIPage() {
   const { lang, setLang, t } = useLang()
   const [screen, setScreen] = useState<Screen>('hero')
@@ -263,13 +241,6 @@ export default function YojanaAIPage() {
     resetToHome()
   }, [currentStep, resetToHome])
 
-  const handleLanguageSelect = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
-    const nextLang = event.currentTarget.dataset.lang as LangCode | undefined
-    if (nextLang) {
-      setLang(nextLang)
-    }
-  }, [setLang])
-
   const handleStateSearchChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
     setStateSearchQuery(event.target.value)
   }, [])
@@ -280,7 +251,10 @@ export default function YojanaAIPage() {
     if (!questionId || !value) return
     setPulseAnswerId(value)
     setAnswers((prev) => ({ ...prev, [questionId]: value }))
-    setTimeout(() => setPulseAnswerId(null), 200)
+    // Automatically proceed to next question for select inputs to save clicks
+    setTimeout(() => {
+      setPulseAnswerId(null)
+    }, 200)
   }, [])
 
   const handleAgeChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
@@ -370,72 +344,93 @@ export default function YojanaAIPage() {
       <main id="main">
         {screen === 'hero' && (
           <div className="hero-wrap">
-            <div className="hero-bg">
-              <div className="hero-blob-1"/>
-              <div className="hero-blob-2"/>
-              <div className="hero-blob-3"/>
-            </div>
+            <div className="blob blob-1"/>
+            <div className="blob blob-2"/>
+            <div className="blob blob-3"/>
             <div className="tricolor"/>
-            <nav className="navbar glass no-print">
-              <span className="nav-logo">🇮🇳 YojanaAI</span>
-              <div className="lang-row" aria-label="Select language">
+          
+            <nav className="navbar-pill no-print">
+              <span className="nav-logo"
+                onClick={() => setScreen('hero')}>
+                🇮🇳 YojanaAI
+              </span>
+              <div className="lang-row"
+                aria-label="Select language">
                 {SUPPORTED_LANGS.map(l => (
                   <button key={l}
-                    className={`lang-pill ${lang===l?'active':''}`}
+                    className={`lang-pill${lang===l?' active':''}`}
                     onClick={() => setLang(l as LangCode)}>
                     {langLabels[l]}
                   </button>
                 ))}
               </div>
             </nav>
+          
             <div className="hero-content">
-              <div className="motif anim-fade-in">
-                <svg viewBox="0 0 80 24" fill="none" width="80" height="24">
-                  <path d="M38 12 C30 4 16 2 8 8 C16 8 28 10 38 12Z" fill="#F97316" opacity="0.6"/>
-                  <path d="M38 12 C30 20 16 22 8 16 C16 16 28 14 38 12Z" fill="#F97316" opacity="0.4"/>
-                  <circle cx="40" cy="12" r="2.5" fill="#F97316"/>
-                  <path d="M42 12 C50 4 64 2 72 8 C64 8 52 10 42 12Z" fill="#F97316" opacity="0.6"/>
-                  <path d="M42 12 C50 20 64 22 72 16 C64 16 52 14 42 12Z" fill="#F97316" opacity="0.4"/>
-                </svg>
-              </div>
-              <div className="hero-badge anim-fade-up"
+              <svg className="ornament" viewBox="0 0 72 20">
+                <path d="M34 10C27 3 15 1 7 7c8 0 20 2 27 3z"
+                  fill="#F97316" opacity="0.6"/>
+                <path d="M34 10C27 17 15 19 7 13c8 0 20-2 27-3z"
+                  fill="#F97316" opacity="0.35"/>
+                <circle cx="36" cy="10" r="2.5"
+                  fill="#F97316"/>
+                <path d="M38 10C45 3 57 1 65 7c-8 0-20 2-27 3z"
+                  fill="#F97316" opacity="0.6"/>
+                <path d="M38 10C45 17 57 19 65 13c-8 0-20-2-27-3z"
+                  fill="#F97316" opacity="0.35"/>
+              </svg>
+          
+              <div className="hero-badge a-fade-up"
                 style={{animationDelay:'0.05s'}}>
                 ✦ {uiCopy.heroBadge}
               </div>
-              <h1 className="hero-heading anim-fade-up"
+          
+              <h1 className="hero-display a-fade-up"
                 style={{animationDelay:'0.1s'}}>
-                <span>{(t as any).tagline_line1 || t.tagline}</span>{' '}
+                {(t as any).tagline_line1 || t.tagline}{' '}
                 {((t as any).tagline_line2) && (
-                  <span className="hero-heading-accent">
+                  <span className="hero-display-accent">
                     {(t as any).tagline_line2}
                   </span>
                 )}
               </h1>
-              <p className="hero-sub anim-fade-up"
+          
+              <p className="hero-body a-fade-up"
                 style={{animationDelay:'0.15s'}}>
                 {t.subtagline}
               </p>
-              <button className="btn-primary anim-fade-up"
+          
+              <button className="btn-cta a-fade-up"
                 style={{animationDelay:'0.2s'}}
-                onClick={handleStart}>
+                onClick={() => setScreen('form')}>
                 {t.start_btn}
               </button>
-              <p className="hero-note anim-fade-up"
+          
+              <p className="hero-note a-fade-up"
                 style={{animationDelay:'0.25s'}}>
                 {t.free_note}
               </p>
-              <div className="stats-row anim-fade-up"
+          
+              <div className="stats-row a-fade-up"
                 style={{animationDelay:'0.3s'}}>
-                {[
-                  {num:'50+', label:t.stat1_label},
-                  {num:'6',   label:t.stat2_label},
-                  {num:'60s', label:t.stat3_label},
-                ].map(s => (
-                  <div key={s.num} className="stat-card glass">
-                    <div className="stat-num">{s.num}</div>
-                    <div className="stat-label">{s.label}</div>
+                <div className="stat-card">
+                  <div className="stat-num">{t.stat1_num}</div>
+                  <div className="stat-label">
+                    {t.stat1_label}
                   </div>
-                ))}
+                </div>
+                <div className="stat-card">
+                  <div className="stat-num">{t.stat2_num}</div>
+                  <div className="stat-label">
+                    {t.stat2_label}
+                  </div>
+                </div>
+                <div className="stat-card">
+                  <div className="stat-num">{t.stat3_num}</div>
+                  <div className="stat-label">
+                    {t.stat3_label}
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -450,49 +445,60 @@ export default function YojanaAIPage() {
           const hasAnswer = answers[q.id] !== undefined && answers[q.id] !== ''
 
           return (
-            <div style={{display:'flex',flexDirection:'column', minHeight:'100vh'}}>
+            <div className="form-screen">
               <div className="tricolor"/>
-              <nav className="navbar glass no-print">
+              <nav className="navbar no-print">
                 <div className="navbar-left">
-                  <button onClick={handleFormBack} className="nav-back-btn">
+                  <button className="nav-back" onClick={handleFormBack}>
                     ← {t.back_btn}
                   </button>
                 </div>
-                <span className="navbar-center" aria-hidden="true">
+                <div className="navbar-center">
                   {t.step_label} {currentStep+1} {t.step_of} 6
-                </span>
+                </div>
                 <div className="navbar-right">
-                  <span className="nav-logo" onClick={resetToHome} style={{fontSize:'13px'}}>
+                  <span className="nav-logo"
+                    style={{fontSize:'13px'}}
+                    onClick={() => setScreen('hero')}>
                     YojanaAI
                   </span>
                 </div>
               </nav>
               <div className="progress-track">
-                <div className="progress-fill" style={{width:`${((currentStep)/6)*100}%`}}/>
+                <div className="progress-fill"
+                  style={{width:`${(currentStep/6)*100}%`}}/>
               </div>
-              <div className="form-wrap">
-                <div className="form-inner anim-slide-right" key={currentStep}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '4px' }}>
-                    <div className="q-number">Q{currentStep + 1}</div>
-                  <SpeakerBtn onSpeak={() => {
-                    const questionText =
-                      QUESTIONS_DATA[currentStep][
-                        lang === 'en' ? 'en' : 'hi'
-                      ] as string
-                    speak(questionText, lang)
-                  }} />
+              <div className="form-body">
+                <div className="form-inner a-slide-left"
+                  key={currentStep}>
+                  <div className="q-header-row">
+                    <div className="q-header-left">
+                      <span className="q-eyebrow">
+                        Q{currentStep+1}
+                      </span>
+                      <h2 className="q-heading">
+                        {lang !== 'en' ? qText : q.en}
+                      </h2>
+                      <p className="q-sub">
+                        {lang!=='en' ? q.en : ''}
+                      </p>
+                    </div>
+                    <button className="speak-btn"
+                      aria-label="Listen"
+                      onClick={() => speak(
+                        lang === 'en' ? q.en : (qText as string),
+                        lang)}>
+                      🔊
+                    </button>
                   </div>
-                  <h2 className="q-heading">{lang !== 'en' ? qText : q.en}</h2>
-                  {lang !== 'en' && <div className="q-sub">{qEn}</div>}
-                  {lang === 'en' && <div style={{ height: '24px' }}></div>}
-
+                  
                   {q.id === 'state' && (
                     <div className="search-wrap">
                       <input
                         type="text"
                         autoFocus
                         className="search-input"
-                        aria-label={qText}
+                        aria-label={qText as string}
                         placeholder={uiCopy.searchPlaceholder}
                         value={stateSearchQuery}
                         onChange={handleStateSearchChange}
@@ -509,20 +515,20 @@ export default function YojanaAIPage() {
                       <button
                         key={idx}
                         role="button"
-                        className={`option-btn ${isSelected ? 'selected' : ''}`}
+                        className={`opt-btn ${isSelected ? 'selected' : ''}`}
                         data-question-id={q.id}
                         data-option-value={opt}
                         aria-pressed={isSelected}
                         onClick={handleAnswerSelect}
                       >
                         <span style={{ minWidth: 0 }}>{text}</span>
-                        {isSelected && <span className="option-check" aria-hidden="true">✓</span>}
+                        {isSelected && <span className="opt-check" aria-hidden="true">✓</span>}
                       </button>
                     )
                   })}
 
                   {q.type === 'number' && (
-                    <div className="num-input-wrap">
+                    <div className="num-row">
                       <input
                         type="number"
                         className="num-input"
@@ -549,12 +555,11 @@ export default function YojanaAIPage() {
                   )}
                 </div>
               </div>
-              <div className="bottom-bar glass no-print">
-                <button
-                  className="btn-primary"
+              <div className="bottom-bar no-print">
+                <button className="btn-cta"
+                  style={{maxWidth:'100%'}}
                   disabled={!hasAnswer}
-                  onClick={handleNext}
-                  style={{maxWidth:'100%'}}>
+                  onClick={handleNext}>
                   {t.next_btn}
                 </button>
               </div>
@@ -574,143 +579,154 @@ export default function YojanaAIPage() {
           }))
 
           return (
-            <div className="loading-wrap no-print">
-              <div className="spinner-ring">
-                <div className="spinner-dot"/>
+            <div className="loading-screen">
+              <div className="spinner">
+                <div className="spinner-core"/>
               </div>
-              <h2 className="loading-title">{t.loading_title}</h2>
-              <p className="loading-sub">{t.loading_sub}</p>
-              <div className="status-rows" aria-live="polite">
-                {agentRows.map((row, i) => (
-                  <div key={i} className="status-row">
-                    <div className={`status-icon ${row.status}`}>
-                      {row.status==='done' ? '✓' : ''}
+              <h2 className="loading-title">
+                {t.loading_title}
+              </h2>
+              <p className="loading-sub">
+                {t.loading_sub}
+              </p>
+              <div className="status-list"
+                aria-live="polite">
+                {agentRows.map((row,i) => (
+                  <div key={i} className="status-item">
+                    <div className={
+                      `status-dot ${row.status}`}>
+                      {row.status==='done'?'✓':''}
                     </div>
-                    <span className={`status-text ${row.status}`}>
+                    <span className={
+                      `status-label ${row.status}`}>
                       {row.label}
                     </span>
                   </div>
                 ))}
               </div>
-              <div className="load-bar-track">
-                <div className="load-bar-fill"/>
+              <div className="load-track">
+                <div className="load-fill"/>
               </div>
             </div>
           )
         })()}
 
         {screen === 'results' && results && (
-          <div style={{minHeight:'100vh', background:'var(--offwhite)'}}>
+          <div className="results-screen">
             <div className="tricolor"/>
-              <nav className="navbar glass no-print">
+            <nav className="navbar no-print">
               <div className="navbar-left">
-                <button className="nav-back-btn" onClick={resetToHome}>
+                <button className="nav-back"
+                  onClick={()=>{
+                    setScreen('hero')
+                    setResults(null)
+                  }}>
                   ← {t.back_btn}
                 </button>
               </div>
               <div className="navbar-right">
-                <span className="nav-logo" onClick={resetToHome} style={{fontSize:'13px'}}>
+                <span className="nav-logo"
+                  style={{fontSize:'13px'}}
+                  onClick={() => {
+                    setScreen('hero')
+                    setResults(null)
+                  }}>
                   YojanaAI
                 </span>
               </div>
             </nav>
-            <div className="results-banner no-print">
-              <div className="results-banner-inner">
-                <div style={{display:'flex', justifyContent:'space-between', alignItems:'flex-start',gap:'12px'}}>
-                  <div>
-                    <h2 className="results-count">
-                      🎉 {results.matched_schemes?.length || 0} {t.schemes_found}
-                    </h2>
-                    <p className="results-benefit">
-                      {t.total_benefit_label}{' '}
-                      {expandedCards['benefit'] 
-                        ? (results.total_annual_benefit || '')
-                        : ((results.total_annual_benefit || '').length > 80 
-                            ? (results.total_annual_benefit || '').substring(0, 80) + '...' 
-                            : (results.total_annual_benefit || ''))}
-                      {(results.total_annual_benefit || '').length > 80 && (
-                        <button 
-                          data-expand-id="benefit"
-                          onClick={handleToggleExpand}
-                          style={{ background: 'none', border: 'none', color: 'white', textDecoration: 'underline', cursor: 'pointer', fontSize: '13px', marginLeft: '6px' }}
-                        >
-                          {expandedCards['benefit'] ? uiCopy.showLess : uiCopy.showMore}
-                        </button>
-                      )}
-                    </p>
-                  </div>
-                <button className="listen-btn" onClick={handleListenResults}>
-                    {t.listen_btn}
-                  </button>
-                </div>
+            <div className="results-banner">
+              <div className="results-banner-content">
+                <p className="results-eyebrow">
+                  Results
+                </p>
+                <h2 className="results-heading">
+                  🎉 {results.matched_schemes.length}{' '}
+                  {t.schemes_found}
+                </h2>
+                <p className="results-benefit-text">
+                  {t.total_benefit_label}{' '}
+                  {results.total_annual_benefit.length>90
+                    ? results.total_annual_benefit
+                        .slice(0,90)+'...'
+                    : results.total_annual_benefit}
+                </p>
+                <button className="listen-pill"
+                  onClick={handleListenResults}>
+                  🔊 {t.listen_btn}
+                </button>
               </div>
             </div>
-            
-            <div style={{padding:'16px 16px 32px', maxWidth: '640px', margin: '0 auto'}}>
-              {results.matched_schemes?.map((scheme: any, i: number) => {
-                const schemeDocs = results.documents?.[scheme.id] || []
-                const schemeAction = results.actions?.[scheme.id] || {}
+            <div className="cards-wrap">
+              {results.matched_schemes.map((s: any, i: number) => {
+                const schemeDocs = results.documents?.[s.id] || []
+                const schemeAction = results.actions?.[s.id] || {}
                 const isExpanded = expandedCards[i.toString()]
                 
-                const derivedName = scheme.name || scheme.id
-                const schemeReason = scheme.reason || scheme.reasoning || ''
+                const derivedName = s.name || s.id
+                const schemeReason = s.reason || s.reasoning || ''
                 const categoryIcon = getCategoryIcon(derivedName, schemeReason)
-                const isHighConfidence = typeof scheme.confidence === 'number' ? scheme.confidence >= 0.85 : scheme.confidence === 'high'
+                const isHighConfidence = typeof s.confidence === 'number' ? s.confidence >= 0.85 : s.confidence === 'high'
 
                 return (
-                  <div key={scheme.id}
-                    className={`scheme-card ${isHighConfidence ? 'high' : 'medium'} anim-fade-up`}
-                    style={{animationDelay:`${i*80}ms`}}>
+                  <div key={s.id}
+                    className={`scheme-card ${
+                      s.confidence==='high'
+                        ?'high':'medium'
+                    } a-fade-up`}
+                    style={{
+                      animationDelay:`${i*70}ms`
+                    }}>
                     
-                    <div className="card-header">
-                      <div className="card-name">
+                    <div className="card-top">
+                      <div className="card-name-wrap">
                         <span className="card-icon" aria-hidden="true">{categoryIcon}</span>
-                        {derivedName}
+                        <h3 className="card-name">{derivedName}</h3>
                       </div>
-                      <div className="benefit-badge" style={{ whiteSpace: 'normal', wordBreak: 'break-word', overflowWrap: 'anywhere' }}>
-                        {scheme.estimated_benefit}
+                      <div className="benefit-chip">
+                        {s.estimated_benefit}
                       </div>
                     </div>
 
-                    <div className={`confidence-badge ${isHighConfidence ? 'high' : 'medium'}`}>
+                    <div className={`confidence-chip ${isHighConfidence ? 'high' : 'medium'}`}>
                       {isHighConfidence ? t.confidence_high : t.confidence_medium}
                     </div>
 
-                    <p className="reason-text">
+                    <p className="reason">
                       {schemeReason}
                     </p>
 
                     <button 
-                      className="expand-btn"
+                      className="expand-trigger"
                       data-expand-id={i.toString()}
                       aria-expanded={isExpanded}
                       onClick={handleToggleExpand}
                     >
                       {isExpanded ? t.hide_details : t.show_details}
-                      <span className={`expand-arrow ${isExpanded ? 'open' : ''}`}>▼</span>
+                      <span className={`expand-caret ${isExpanded ? 'open' : ''}`}>▼</span>
                     </button>
                     
-                    <div className={`expand-content ${isExpanded ? 'open' : ''}`}>
+                    <div className={`expand-body ${isExpanded ? 'open' : ''}`}>
                       <div style={{ paddingTop: '10px', paddingBottom: '16px' }}>
-                        <h4 style={{ fontSize: '12px', fontWeight: 700, color: 'var(--navy)', marginBottom: '8px', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+                        <h4 style={{ fontSize: '11px', fontWeight: 700, color: 'var(--ink-soft)', marginBottom: '8px', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
                           📄 {t.docs_needed} ({schemeDocs.length})
                         </h4>
                         <div style={{ paddingBottom: '16px' }}>
                           {schemeDocs.map((doc: string, dIdx: number) => (
-                            <div key={dIdx} className="doc-item">
+                            <div key={dIdx} className="doc-row">
                               <div className="doc-dot"></div>
                               {doc}
                             </div>
                           ))}
                         </div>
 
-                        <h4 style={{ fontSize: '12px', fontWeight: 700, color: 'var(--navy)', marginBottom: '8px', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+                        <h4 style={{ fontSize: '11px', fontWeight: 700, color: 'var(--ink-soft)', marginBottom: '8px', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
                           📋 {t.how_to_apply}
                         </h4>
                         <div>
                           {schemeAction.steps?.map((step: string, sIdx: number) => (
-                            <div key={sIdx} className="step-item">
-                              <div className="step-num">{sIdx + 1}</div>
+                            <div key={sIdx} className="step-row">
+                              <div className="step-badge">{sIdx + 1}</div>
                               <div className="step-text">{step}</div>
                             </div>
                           ))}
@@ -722,7 +738,7 @@ export default function YojanaAIPage() {
                       <button 
                         className="btn-apply"
                         onClick={() => window.open(
-                          getApplyUrl(scheme.id),
+                          getApplyUrl(s.id),
                           '_blank',
                           'noopener,noreferrer'
                         )}
@@ -730,9 +746,9 @@ export default function YojanaAIPage() {
                         {t.apply_btn}
                       </button>
                       <button 
-                        className="btn-whatsapp"
+                        className="btn-wa"
                         data-scheme-name={derivedName}
-                        data-scheme-benefit={scheme.estimated_benefit}
+                        data-scheme-benefit={s.estimated_benefit}
                         onClick={handleShareClick}
                       >
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style={{ verticalAlign: 'middle', marginRight: '6px' }}>
@@ -741,15 +757,19 @@ export default function YojanaAIPage() {
                         {t.share_btn}
                       </button>
                     </div>
-
                   </div>
                 )
               })}
-              <div style={{marginTop:'8px', display: 'flex', flexDirection: 'column', gap: '8px'}}>
-                <button className="btn-outline no-print" onClick={resetToHome}>
+              <div style={{marginTop:'8px'}}>
+                <button className="btn-ghost no-print"
+                  onClick={()=>{
+                    setScreen('hero')
+                    setResults(null)
+                  }}>
                   🔄 {t.retry_btn}
                 </button>
-                <button className="btn-outline no-print" onClick={handlePrint}>
+                <button className="btn-ghost no-print"
+                  onClick={()=>window.print()}>
                   💾 {t.pdf_btn}
                 </button>
               </div>
