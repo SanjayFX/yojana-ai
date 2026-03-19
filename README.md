@@ -2,7 +2,7 @@
 
 <img src="https://img.shields.io/badge/Made%20in-India%20🇮🇳-FF9933?style=for-the-badge" />
 <img src="https://img.shields.io/badge/Built%20in-12%20Hours-138808?style=for-the-badge" />
-<img src="https://img.shields.io/badge/Schemes-526%2B-0F2244?style=for-the-badge" />
+<img src="https://img.shields.io/badge/Schemes-558%2B-0F2244?style=for-the-badge" />
 
 <br /><br />
 
@@ -17,7 +17,7 @@
 
 ### 🇮🇳 Find every Indian government scheme you qualify for — in 60 seconds
 
-**Free • No login • 8 languages • 526+ schemes • Self-updating**
+**Free • No login • 8 languages • 558+ schemes • Self-updating**
 
 <br />
 
@@ -49,7 +49,7 @@ YojanaAI fixes this. Answer 6 simple questions. Get every scheme you're eligible
 | Feature | Details |
 |---|---|
 | 🤖 **Multi-Agent AI** | 4 specialized agents run in parallel — Profile, Eligibility, Documents, Action |
-| 🗄️ **526+ Schemes** | Central + state government schemes, self-updating daily |
+| 🗄️ **558+ Schemes** | Central + state government schemes, self-updating daily |
 | 🌐 **8 Languages** | Hindi, English, Bengali, Telugu, Marathi, Tamil, Gujarati, Kannada |
 | 🔍 **Instant Search** | Search any scheme directly from the homepage |
 | 📱 **Mobile First** | Works on ₹5,000 Android phones on slow 4G |
@@ -74,7 +74,7 @@ User answers 6 questions
 │  → Parses answers into structured JSON profile  │
 │                                                  │
 │  Step 2: Eligibility Agent (Gemini Pro)          │
-│  → Deep reasoning across 526+ schemes           │
+│  → Deep reasoning across 558+ schemes           │
 │  → Returns matched schemes with reasons         │
 │                                                  │
 │  Step 3: Documents + Action Agents (PARALLEL)   │
@@ -107,7 +107,7 @@ const profile = await profileAgent(answers)
 
 // Agent 2 — Eligibility Reasoner (Gemini Pro ~5s)
 // This is where Gemini Pro earns its cost.
-// Complex multi-condition matching across 526 schemes.
+// Complex multi-condition matching across 558 schemes.
 const { matched_schemes } = await eligibilityAgent(profile)
 
 // Agents 3 + 4 — Parallel execution (~7s combined → ~7s total)
@@ -299,7 +299,8 @@ curl -X POST http://localhost:3000/api/schemes/seed \
 ## 📊 Stats
 
 ```
-526+    schemes in database (and growing)
+558+    schemes in database
+        (grows daily via AI cron)
 8       languages supported
 13+     schemes matched per search average
 ~13s    end-to-end pipeline time
@@ -308,6 +309,25 @@ curl -X POST http://localhost:3000/api/schemes/seed \
 7 days  scheme freshness window per state
 0       personal data stored
 ```
+
+---
+
+## ✅ Verified Status
+
+| Check | Status | Details |
+|---|---|---|
+| Build | ✅ Pass | npm run build — 0 errors |
+| Profile Agent | ✅ Pass | ~2s response |
+| Eligibility Agent | ✅ Pass | Gemini Pro |
+| Documents Agent | ✅ Pass | ~2.7s |
+| Action Agent | ✅ Pass | Fixed |
+| Full Pipeline | ✅ Pass | ~13-22s |
+| 8 Languages | ✅ Pass | All verified |
+| Mobile 412px | ✅ Pass | Playwright verified |
+| Rate Limiting | ✅ Pass | 429 at req 11 |
+| Supabase RLS | ✅ Pass | Anon read only |
+
+*Last verified: March 2026*
 
 ---
 

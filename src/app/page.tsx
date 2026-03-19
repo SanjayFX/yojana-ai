@@ -93,7 +93,7 @@ export default function YojanaAIPage() {
   const [currentStep, setCurrentStep] = useState(0)
   const [answers, setAnswers] = useState<Record<string, any>>({})
   const [results, setResults] = useState<any>(null)
-  const [schemeCount, setSchemeCount] = useState<number>(500)
+  const [schemeCount, setSchemeCount] = useState<number>(558)
   const [searchQuery, setSearchQuery] = useState('')
   const [searchResults, setSearchResults] = useState<Array<{
     id: string

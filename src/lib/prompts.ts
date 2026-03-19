@@ -251,20 +251,18 @@ ${JSON.stringify(profile)}
 MATCHED SCHEMES:
 ${JSON.stringify(relevantSchemes)}
 
-You MUST respond with ONLY a valid JSON object (no markdown, no explanation):
+Return ONLY this JSON structure:
 {
-  "actions": {
-    "<scheme_id>": {
-      "steps": [
-        "Step 1: <specific action>",
-        "Step 2: <specific action>",
-        "Step 3: <specific action>"
-      ],
-      "apply_url": "<official application URL>",
-      "apply_modes": ["<Online|Offline|CSC Center|Bank Branch>"],
-      "timeline": "<expected processing time>",
-      "helpline": "<helpline number if available>"
-    }
+  "<scheme_id>": {
+    "steps": [
+      "Step 1: <specific action>",
+      "Step 2: <specific action>",
+      "Step 3: <specific action>"
+    ],
+    "easiest_mode": "online",
+    "portal_url": "https://...",
+    "helpline": null,
+    "time_to_apply": "20 minutes"
   }
 }
 
@@ -303,12 +301,13 @@ For any other scheme use:
   https://www.myscheme.gov.in/search
 
 Rules:
-Rules:
 Steps must be in ${actionLanguage}.
 - Steps should be clear, actionable, and in order
 - Return exactly 3 concise steps per scheme
-- Include both online and offline options where available
-- Mention nearest CSC (Common Service Center) as an option
+- easiest_mode must be one of: online, offline, CSC Center, bank
+- portal_url must be a real official URL or https://www.myscheme.gov.in/search
+- Mention nearest CSC (Common Service Center) as an option when relevant
 - Include state-specific portals where applicable for ${profile.state}
-- Keep timeline to one short sentence`;
+- Keep time_to_apply to one short sentence
+- Do not wrap the response inside an "actions" key`;
 }

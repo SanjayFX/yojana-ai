@@ -12,6 +12,47 @@ import {
   parseAIResponse,
 } from "@/lib/api-utils";
 
+type ActionAgentResponse = Record<
+  string,
+  ActionData & {
+    easiest_mode?: string;
+    time_to_apply?: string;
+  }
+>;
+
+function chunkSchemeIds(ids: string[], size: number) {
+  const chunks: string[][] = [];
+  for (let i = 0; i < ids.length; i += size) {
+    chunks.push(ids.slice(i, i + size));
+  }
+  return chunks;
+}
+
+function normalizeActions(
+  parsed: ActionAgentResponse | { actions?: ActionAgentResponse }
+) {
+  const rawActions =
+    "actions" in parsed && parsed.actions ? parsed.actions : parsed;
+
+  return Object.fromEntries(
+    Object.entries(rawActions).map(([id, action]) => [
+      id,
+      {
+        ...action,
+        steps: Array.isArray(action.steps) ? action.steps.slice(0, 3) : [],
+        portal_url: action.portal_url ?? action.apply_url,
+        apply_modes:
+          Array.isArray(action.apply_modes) && action.apply_modes.length > 0
+            ? action.apply_modes
+            : action.easiest_mode
+              ? [action.easiest_mode]
+              : [],
+        timeline: action.timeline ?? action.time_to_apply ?? "",
+      },
+    ])
+  ) as Record<string, ActionData>;
+}
+
 export async function POST(request: NextRequest) {
   const startTime = Date.now();
 
@@ -40,25 +81,30 @@ export async function POST(request: NextRequest) {
     }
 
     const schemes = (await getSchemes()) as SchemeData[];
-    const prompt = buildActionPrompt(body.schemeIds, body.profile, schemes);
-    const aiResponse = await callAI(FLASH, prompt, 2048);
-    const parsed = parseAIResponse(aiResponse) as {
-      actions: Record<string, ActionData>;
-    };
-    const normalizedActions = Object.fromEntries(
-      Object.entries(parsed.actions).map(([id, action]) => [
-        id,
-        {
-          ...action,
-          steps: Array.isArray(action.steps) ? action.steps.slice(0, 3) : [],
-          portal_url: action.portal_url ?? action.apply_url,
-        },
-      ])
+    const actionChunks = chunkSchemeIds(body.schemeIds, 6);
+    const actionResponses = await Promise.all(
+      actionChunks.map(async (schemeIds) => {
+        const prompt = buildActionPrompt(schemeIds, body.profile!, schemes);
+        const aiResponse = await callAI(FLASH, prompt, 4096);
+        const parsed = parseAIResponse(aiResponse) as
+          | ActionAgentResponse
+          | { actions?: ActionAgentResponse };
+
+        if (!parsed || typeof parsed !== "object") {
+          console.error("Action agent bad parse:", aiResponse.slice(0, 200));
+          throw new Error("Action agent returned non-object payload");
+        }
+
+        return normalizeActions(parsed);
+      })
     );
+
+    const normalizedActions = Object.assign({}, ...actionResponses);
 
     const processingTime = Date.now() - startTime;
     return successResponse({ actions: normalizedActions }, processingTime);
-  } catch {
+  } catch (err) {
+    console.error("Action agent error:", err);
     return agentFailed();
   }
 }
