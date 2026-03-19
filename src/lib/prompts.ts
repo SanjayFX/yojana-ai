@@ -162,6 +162,20 @@ ADDITIONAL ACCURACY RULES:
 
 12. If state has state-specific schemes in the database, always include relevant ones.
 
+13. ELDERLY CITIZENS (age >= 60):
+    ALWAYS check for and include if eligible:
+    - IGNOAPS (Indira Gandhi Old Age Pension)
+    - State pension schemes
+    - Ayushman Bharat (health coverage)
+    - Any disability/widow pension if applicable
+
+    For Karnataka specifically age >= 60:
+    - Karnataka Sandhya Suraksha Yojana
+      (state old age pension Rs 600-1000/month)
+    - IGNOAPS central pension
+    These must be checked even if not in
+    top pre-filtered results.
+
 REASON: Write the reason in ${reasonLanguage}.
 Keep it 2 sentences max. Be specific about why they qualify — mention their age, income, state, category where relevant.
 Example: "Aap qualify karte hain kyunki income Rs 2L hai jo limit se kam hai."
