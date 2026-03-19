@@ -799,15 +799,20 @@ body {
   border-radius: 1px;
   overflow: hidden;
   flex-shrink: 0;
+  pointer-events: none;
+  will-change: transform;
   animation: wave 2s ease-in-out infinite;
   transform-origin: left center;
+  transform-style: preserve-3d;
   box-shadow: 0 1px 3px rgba(0,0,0,0.15);
 }
 
 .flag-saffron,
 .flag-white,
 .flag-green {
+  will-change: transform;
   animation: flagWave 2s ease-in-out infinite;
+  transform-origin: left center;
 }
 
 .flag-saffron {
@@ -834,6 +839,15 @@ body {
 .flag-green {
   flex: 1;
   background: #138808;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flag-wrap,
+  .flag-saffron,
+  .flag-white,
+  .flag-green {
+    animation: none;
+  }
 }
 
 /* Bottom fixed bar */
