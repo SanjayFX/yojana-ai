@@ -3,7 +3,6 @@
 import React, { useState, useEffect, useMemo, useCallback, useRef } from 'react'
 import { SUPPORTED_LANGS, type LangCode } from '@/lib/i18n/translations'
 import { useLang } from '@/lib/context/LanguageContext'
-import { speak, stopSpeaking, isSpeaking, startVoiceInput } from '@/lib/speech'
 
 type Screen = 'hero' | 'form' | 'loading' | 'results'
 
@@ -61,8 +60,6 @@ const FALLBACK_COPY = {
     showLess: 'Kam dikhayein',
     showDetails: 'Details dekhein',
     hideDetails: 'Details chhupayein',
-    listenResults: 'Sunein',
-    stopAudio: 'Band Karein',
     resultsIntro: 'Aapko',
   },
   en: {
@@ -72,7 +69,6 @@ const FALLBACK_COPY = {
     showLess: 'Show less',
     showDetails: 'Show details',
     hideDetails: 'Hide details',
-    listenResults: 'Listen',
     stopAudio: 'Stop',
     resultsIntro: 'You found',
   }
@@ -97,14 +93,23 @@ export default function YojanaAIPage() {
   const [currentStep, setCurrentStep] = useState(0)
   const [answers, setAnswers] = useState<Record<string, any>>({})
   const [results, setResults] = useState<any>(null)
+  const [schemeCount, setSchemeCount] = useState<number>(500)
+  const [searchQuery, setSearchQuery] = useState('')
+  const [searchResults, setSearchResults] = useState<Array<{
+    id: string
+    name: string
+    benefit: string
+    category: string
+    apply_url: string
+  }>>([])
+  const [searching, setSearching] = useState(false)
   
   const [activeWaitTimer, setActiveWaitTimer] = useState(0)
   const [expandedCards, setExpandedCards] = useState<Record<string, boolean>>({})
 
   const [pulseAnswerId, setPulseAnswerId] = useState<string | null>(null)
-  const [listening, setListening] = useState(false)
   const [stateSearchQuery, setStateSearchQuery] = useState('')
-  const stopVoiceRef = useRef<(() => void) | null>(null)
+  const searchTimeout = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   const uiCopy = lang === 'en' ? FALLBACK_COPY.en : FALLBACK_COPY.hi
   const currentQuestion = QUESTIONS_DATA[currentStep]
@@ -131,6 +136,63 @@ export default function YojanaAIPage() {
     return () => clearInterval(interval)
   }, [screen])
 
+  useEffect(() => {
+    fetch('/api/schemes/stats')
+      .then(r => r.json())
+      .then(data => {
+        if (data.total_schemes) {
+          setSchemeCount(data.total_schemes)
+        }
+      })
+      .catch(() => {})
+  }, [])
+
+  useEffect(() => {
+    const handleClick = (e: MouseEvent) => {
+      const target = e.target as HTMLElement
+      if (!target.closest('.scheme-search-wrap')) {
+        setSearchResults([])
+        setSearchQuery('')
+      }
+    }
+    document.addEventListener('mousedown', handleClick)
+    return () => document.removeEventListener('mousedown', handleClick)
+  }, [])
+
+  const formatCount = (n: number): string => {
+    if (n >= 1000) return `${(n / 1000).toFixed(1)}k+`
+    if (n >= 100) return `${Math.floor(n / 10) * 10}+`
+    return `${n}+`
+  }
+
+  const handleSearch = (query: string) => {
+    setSearchQuery(query)
+    if (searchTimeout.current) {
+      clearTimeout(searchTimeout.current)
+    }
+
+    if (query.trim().length < 2) {
+      setSearchResults([])
+      setSearching(false)
+      return
+    }
+
+    setSearching(true)
+    searchTimeout.current = setTimeout(async () => {
+      try {
+        const res = await fetch(
+          `/api/schemes/search?q=${encodeURIComponent(query.trim())}`
+        )
+        const data = await res.json()
+        setSearchResults(data.results ?? [])
+      } catch {
+        setSearchResults([])
+      } finally {
+        setSearching(false)
+      }
+    }, 300)
+  }
+
   const submitForm = useCallback(async (finalAnswers: Record<string, any>) => {
     setScreen('loading')
     
@@ -155,7 +217,6 @@ export default function YojanaAIPage() {
   }, [])
 
   const handleStart = useCallback(() => {
-    stopSpeaking()
     setResults(null)
     setAnswers({})
     setExpandedCards({})
@@ -183,51 +244,11 @@ export default function YojanaAIPage() {
       toggleExpand(expandId)
     }
   }, [toggleExpand])
-
-  const handleMicClick = useCallback(() => {
-    if (listening) {
-      stopVoiceRef.current?.()
-      setListening(false)
-      return
-    }
-
-    setListening(true)
-    const stop = startVoiceInput(
-      lang,
-      (spoken: string) => {
-        const num = spoken.replace(/[^0-9]/g, '')
-        const parsed = parseInt(num, 10)
-        if (num && !isNaN(parsed) && parsed > 0 && parsed <= 120) {
-          setAnswers(prev => ({ ...prev, age: num }))
-        }
-        setListening(false)
-      },
-      () => setListening(false)
-    )
-    stopVoiceRef.current = stop
-  }, [lang, listening])
-  
-  const handleListenResults = useCallback(() => {
-    if (isSpeaking()) {
-      stopSpeaking()
-      return
-    }
-
-    const allText = results?.matched_schemes
-      ?.map((s: any, i: number) => {
-        const name = s.name || s.id
-        return `${i + 1}. ${name}. ${s.reason}`
-      })
-      .join('. ') ?? ''
-
-    speak(allText, lang)
-  }, [lang, results])
   
   const resetToHome = useCallback(() => {
     setScreen('hero')
     setAnswers({})
     setExpandedCards({})
-    stopSpeaking()
     setResults(null)
     setCurrentStep(0)
     setStateSearchQuery('')
@@ -410,11 +431,208 @@ export default function YojanaAIPage() {
                 style={{animationDelay:'0.25s'}}>
                 {t.free_note}
               </p>
-          
+
+              <div className="scheme-search-wrap"
+                style={{
+                  width: '100%',
+                  maxWidth: '420px',
+                  marginTop: '28px',
+                  position: 'relative'
+                }}>
+                <div style={{
+                  position: 'relative',
+                  display: 'flex',
+                  alignItems: 'center'
+                }}>
+                  <span style={{
+                    position: 'absolute',
+                    left: '16px',
+                    fontSize: '16px',
+                    pointerEvents: 'none',
+                    opacity: 0.4
+                  }}>🔍</span>
+                  <input
+                    type="text"
+                    value={searchQuery}
+                    onChange={e => handleSearch(e.target.value)}
+                    placeholder={
+                      lang === 'en'
+                        ? 'Search any scheme... e.g. PM Kisan'
+                        : 'Koi bhi yojana dhundho...'
+                    }
+                    style={{
+                      width: '100%',
+                      height: '50px',
+                      paddingLeft: '44px',
+                      paddingRight: '16px',
+                      border: '1.5px solid var(--border-mid)',
+                      borderRadius: 'var(--r-full)',
+                      fontSize: '14px',
+                      color: 'var(--ink)',
+                      background: 'rgba(255,255,255,0.85)',
+                      backdropFilter: 'blur(12px)',
+                      WebkitBackdropFilter: 'blur(12px)',
+                      outline: 'none',
+                      letterSpacing: '-0.005em',
+                      boxShadow: '0 2px 12px rgba(10,15,30,0.06)'
+                    }}
+                    onFocus={e => {
+                      e.target.style.borderColor =
+                        'var(--saffron)'
+                      e.target.style.boxShadow =
+                        '0 0 0 3px var(--saffron-soft)'
+                    }}
+                    onBlur={e => {
+                      e.target.style.borderColor =
+                        'var(--border-mid)'
+                      e.target.style.boxShadow =
+                        '0 2px 12px rgba(10,15,30,0.06)'
+                    }}
+                  />
+                  {searching && (
+                    <span style={{
+                      position: 'absolute',
+                      right: '16px',
+                      fontSize: '12px',
+                      color: 'var(--subtle)'
+                    }}>...</span>
+                  )}
+                </div>
+
+                {searchResults.length > 0 && (
+                  <div style={{
+                    position: 'absolute',
+                    top: '54px',
+                    left: 0,
+                    right: 0,
+                    background: 'var(--surface)',
+                    border: '1px solid var(--border-mid)',
+                    borderRadius: 'var(--r-xl)',
+                    boxShadow: '0 8px 32px rgba(10,15,30,0.12)',
+                    zIndex: 200,
+                    overflow: 'hidden',
+                    maxHeight: '320px',
+                    overflowY: 'auto'
+                  }}>
+                    {searchResults.map((scheme, i) => {
+                      const categoryIcons: Record<string, string> = {
+                        agriculture: '🌾',
+                        health: '🏥',
+                        education: '📚',
+                        housing: '🏠',
+                        finance: '💰',
+                        women: '👩',
+                        disability: '♿',
+                        elderly: '👴',
+                        employment: '💼'
+                      }
+                      const icon = categoryIcons[scheme.category] ?? '📋'
+
+                      return (
+                        <div
+                          key={scheme.id}
+                          onClick={() => {
+                            setSearchResults([])
+                            setSearchQuery('')
+                            window.open(
+                              scheme.apply_url ||
+                              'https://www.myscheme.gov.in/search',
+                              '_blank',
+                              'noopener,noreferrer'
+                            )
+                          }}
+                          style={{
+                            padding: '14px 16px',
+                            borderBottom: i < searchResults.length - 1
+                              ? '1px solid var(--border)'
+                              : 'none',
+                            cursor: 'pointer',
+                            display: 'flex',
+                            alignItems: 'flex-start',
+                            gap: '12px',
+                            textAlign: 'left',
+                            transition: 'background 0.15s ease'
+                          }}
+                          onMouseEnter={e => {
+                            ;(e.currentTarget as HTMLDivElement).style.background =
+                              'var(--saffron-soft)'
+                          }}
+                          onMouseLeave={e => {
+                            ;(e.currentTarget as HTMLDivElement).style.background = 'transparent'
+                          }}
+                        >
+                          <span style={{
+                            fontSize: '20px',
+                            flexShrink: 0,
+                            marginTop: '1px'
+                          }}>
+                            {icon}
+                          </span>
+                          <div>
+                            <div style={{
+                              fontSize: '13px',
+                              fontWeight: 600,
+                              color: 'var(--ink)',
+                              lineHeight: 1.3,
+                              letterSpacing: '-0.01em',
+                              marginBottom: '3px'
+                            }}>
+                              {scheme.name}
+                            </div>
+                            <div style={{
+                              fontSize: '11px',
+                              color: 'var(--muted)',
+                              letterSpacing: '-0.005em'
+                            }}>
+                              {scheme.benefit.length > 60
+                                ? scheme.benefit.slice(0, 60)+'...'
+                                : scheme.benefit}
+                            </div>
+                          </div>
+                          <span style={{
+                            fontSize: '11px',
+                            color: 'var(--saffron)',
+                            fontWeight: 600,
+                            marginLeft: 'auto',
+                            flexShrink: 0,
+                            marginTop: '2px'
+                          }}>
+                            Apply →
+                          </span>
+                        </div>
+                      )
+                    })}
+                  </div>
+                )}
+
+                {searchQuery.length >= 2 &&
+                  !searching &&
+                  searchResults.length === 0 && (
+                    <div style={{
+                      position: 'absolute',
+                      top: '54px',
+                      left: 0,
+                      right: 0,
+                      background: 'var(--surface)',
+                      border: '1px solid var(--border-mid)',
+                      borderRadius: 'var(--r-xl)',
+                      padding: '20px',
+                      textAlign: 'center',
+                      fontSize: '13px',
+                      color: 'var(--subtle)',
+                      zIndex: 200,
+                      boxShadow:
+                        '0 8px 32px rgba(10,15,30,0.08)'
+                    }}>
+                      No schemes found for "{searchQuery}"
+                    </div>
+                  )}
+              </div>
+
               <div className="stats-row a-fade-up"
                 style={{animationDelay:'0.3s'}}>
                 <div className="stat-card">
-                  <div className="stat-num">{t.stat1_num}</div>
+                  <div className="stat-num">{formatCount(schemeCount)}</div>
                   <div className="stat-label">
                     {t.stat1_label}
                   </div>
@@ -449,7 +667,7 @@ export default function YojanaAIPage() {
               <div className="tricolor"/>
               <nav className="navbar no-print">
                 <div className="navbar-left">
-                  <button className="nav-back" onClick={handleFormBack}>
+                  <button className="nav-back-btn" onClick={handleFormBack}>
                     ← {t.back_btn}
                   </button>
                 </div>
@@ -471,11 +689,11 @@ export default function YojanaAIPage() {
               <div className="form-body">
                 <div className="form-inner a-slide-left"
                   key={currentStep}>
-                  <div className="q-header-row">
-                    <div className="q-header-left">
-                      <span className="q-eyebrow">
-                        Q{currentStep+1}
-                      </span>
+                <div className="q-header-row">
+                  <div className="q-header-left">
+                    <span className="q-eyebrow">
+                      Q{currentStep+1}
+                    </span>
                       <h2 className="q-heading">
                         {lang !== 'en' ? qText : q.en}
                       </h2>
@@ -483,13 +701,6 @@ export default function YojanaAIPage() {
                         {lang!=='en' ? q.en : ''}
                       </p>
                     </div>
-                    <button className="speak-btn"
-                      aria-label="Listen"
-                      onClick={() => speak(
-                        lang === 'en' ? q.en : (qText as string),
-                        lang)}>
-                      🔊
-                    </button>
                   </div>
                   
                   {q.id === 'state' && (
@@ -537,27 +748,13 @@ export default function YojanaAIPage() {
                         onChange={handleAgeChange}
                         placeholder={q.placeholder}
                       />
-                      {q.id === 'age' && (
-                        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                          <button
-                            type="button"
-                            role="button"
-                            aria-label="Speak age"
-                            className={`mic-btn ${listening ? 'listening' : ''}`}
-                            onClick={handleMicClick}
-                          >
-                            <span aria-hidden="true" style={{ color: listening ? 'white' : 'var(--gray-600)' }}>🎤</span>
-                          </button>
-                          {listening && <span className="mic-hint">{t.listen_btn}</span>}
-                        </div>
-                      )}
                     </div>
                   )}
                 </div>
               </div>
               <div className="bottom-bar no-print">
                 <button className="btn-cta"
-                  style={{maxWidth:'100%'}}
+                  style={{ maxWidth: '100%', width: '100%' }}
                   disabled={!hasAnswer}
                   onClick={handleNext}>
                   {t.next_btn}
@@ -616,7 +813,7 @@ export default function YojanaAIPage() {
             <div className="tricolor"/>
             <nav className="navbar no-print">
               <div className="navbar-left">
-                <button className="nav-back"
+                <button className="nav-back-btn"
                   onClick={()=>{
                     setScreen('hero')
                     setResults(null)
@@ -651,10 +848,6 @@ export default function YojanaAIPage() {
                         .slice(0,90)+'...'
                     : results.total_annual_benefit}
                 </p>
-                <button className="listen-pill"
-                  onClick={handleListenResults}>
-                  🔊 {t.listen_btn}
-                </button>
               </div>
             </div>
             <div className="cards-wrap">
