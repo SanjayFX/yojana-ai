@@ -218,6 +218,40 @@ You MUST respond with ONLY a valid JSON object (no markdown, no explanation):
   }
 }
 
+OFFICIAL PORTAL URLS — use these exact URLs:
+pm_kisan → https://pmkisan.gov.in
+ab_pmjay → https://pmjay.gov.in
+pmay_urban → https://pmaymis.gov.in
+pmay_rural → https://pmayg.nic.in
+mgnrega → https://nrega.nic.in
+kisan_credit_card → https://www.nabard.org
+pm_mudra → https://www.mudra.org.in
+pm_fasal_bima → https://pmfby.gov.in
+pm_ujjwala → https://pmuy.gov.in
+pm_jan_dhan → https://pmjdy.gov.in
+atal_pension → https://npscra.nsdl.co.in
+pm_jeevan_jyoti → https://jansuraksha.gov.in
+pm_suraksha_bima → https://jansuraksha.gov.in
+stand_up_india → https://www.standupmitra.in
+pm_vishwakarma → https://pmvishwakarma.gov.in
+national_scholarship → https://scholarships.gov.in
+pm_scholarship_capf → https://scholarships.gov.in
+pmkvy → https://www.pmkvyofficial.org
+pm_surya_ghar → https://pmsuryaghar.gov.in
+sukanya_samriddhi → https://www.indiapost.gov.in
+pudhumai_penn → https://pudumaipenn.tn.gov.in
+pudhumai-penn-scheme → https://pudumaipenn.tn.gov.in
+cm_breakfast → https://www.tnschools.gov.in
+cm-breakfast-scheme → https://www.tnschools.gov.in
+up_kanya_sumangala → https://mksy.up.gov.in
+up-kanya-sumangala-yojana → https://mksy.up.gov.in
+karnataka_yuvanidhi → https://sevasindhu.karnataka.gov.in
+karnataka-yuvanidhi-scheme → https://sevasindhu.karnataka.gov.in
+bihar_student_credit_card → https://www.7nishchay-yuvaupmission.bihar.gov.in
+bihar-student-credit-card-scheme → https://www.7nishchay-yuvaupmission.bihar.gov.in
+For any other scheme use:
+  https://www.myscheme.gov.in/search
+
 Rules:
 - Steps should be clear, actionable, and in order
 - Return exactly 3 concise steps per scheme

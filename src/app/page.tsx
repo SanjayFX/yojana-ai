@@ -1,16 +1,9 @@
 'use client'
 
-import React, { useState, useEffect, useMemo, useCallback } from 'react'
+import React, { useState, useEffect, useMemo, useCallback, useRef } from 'react'
 import { SUPPORTED_LANGS, type LangCode } from '@/lib/i18n/translations'
 import { useLang } from '@/lib/context/LanguageContext'
-import { speak, stopSpeaking } from '@/lib/speech'
-
-declare global {
-  interface Window {
-    SpeechRecognition: any
-    webkitSpeechRecognition: any
-  }
-}
+import { speak, stopSpeaking, isSpeaking, startVoiceInput } from '@/lib/speech'
 
 type Screen = 'hero' | 'form' | 'loading' | 'results'
 
@@ -60,11 +53,6 @@ const langLabels: Record<LangCode, string> = {
   kn: 'ಕನ್'
 }
 
-const langCodeMap: Record<LangCode, string> = {
-  hi: 'hi-IN', en: 'en-IN', bn: 'bn-IN', te: 'te-IN',
-  mr: 'mr-IN', ta: 'ta-IN', gu: 'gu-IN', kn: 'kn-IN'
-}
-
 const FALLBACK_COPY = {
   hi: {
     heroBadge: 'AI-powered • Free • No login',
@@ -103,15 +91,13 @@ function getCategoryIcon(name: string, reason: string): string {
   return '💰'
 }
 
-const SpeakerBtn = ({ text }: { text: string }) => {
-  const { lang } = useLang()
+const SpeakerBtn = ({ onSpeak }: { onSpeak: () => void }) => {
   const [isPlaying, setIsPlaying] = useState(false)
-  const handleClick = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
-    e.stopPropagation()
-    speak(text, langCodeMap[lang])
+  const handleClick = useCallback(() => {
+    onSpeak()
     setIsPlaying(true)
     setTimeout(() => setIsPlaying(false), 2000)
-  }, [lang, text])
+  }, [onSpeak])
 
   return (
     <button 
@@ -138,9 +124,9 @@ export default function YojanaAIPage() {
   const [expandedCards, setExpandedCards] = useState<Record<string, boolean>>({})
 
   const [pulseAnswerId, setPulseAnswerId] = useState<string | null>(null)
-  const [isListeningForAge, setIsListeningForAge] = useState(false)
-  const [isReadingResults, setIsReadingResults] = useState(false)
+  const [listening, setListening] = useState(false)
   const [stateSearchQuery, setStateSearchQuery] = useState('')
+  const stopVoiceRef = useRef<(() => void) | null>(null)
 
   const uiCopy = lang === 'en' ? FALLBACK_COPY.en : FALLBACK_COPY.hi
   const currentQuestion = QUESTIONS_DATA[currentStep]
@@ -220,53 +206,50 @@ export default function YojanaAIPage() {
     }
   }, [toggleExpand])
 
-  const startVoiceInputAge = useCallback(() => {
-    try {
-      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition
-      if (!SpeechRecognition) return
-      
-      const recognition = new SpeechRecognition()
-      recognition.lang = langCodeMap[lang] || 'hi-IN'
-      recognition.onstart = () => setIsListeningForAge(true)
-      recognition.onend = () => setIsListeningForAge(false)
-      recognition.onresult = (e: any) => {
-        const spoken = e.results[0][0].transcript
+  const handleMicClick = useCallback(() => {
+    if (listening) {
+      stopVoiceRef.current?.()
+      setListening(false)
+      return
+    }
+
+    setListening(true)
+    const stop = startVoiceInput(
+      lang,
+      (spoken: string) => {
         const num = spoken.replace(/[^0-9]/g, '')
-        if (num) {
+        const parsed = parseInt(num, 10)
+        if (num && !isNaN(parsed) && parsed > 0 && parsed <= 120) {
           setAnswers(prev => ({ ...prev, age: num }))
         }
-      }
-      recognition.start()
-    } catch (err) {
-      console.error("Speech recognition error:", err)
-      setIsListeningForAge(false)
-    }
-  }, [lang])
+        setListening(false)
+      },
+      () => setListening(false)
+    )
+    stopVoiceRef.current = stop
+  }, [lang, listening])
   
-  const toggleReadAll = useCallback(() => {
-    if (isReadingResults) {
+  const handleListenResults = useCallback(() => {
+    if (isSpeaking()) {
       stopSpeaking()
-      setIsReadingResults(false)
-    } else {
-      setIsReadingResults(true)
-      if (results && results.matched_schemes) {
-        let sentence = `${t.results_title} ${results.total_annual_benefit}. `
-        results.matched_schemes.forEach((s: any) => {
-          const derivedName = s.name || s.id
-          sentence += `${derivedName}. Benefit: ${s.estimated_benefit}. `
-        })
-        speak(sentence, langCodeMap[lang])
-        setTimeout(() => setIsReadingResults(false), 20000)
-      }
+      return
     }
-  }, [isReadingResults, lang, results, t.results_title])
+
+    const allText = results?.matched_schemes
+      ?.map((s: any, i: number) => {
+        const name = s.name || s.id
+        return `${i + 1}. ${name}. ${s.reason}`
+      })
+      .join('. ') ?? ''
+
+    speak(allText, lang)
+  }, [lang, results])
   
   const resetToHome = useCallback(() => {
     setScreen('hero')
     setAnswers({})
     setExpandedCards({})
     stopSpeaking()
-    setIsReadingResults(false)
     setResults(null)
     setCurrentStep(0)
     setStateSearchQuery('')
@@ -305,11 +288,6 @@ export default function YojanaAIPage() {
     setAnswers((prev) => ({ ...prev, age: value }))
   }, [])
 
-  const handleApplyClick = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
-    const url = event.currentTarget.dataset.url || 'https://www.myscheme.gov.in'
-    window.open(url, '_blank', 'noopener,noreferrer')
-  }, [])
-
   const handleShareClick = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
     const schemeName = event.currentTarget.dataset.schemeName || ''
     const benefit = event.currentTarget.dataset.schemeBenefit || ''
@@ -338,6 +316,53 @@ export default function YojanaAIPage() {
     }
     return opt
   }, [t])
+
+  const getApplyUrl = useCallback((schemeId: string): string => {
+    const action = results?.actions?.[schemeId] as { portal_url?: string; apply_url?: string } | undefined
+
+    if (action?.portal_url?.startsWith('http')) {
+      return action.portal_url
+    }
+    if (action?.apply_url?.startsWith('http')) {
+      return action.apply_url
+    }
+
+    const KNOWN_URLS: Record<string, string> = {
+      pm_kisan: 'https://pmkisan.gov.in',
+      ab_pmjay: 'https://pmjay.gov.in',
+      pmay_urban: 'https://pmaymis.gov.in',
+      mgnrega: 'https://nrega.nic.in',
+      kisan_credit_card: 'https://www.nabard.org',
+      pm_mudra: 'https://www.mudra.org.in',
+      pm_fasal_bima: 'https://pmfby.gov.in',
+      pm_ujjwala: 'https://pmuy.gov.in',
+      stand_up_india: 'https://www.standupmitra.in',
+      national_scholarship: 'https://scholarships.gov.in',
+      pm_scholarship_capf: 'https://scholarships.gov.in',
+      pudhumai_penn: 'https://pudumaipenn.tn.gov.in',
+      'pudhumai-penn-scheme': 'https://pudumaipenn.tn.gov.in',
+      cm_breakfast: 'https://www.tnschools.gov.in',
+      'cm-breakfast-scheme': 'https://www.tnschools.gov.in',
+      kalaignar_magalir: 'https://www.tn.gov.in',
+      'kalaignar-magalir-urimai-thogai-scheme':
+        'https://www.tn.gov.in',
+      up_kanya_sumangala: 'https://mksy.up.gov.in',
+      'up-kanya-sumangala-yojana': 'https://mksy.up.gov.in',
+      karnataka_yuvanidhi: 'https://sevasindhu.karnataka.gov.in',
+      'karnataka-yuvanidhi-scheme':
+        'https://sevasindhu.karnataka.gov.in',
+      bihar_student_credit_card:
+        'https://www.7nishchay-yuvaupmission.bihar.gov.in',
+      'bihar-student-credit-card-scheme':
+        'https://www.7nishchay-yuvaupmission.bihar.gov.in',
+      atal_pension: 'https://npscra.nsdl.co.in',
+      pm_jeevan_jyoti: 'https://jansuraksha.gov.in',
+      pm_suraksha_bima: 'https://jansuraksha.gov.in',
+      sukanya_samriddhi: 'https://www.indiapost.gov.in',
+    }
+
+    return KNOWN_URLS[schemeId] ?? 'https://www.myscheme.gov.in/search'
+  }, [results])
 
   return (
     <>
@@ -430,7 +455,7 @@ export default function YojanaAIPage() {
               <nav className="navbar glass no-print">
                 <button onClick={handleFormBack} className="btn-outline"
                   style={{width:'auto',height:'36px', padding:'0 14px',fontSize:'13px', marginBottom:0}}>
-                  ← {t.back_btn}
+                  {t.back_btn}
                 </button>
                 <span style={{fontSize:'13px', color:'var(--gray-400)',fontWeight:500}}>
                   {t.step_label} {currentStep+1} {t.step_of} 6
@@ -446,7 +471,13 @@ export default function YojanaAIPage() {
                 <div className="form-inner anim-slide-right" key={currentStep}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '4px' }}>
                     <div className="q-number">Q{currentStep + 1}</div>
-                    <SpeakerBtn text={qText} />
+                  <SpeakerBtn onSpeak={() => {
+                    const questionText =
+                      QUESTIONS_DATA[currentStep][
+                        lang === 'en' ? 'en' : 'hi'
+                      ] as string
+                    speak(questionText, lang)
+                  }} />
                   </div>
                   <h2 className="q-heading">{lang !== 'en' ? qText : q.en}</h2>
                   {lang !== 'en' && <div className="q-sub">{qEn}</div>}
@@ -503,12 +534,12 @@ export default function YojanaAIPage() {
                             type="button"
                             role="button"
                             aria-label="Speak age"
-                            className={`mic-btn ${isListeningForAge ? 'listening' : ''}`}
-                            onClick={startVoiceInputAge}
+                            className={`mic-btn ${listening ? 'listening' : ''}`}
+                            onClick={handleMicClick}
                           >
-                            <span aria-hidden="true" style={{ color: isListeningForAge ? 'white' : 'var(--gray-600)' }}>🎤</span>
+                            <span aria-hidden="true" style={{ color: listening ? 'white' : 'var(--gray-600)' }}>🎤</span>
                           </button>
-                          {isListeningForAge && <span className="mic-hint">Listening...</span>}
+                          {listening && <span className="mic-hint">{t.listen_btn}</span>}
                         </div>
                       )}
                     </div>
@@ -568,14 +599,14 @@ export default function YojanaAIPage() {
         {screen === 'results' && results && (
           <div style={{minHeight:'100vh', background:'var(--offwhite)'}}>
             <div className="tricolor"/>
-            <nav className="navbar glass no-print">
+              <nav className="navbar glass no-print">
               <button className="btn-outline"
                 style={{width:'auto',height:'36px', padding:'0 14px',fontSize:'13px',marginBottom:0}}
                 onClick={resetToHome}>
-                ← {t.back_btn}
+                {t.back_btn}
               </button>
               <span style={{fontSize:'13px', color:'var(--gray-400)',fontWeight:500}}>
-                {results.matched_schemes?.length || 0} {t.results_title}
+                {results.matched_schemes?.length || 0} {t.schemes_found}
               </span>
               <span className="nav-logo" onClick={resetToHome} style={{fontSize:'13px'}}>
                 YojanaAI
@@ -586,10 +617,10 @@ export default function YojanaAIPage() {
                 <div style={{display:'flex', justifyContent:'space-between', alignItems:'flex-start',gap:'12px'}}>
                   <div>
                     <h2 className="results-count">
-                      🎉 {results.matched_schemes?.length || 0} {t.results_title}
+                      🎉 {results.matched_schemes?.length || 0} {t.schemes_found}
                     </h2>
                     <p className="results-benefit">
-                      {t.results_sub}{' '}
+                      {t.total_benefit_label}{' '}
                       {expandedCards['benefit'] 
                         ? (results.total_annual_benefit || '')
                         : ((results.total_annual_benefit || '').length > 80 
@@ -606,8 +637,8 @@ export default function YojanaAIPage() {
                       )}
                     </p>
                   </div>
-                  <button className="listen-btn" onClick={toggleReadAll}>
-                    {isReadingResults ? `${uiCopy.stopAudio} 🔇` : `🔊 ${uiCopy.listenResults}`}
+                <button className="listen-btn" onClick={handleListenResults}>
+                    {t.listen_btn}
                   </button>
                 </div>
               </div>
@@ -640,7 +671,7 @@ export default function YojanaAIPage() {
                     </div>
 
                     <div className={`confidence-badge ${isHighConfidence ? 'high' : 'medium'}`}>
-                      {isHighConfidence ? (t.confidence_high || '✓ Pakka Eligible') : (t.confidence_medium || '~ Shayad Eligible')}
+                      {isHighConfidence ? t.confidence_high : t.confidence_medium}
                     </div>
 
                     <p className="reason-text">
@@ -653,14 +684,14 @@ export default function YojanaAIPage() {
                       aria-expanded={isExpanded}
                       onClick={handleToggleExpand}
                     >
-                      {isExpanded ? uiCopy.hideDetails : uiCopy.showDetails}
+                      {isExpanded ? t.hide_details : t.show_details}
                       <span className={`expand-arrow ${isExpanded ? 'open' : ''}`}>▼</span>
                     </button>
                     
                     <div className={`expand-content ${isExpanded ? 'open' : ''}`}>
                       <div style={{ paddingTop: '10px', paddingBottom: '16px' }}>
                         <h4 style={{ fontSize: '12px', fontWeight: 700, color: 'var(--navy)', marginBottom: '8px', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
-                          📄 {t.documents_label} ({schemeDocs.length})
+                          📄 {t.docs_needed} ({schemeDocs.length})
                         </h4>
                         <div style={{ paddingBottom: '16px' }}>
                           {schemeDocs.map((doc: string, dIdx: number) => (
@@ -672,7 +703,7 @@ export default function YojanaAIPage() {
                         </div>
 
                         <h4 style={{ fontSize: '12px', fontWeight: 700, color: 'var(--navy)', marginBottom: '8px', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
-                          📋 {t.apply_steps_label}
+                          📋 {t.how_to_apply}
                         </h4>
                         <div>
                           {schemeAction.steps?.map((step: string, sIdx: number) => (
@@ -688,10 +719,13 @@ export default function YojanaAIPage() {
                     <div className="card-actions no-print">
                       <button 
                         className="btn-apply"
-                        data-url={schemeAction.portal_url || schemeAction.apply_url || scheme.apply_url || 'https://www.myscheme.gov.in'}
-                        onClick={handleApplyClick}
+                        onClick={() => window.open(
+                          getApplyUrl(scheme.id),
+                          '_blank',
+                          'noopener,noreferrer'
+                        )}
                       >
-                        {t.apply_btn || 'Apply Karein →'}
+                        {t.apply_btn}
                       </button>
                       <button 
                         className="btn-whatsapp"
