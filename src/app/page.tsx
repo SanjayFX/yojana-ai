@@ -242,6 +242,7 @@ export default function YojanaAIPage() {
           scheme_name: scheme.name ?? scheme.id,
           benefit: scheme.estimated_benefit,
           profile: results.profile,
+          ui_lang: lang,
         })
       })
       const data = await res.json() as SchemeExplanation

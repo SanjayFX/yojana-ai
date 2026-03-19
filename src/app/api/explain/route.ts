@@ -5,7 +5,13 @@ export async function POST(req: Request) {
   const start = Date.now()
 
   try {
-    const { scheme_id, scheme_name, benefit, profile } = await req.json()
+    const {
+      scheme_id,
+      scheme_name,
+      benefit,
+      profile,
+      ui_lang,
+    } = await req.json()
 
     if (!scheme_id || !profile) {
       return Response.json(
@@ -14,7 +20,26 @@ export async function POST(req: Request) {
       )
     }
 
-    const lang = (profile as UserProfile).preferred_language ?? 'hi'
+    const lang = ui_lang
+      ?? (profile as UserProfile).preferred_language
+      ?? 'hi'
+
+    const langInstruction =
+      lang === 'en'
+        ? 'Respond in clear simple English only. No Hindi. No Hinglish.'
+        : lang === 'bn'
+          ? 'Respond in Bengali mixed with English.'
+          : lang === 'ta'
+            ? 'Respond in Tamil mixed with English.'
+            : lang === 'te'
+              ? 'Respond in Telugu mixed with English.'
+              : lang === 'mr'
+                ? 'Respond in Marathi mixed with English.'
+                : lang === 'gu'
+                  ? 'Respond in Gujarati mixed with English.'
+                  : lang === 'kn'
+                    ? 'Respond in Kannada mixed with English.'
+                    : 'Respond in Hinglish (Hindi + English mix).'
 
     const prompt = `You are an expert on Indian government welfare schemes helping a citizen understand how to successfully get this scheme.
 
@@ -24,11 +49,7 @@ ${JSON.stringify(profile, null, 2)}
 SCHEME: ${scheme_name} (${scheme_id})
 BENEFIT: ${benefit}
 
-Provide in ${
-      lang === 'en'
-        ? 'simple English'
-        : 'Hinglish (Hindi + English mix)'
-    }:
+${langInstruction}
 
 1. WHY YOU QUALIFY (2-3 sentences specific to their profile)
 2. FIRST STEP (single most important action)
