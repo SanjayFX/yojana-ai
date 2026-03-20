@@ -1333,96 +1333,108 @@ export default function YojanaAIPage() {
       <main id="main">
         {screen === 'hero' && (
           <>
-            <section className="relative flex flex-col items-center justify-center min-h-screen px-4 pt-24 pb-16 overflow-hidden bg-gradient-to-b from-orange-50 to-white text-center">
+            <nav className="navbar-pill no-print">
+              <span className="nav-logo" onClick={() => setScreen('hero')}>
+                {navBrand}
+              </span>
+              {renderLangDropdown()}
+            </nav>
+
+            <section className="relative flex items-center justify-center min-h-screen px-4 sm:px-6 pt-24 pb-16 overflow-hidden bg-gradient-to-b from-orange-50 to-white">
               <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_80%_50%_at_50%_0%,rgba(255,107,0,0.1),transparent)]" />
               
-              <div className="mb-6 flex items-center gap-2 rounded-full border border-orange-200 bg-white px-4 py-1.5 text-sm font-medium text-orange-600 shadow-sm">
-                🇮🇳 <span>{(t as any)['hero.badge']}</span>
-              </div>
-
-              <h1 className="font-[Noto_Sans_Devanagari,sans-serif] text-5xl md:text-6xl font-black text-gray-900 leading-tight mb-4">
-                {(t as any)['hero.headline']}{" "}
-                <span className="text-orange-500">
-                  <Typewriter
-                    text={(t as any)['hero.typewriter']}
-                    speed={80}
-                    deleteSpeed={50}
-                    waitTime={2000}
-                    cursorChar="।"
-                    cursorClassName="ml-1 text-orange-400"
-                  />
-                </span>
-              </h1>
-
-              <p className="max-w-xl text-lg md:text-xl text-gray-600 mb-8 leading-relaxed">
-                {(t as any)['hero.subtext']}
-              </p>
-
-              <button 
-                onClick={() => setScreen('form')}
-                className="group flex items-center gap-2 rounded-full bg-orange-500 hover:bg-orange-600 text-white font-semibold text-lg px-8 py-4 shadow-lg hover:shadow-orange-200 transition-all duration-200 mb-4 w-full sm:w-auto">
-                {(t as any)['hero.cta']}
-                <ArrowRightIcon className="size-5 group-hover:translate-x-1 transition-transform" />
-              </button>
-
-              <p className="text-sm text-gray-400 mb-12">
-                {(t as any)['hero.microtrust']}
-              </p>
-
-              <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-4 mb-10 w-full">
-                <div className="flex flex-col items-center bg-white rounded-2xl shadow-md px-6 py-4 min-w-[120px] border border-orange-100">
-                  <span className="text-2xl mb-1">🏛️</span>
-                  <span className="text-2xl font-black text-orange-500">780+</span>
-                  <span className="text-xs text-gray-500 mt-1">{(t as any)['stats.schemes.label']}</span>
+              <div className="w-full max-w-2xl mx-auto flex flex-col items-center text-center">
+                <div className="mb-6 flex items-center gap-2 rounded-full border border-orange-200 bg-white px-4 py-1.5 text-sm font-medium text-orange-600 shadow-sm">
+                  🇮🇳 <span>{t.hero_badge}</span>
                 </div>
-                <div className="flex flex-col items-center bg-white rounded-2xl shadow-md px-6 py-4 min-w-[120px] border border-orange-100">
-                  <span className="text-2xl mb-1">❓</span>
-                  <span className="text-2xl font-black text-orange-500">6</span>
-                  <span className="text-xs text-gray-500 mt-1">{(t as any)['stats.questions.label']}</span>
-                </div>
-                <div className="flex flex-col items-center bg-white rounded-2xl shadow-md px-6 py-4 min-w-[120px] border border-orange-100">
-                  <span className="text-2xl mb-1">⚡</span>
-                  <span className="text-2xl font-black text-orange-500">60s</span>
-                  <span className="text-xs text-gray-500 mt-1">{(t as any)['stats.result.label']}</span>
-                </div>
-              </div>
 
-              <div className="flex flex-wrap justify-center gap-4 text-xs text-gray-400 border-t border-gray-100 pt-6 w-full max-w-lg">
-                <span className="w-[45%] sm:w-auto text-left sm:text-center">✅ {(t as any)['trust.nic']}</span>
-                <span className="w-[45%] sm:w-auto text-left sm:text-center">✅ {(t as any)['trust.nologin']}</span>
-                <span className="w-[45%] sm:w-auto text-left sm:text-center">✅ {(t as any)['trust.free']}</span>
-                <span className="w-[45%] sm:w-auto text-left sm:text-center">✅ {(t as any)['trust.languages']}</span>
+                <h1 className="font-[Noto_Sans_Devanagari,sans-serif] text-5xl md:text-6xl font-black text-gray-900 leading-tight mb-4">
+                  {t.hero_headline}{" "}
+                  <span className="text-orange-500">
+                    <Typewriter
+                      text={t.hero_typewriter as any}
+                      speed={80}
+                      deleteSpeed={50}
+                      waitTime={2000}
+                      cursorChar="।"
+                      cursorClassName="ml-1 text-orange-400"
+                    />
+                  </span>
+                </h1>
+
+                <p className="max-w-xl text-lg md:text-xl text-gray-600 mb-8 leading-relaxed">
+                  {t.hero_subtext}
+                </p>
+
+                <button 
+                  onClick={() => setScreen('form')}
+                  className="group flex items-center justify-center gap-2 rounded-full bg-orange-500 hover:bg-orange-600 text-white font-semibold text-lg px-8 py-4 shadow-lg hover:shadow-orange-200 transition-all duration-200 mb-4 w-full sm:w-auto">
+                  {t.hero_cta}
+                  <ArrowRightIcon className="size-5 group-hover:translate-x-1 transition-transform" />
+                </button>
+
+                <p className="text-sm text-gray-400 mb-12">
+                  {t.hero_microtrust}
+                </p>
+
+                <div className="flex flex-row justify-center gap-3 mb-10 w-full">
+                  <div className="flex flex-col flex-1 max-w-[120px] items-center bg-white rounded-2xl shadow-md px-4 sm:px-6 py-4 border border-orange-100">
+                    <span className="text-2xl mb-1">🏛️</span>
+                    <span className="text-xl sm:text-2xl font-black text-orange-500">780+</span>
+                    <span className="text-xs text-center text-gray-500 mt-1">{t.stats_schemes_label}</span>
+                  </div>
+                  <div className="flex flex-col flex-1 max-w-[120px] items-center bg-white rounded-2xl shadow-md px-4 sm:px-6 py-4 border border-orange-100">
+                    <span className="text-2xl mb-1">❓</span>
+                    <span className="text-xl sm:text-2xl font-black text-orange-500">6</span>
+                    <span className="text-xs text-center text-gray-500 mt-1">{t.stats_questions_label}</span>
+                  </div>
+                  <div className="flex flex-col flex-1 max-w-[120px] items-center bg-white rounded-2xl shadow-md px-4 sm:px-6 py-4 border border-orange-100">
+                    <span className="text-2xl mb-1">⚡</span>
+                    <span className="text-xl sm:text-2xl font-black text-orange-500">60s</span>
+                    <span className="text-xs text-center text-gray-500 mt-1">{t.stats_result_label}</span>
+                  </div>
+                </div>
+
+                <div className="flex flex-wrap justify-center gap-4 text-xs text-gray-400 border-t border-gray-100 pt-6 w-full max-w-lg">
+                  <span className="w-[45%] sm:w-auto text-left sm:text-center">✅ {t.trust_nic}</span>
+                  <span className="w-[45%] sm:w-auto text-left sm:text-center">✅ {t.trust_nologin}</span>
+                  <span className="w-[45%] sm:w-auto text-left sm:text-center">✅ {t.trust_free}</span>
+                  <span className="w-[45%] sm:w-auto text-left sm:text-center">✅ {t.trust_languages}</span>
+                </div>
               </div>
             </section>
 
-            <SchemesMarchingSection 
-              label={(t as any)['schemes.section.label']} 
-              heading={(t as any)['schemes.section.heading']} 
-            />
+            <SchemesMarchingSection />
 
-            <section className="py-16 px-4 bg-white">
-              <h2 className="text-center text-2xl font-bold text-gray-800 mb-10">
-                {(t as any)['steps.heading']}
-              </h2>
-              <div className="flex flex-col md:flex-row items-center justify-center gap-4 max-w-3xl mx-auto">
-                {[1, 2, 3].map((n, i) => (
-                  <div key={n} className="flex flex-col md:flex-row items-center gap-4">
-                    <div className="flex flex-col items-center bg-orange-50 border border-orange-100 rounded-2xl px-6 py-5 w-52 text-center">
-                      <span className="text-3xl font-black text-orange-400 mb-2">
-                        0{n}
-                      </span>
-                      <p className="font-bold text-gray-800 text-sm">
-                        {(t as any)[`steps.${n}.title`]}
-                      </p>
-                      <p className="text-xs text-gray-500 mt-1">
-                        {(t as any)[`steps.${n}.desc`]}
-                      </p>
+            <section className="py-16 px-4 sm:px-6 bg-white flex flex-col items-center">
+              <div className="w-full max-w-2xl mx-auto">
+                <h2 className="text-center text-2xl font-bold text-gray-800 mb-10">
+                  {t.steps_heading}
+                </h2>
+                <div className="flex flex-col md:flex-row items-center justify-center gap-4">
+                  {[1, 2, 3].map((n, i) => {
+                    const titleKey = `steps_${n}_title`;
+                    const descKey = `steps_${n}_desc`;
+                    
+                    return (
+                    <div key={n} className="flex flex-col md:flex-row items-center gap-4">
+                      <div className="flex flex-col items-center bg-orange-50 border border-orange-100 rounded-2xl px-6 py-5 w-52 text-center">
+                        <span className="text-3xl font-black text-orange-400 mb-2">
+                          0{n}
+                        </span>
+                        <p className="font-bold text-gray-800 text-sm">
+                          {(t as any)[titleKey]}
+                        </p>
+                        <p className="text-xs text-gray-500 mt-1">
+                          {(t as any)[descKey]}
+                        </p>
+                      </div>
+                      {i < 2 && (
+                        <ArrowRightIcon className="size-5 text-orange-300 hidden md:block shrink-0" />
+                      )}
                     </div>
-                    {i < 2 && (
-                      <ArrowRightIcon className="size-5 text-orange-300 hidden md:block shrink-0" />
-                    )}
-                  </div>
-                ))}
+                  )})}
+                </div>
               </div>
             </section>
           </>

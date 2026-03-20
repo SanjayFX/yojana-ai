@@ -1409,10 +1409,10 @@ body {
 
 @keyframes marquee {
   from { transform: translateX(0); }
-  to { transform: translateX(calc(-100% - var(--gap))); }
+  to { transform: translateX(calc(-50% - var(--gap)/2)); }
 }
 @keyframes marquee-reverse {
-  from { transform: translateX(calc(-100% - var(--gap))); }
+  from { transform: translateX(calc(-50% - var(--gap)/2)); }
   to { transform: translateX(0); }
 }
 .animate-marquee {
