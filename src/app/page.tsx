@@ -3,6 +3,9 @@
 import React, { useState, useEffect, useMemo, useCallback, useRef } from 'react'
 import { SUPPORTED_LANGS, type LangCode } from '@/lib/i18n/translations'
 import { useLang } from '@/lib/context/LanguageContext'
+import { Typewriter } from "@/components/ui/typewriter"
+import { SchemesMarchingSection } from "@/components/ui/schemes-marquee"
+import { ArrowRightIcon } from "lucide-react"
 
 type Screen = 'hero' | 'form' | 'loading' | 'results'
 type SchemeTypeFilter = 'all' | 'central' | 'state'
@@ -1329,348 +1332,101 @@ export default function YojanaAIPage() {
       <a href="#main" className="skip-link">Skip to main content</a>
       <main id="main">
         {screen === 'hero' && (
-          <div className="hero-wrap">
-            <div className="blob blob-1"/>
-            <div className="blob blob-2"/>
-            <div className="blob blob-3"/>
-            <div className="tricolor"/>
-          
-            <nav className="navbar-pill no-print">
-              <span className="nav-logo"
-                onClick={() => setScreen('hero')}>
-                {navBrand}
-              </span>
-              {renderLangDropdown()}
-            </nav>
-          
-            <div className="hero-content">
-              <svg className="ornament" viewBox="0 0 72 20">
-                <path d="M34 10C27 3 15 1 7 7c8 0 20 2 27 3z"
-                  fill="#F97316" opacity="0.6"/>
-                <path d="M34 10C27 17 15 19 7 13c8 0 20-2 27-3z"
-                  fill="#F97316" opacity="0.35"/>
-                <circle cx="36" cy="10" r="2.5"
-                  fill="#F97316"/>
-                <path d="M38 10C45 3 57 1 65 7c-8 0-20 2-27 3z"
-                  fill="#F97316" opacity="0.6"/>
-                <path d="M38 10C45 17 57 19 65 13c-8 0-20-2-27-3z"
-                  fill="#F97316" opacity="0.35"/>
-              </svg>
-          
-              <div className="hero-badge a-fade-up"
-                style={{animationDelay:'0.05s'}}>
-                ✦ {uiCopy.heroBadge}
+          <>
+            <section className="relative flex flex-col items-center justify-center min-h-screen px-4 pt-24 pb-16 overflow-hidden bg-gradient-to-b from-orange-50 to-white text-center">
+              <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_80%_50%_at_50%_0%,rgba(255,107,0,0.1),transparent)]" />
+              
+              <div className="mb-6 flex items-center gap-2 rounded-full border border-orange-200 bg-white px-4 py-1.5 text-sm font-medium text-orange-600 shadow-sm">
+                🇮🇳 <span>{(t as any)['hero.badge']}</span>
               </div>
-          
-              <h1 className="hero-display a-fade-up"
-                style={{animationDelay:'0.1s'}}>
-                {(t as any).tagline_line1 || t.tagline}{' '}
-                {((t as any).tagline_line2) && (
-                  <span className="hero-display-accent">
-                    {(t as any).tagline_line2}
-                  </span>
-                )}
-              </h1>
-          
-              <p className="hero-body a-fade-up"
-                style={{animationDelay:'0.15s'}}>
-                {t.subtagline}
-              </p>
-          
-              <button className="btn-cta a-fade-up"
-                style={{animationDelay:'0.2s'}}
-                onClick={() => setScreen('form')}>
-                {t.start_btn}
-              </button>
-          
-              <p className="hero-note a-fade-up"
-                style={{animationDelay:'0.25s'}}>
-                {t.free_note}
-              </p>
 
-              <div className="scheme-search-wrap"
-                style={{
-                  width: '100%',
-                  maxWidth: '420px',
-                  marginTop: '28px',
-                  position: 'relative'
-                }}>
-                <div style={{
-                  position: 'relative',
-                  display: 'flex',
-                  alignItems: 'center'
-                }}>
-                  <span style={{
-                    position: 'absolute',
-                    left: '16px',
-                    fontSize: '16px',
-                    pointerEvents: 'none',
-                    opacity: 0.4
-                  }}>🔍</span>
-                    <input
-                      type="text"
-                      value={searchQuery}
-                      onChange={e => handleSearch(e.target.value)}
-                      placeholder={t.search_placeholder}
-                    style={{
-                      width: '100%',
-                      height: '50px',
-                      paddingLeft: '44px',
-                      paddingRight: '16px',
-                      border: '1.5px solid var(--border-mid)',
-                      borderRadius: 'var(--r-full)',
-                      fontSize: '14px',
-                      color: 'var(--ink)',
-                      background: 'rgba(255,255,255,0.85)',
-                      backdropFilter: 'blur(12px)',
-                      WebkitBackdropFilter: 'blur(12px)',
-                      outline: 'none',
-                      letterSpacing: '-0.005em',
-                      boxShadow: '0 2px 12px rgba(10,15,30,0.06)'
-                    }}
-                    onFocus={e => {
-                      e.target.style.borderColor =
-                        'var(--saffron)'
-                      e.target.style.boxShadow =
-                        '0 0 0 3px var(--saffron-soft)'
-                    }}
-                    onBlur={e => {
-                      e.target.style.borderColor =
-                        'var(--border-mid)'
-                      e.target.style.boxShadow =
-                        '0 2px 12px rgba(10,15,30,0.06)'
-                    }}
+              <h1 className="font-[Noto_Sans_Devanagari,sans-serif] text-5xl md:text-6xl font-black text-gray-900 leading-tight mb-4">
+                {(t as any)['hero.headline']}{" "}
+                <span className="text-orange-500">
+                  <Typewriter
+                    text={(t as any)['hero.typewriter']}
+                    speed={80}
+                    deleteSpeed={50}
+                    waitTime={2000}
+                    cursorChar="।"
+                    cursorClassName="ml-1 text-orange-400"
                   />
-                  {searching && (
-                    <span style={{
-                      position: 'absolute',
-                      right: '16px',
-                      fontSize: '12px',
-                      color: 'var(--subtle)'
-                    }}>...</span>
-                  )}
+                </span>
+              </h1>
+
+              <p className="max-w-xl text-lg md:text-xl text-gray-600 mb-8 leading-relaxed">
+                {(t as any)['hero.subtext']}
+              </p>
+
+              <button 
+                onClick={() => setScreen('form')}
+                className="group flex items-center gap-2 rounded-full bg-orange-500 hover:bg-orange-600 text-white font-semibold text-lg px-8 py-4 shadow-lg hover:shadow-orange-200 transition-all duration-200 mb-4 w-full sm:w-auto">
+                {(t as any)['hero.cta']}
+                <ArrowRightIcon className="size-5 group-hover:translate-x-1 transition-transform" />
+              </button>
+
+              <p className="text-sm text-gray-400 mb-12">
+                {(t as any)['hero.microtrust']}
+              </p>
+
+              <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-4 mb-10 w-full">
+                <div className="flex flex-col items-center bg-white rounded-2xl shadow-md px-6 py-4 min-w-[120px] border border-orange-100">
+                  <span className="text-2xl mb-1">🏛️</span>
+                  <span className="text-2xl font-black text-orange-500">780+</span>
+                  <span className="text-xs text-gray-500 mt-1">{(t as any)['stats.schemes.label']}</span>
                 </div>
+                <div className="flex flex-col items-center bg-white rounded-2xl shadow-md px-6 py-4 min-w-[120px] border border-orange-100">
+                  <span className="text-2xl mb-1">❓</span>
+                  <span className="text-2xl font-black text-orange-500">6</span>
+                  <span className="text-xs text-gray-500 mt-1">{(t as any)['stats.questions.label']}</span>
+                </div>
+                <div className="flex flex-col items-center bg-white rounded-2xl shadow-md px-6 py-4 min-w-[120px] border border-orange-100">
+                  <span className="text-2xl mb-1">⚡</span>
+                  <span className="text-2xl font-black text-orange-500">60s</span>
+                  <span className="text-xs text-gray-500 mt-1">{(t as any)['stats.result.label']}</span>
+                </div>
+              </div>
 
-                {searchResults.length > 0 && (
-                  <div style={{
-                    position: 'absolute',
-                    top: '54px',
-                    left: 0,
-                    right: 0,
-                    background: 'var(--surface)',
-                    border: '1px solid var(--border-mid)',
-                    borderRadius: 'var(--r-xl)',
-                    boxShadow: '0 8px 32px rgba(10,15,30,0.12)',
-                    zIndex: 200,
-                    overflow: 'hidden',
-                    maxHeight: '320px',
-                    overflowY: 'auto'
-                  }}>
-                    {searchResults.map((scheme, i) => {
-                      const categoryIcons: Record<string, string> = {
-                        agriculture: '🌾',
-                        health: '🏥',
-                        education: '📚',
-                        housing: '🏠',
-                        finance: '💰',
-                        women: '👩',
-                        disability: '♿',
-                        elderly: '👴',
-                        employment: '💼'
-                      }
-                      const icon = categoryIcons[scheme.category] ?? '📋'
+              <div className="flex flex-wrap justify-center gap-4 text-xs text-gray-400 border-t border-gray-100 pt-6 w-full max-w-lg">
+                <span className="w-[45%] sm:w-auto text-left sm:text-center">✅ {(t as any)['trust.nic']}</span>
+                <span className="w-[45%] sm:w-auto text-left sm:text-center">✅ {(t as any)['trust.nologin']}</span>
+                <span className="w-[45%] sm:w-auto text-left sm:text-center">✅ {(t as any)['trust.free']}</span>
+                <span className="w-[45%] sm:w-auto text-left sm:text-center">✅ {(t as any)['trust.languages']}</span>
+              </div>
+            </section>
 
-                      return (
-                        <div
-                          key={scheme.id}
-                          onClick={() => {
-                            setSearchResults([])
-                            setSearchQuery('')
-                            window.open(
-                              scheme.apply_url ||
-                              'https://www.myscheme.gov.in/search',
-                              '_blank',
-                              'noopener,noreferrer'
-                            )
-                          }}
-                          style={{
-                            padding: '14px 16px',
-                            borderBottom: i < searchResults.length - 1
-                              ? '1px solid var(--border)'
-                              : 'none',
-                            cursor: 'pointer',
-                            display: 'flex',
-                            alignItems: 'flex-start',
-                            gap: '12px',
-                            textAlign: 'left',
-                            transition: 'background 0.15s ease'
-                          }}
-                          onMouseEnter={e => {
-                            ;(e.currentTarget as HTMLDivElement).style.background =
-                              'var(--saffron-soft)'
-                          }}
-                          onMouseLeave={e => {
-                            ;(e.currentTarget as HTMLDivElement).style.background = 'transparent'
-                          }}
-                        >
-                          <span style={{
-                            fontSize: '20px',
-                            flexShrink: 0,
-                            marginTop: '1px'
-                          }}>
-                            {icon}
-                          </span>
-                          <div>
-                            <div style={{
-                              fontSize: '13px',
-                              fontWeight: 600,
-                              color: 'var(--ink)',
-                              lineHeight: 1.3,
-                              letterSpacing: '-0.01em',
-                              marginBottom: '3px'
-                            }}>
-                              {getSchemeDisplayName(scheme.id, scheme.name)}
-                            </div>
-                            <div style={{
-                              fontSize: '11px',
-                              color: 'var(--muted)',
-                              letterSpacing: '-0.005em'
-                            }}>
-                              {scheme.benefit.length > 60
-                                ? scheme.benefit.slice(0, 60)+'...'
-                                : scheme.benefit}
-                            </div>
-                          </div>
-                          <span style={{
-                            fontSize: '11px',
-                            color: 'var(--saffron)',
-                            fontWeight: 600,
-                            marginLeft: 'auto',
-                            flexShrink: 0,
-                            marginTop: '2px'
-                          }}>
-                            Apply →
-                          </span>
-                        </div>
-                      )
-                    })}
-                  </div>
-                )}
+            <SchemesMarchingSection 
+              label={(t as any)['schemes.section.label']} 
+              heading={(t as any)['schemes.section.heading']} 
+            />
 
-                {searchQuery.length >= 2 &&
-                  !searching &&
-                  searchResults.length === 0 && (
-                    <div style={{
-                      position: 'absolute',
-                      top: '54px',
-                      left: 0,
-                      right: 0,
-                      background: 'var(--surface)',
-                      border: '1px solid var(--border-mid)',
-                      borderRadius: 'var(--r-xl)',
-                      padding: '20px',
-                      textAlign: 'center',
-                      fontSize: '13px',
-                      color: 'var(--subtle)',
-                      zIndex: 200,
-                      boxShadow:
-                        '0 8px 32px rgba(10,15,30,0.08)'
-                    }}>
-                      No schemes found for "{searchQuery}"
+            <section className="py-16 px-4 bg-white">
+              <h2 className="text-center text-2xl font-bold text-gray-800 mb-10">
+                {(t as any)['steps.heading']}
+              </h2>
+              <div className="flex flex-col md:flex-row items-center justify-center gap-4 max-w-3xl mx-auto">
+                {[1, 2, 3].map((n, i) => (
+                  <div key={n} className="flex flex-col md:flex-row items-center gap-4">
+                    <div className="flex flex-col items-center bg-orange-50 border border-orange-100 rounded-2xl px-6 py-5 w-52 text-center">
+                      <span className="text-3xl font-black text-orange-400 mb-2">
+                        0{n}
+                      </span>
+                      <p className="font-bold text-gray-800 text-sm">
+                        {(t as any)[`steps.${n}.title`]}
+                      </p>
+                      <p className="text-xs text-gray-500 mt-1">
+                        {(t as any)[`steps.${n}.desc`]}
+                      </p>
                     </div>
-                  )}
+                    {i < 2 && (
+                      <ArrowRightIcon className="size-5 text-orange-300 hidden md:block shrink-0" />
+                    )}
+                  </div>
+                ))}
               </div>
-
-              <div className="stats-row a-fade-up"
-                style={{animationDelay:'0.3s'}}>
-                <div className="stat-card">
-                  <div className="stat-num">{formatCount(schemeCount)}</div>
-                  <div className="stat-label">
-                    {t.stat1_label}
-                  </div>
-                </div>
-                <div className="stat-card">
-                  <div className="stat-num">{t.stat2_num}</div>
-                  <div className="stat-label">
-                    {t.stat2_label}
-                  </div>
-                </div>
-                <div className="stat-card">
-                  <div className="stat-num">{t.stat3_num}</div>
-                  <div className="stat-label">
-                    {t.stat3_label}
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="credits-footer">
-              <span>
-                {lang === 'hi' ? 'बनाया' : 'Built'} with ❤️
-                {lang === 'hi' ? ' भारत के लिए' : ' for India'}
-              </span>
-              <span className="credits-dot">·</span>
-              <a
-                href="https://github.com/SanjayFX"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="credits-link-footer">
-                <svg width="13" height="13"
-                  viewBox="0 0 24 24"
-                  fill="currentColor">
-                  <path d="M12 0C5.37 0 0 5.37 0 12c0
-                    5.31 3.435 9.795 8.205 11.385.6.105
-                    .825-.255.825-.57 0-.285-.015-1.23
-                    -.015-2.235-3.015.555-3.795-.735
-                    -4.035-1.41-.135-.345-.72-1.41-1.23
-                    -1.695-.42-.225-1.02-.78-.015-.795
-                    .945-.015 1.62.87 1.845 1.23 1.08
-                    1.815 2.805 1.305 3.495.99.105-.78
-                    .42-1.305.765-1.605-2.67-.3-5.46
-                    -1.335-5.46-5.925 0-1.305.465-2.385
-                    1.23-3.225-.12-.3-.54-1.53.12-3.18
-                    0 0 1.005-.315 3.3 1.23.96-.27 1.98
-                    -.405 3-.405s2.04.135 3 .405c2.295
-                    -1.56 3.3-1.23 3.3-1.23.66 1.65.24
-                    2.88.12 3.18.765.84 1.23 1.905 1.23
-                    3.225 0 4.605-2.805 5.625-5.475
-                    5.925.435.375.81 1.095.81 2.22 0
-                    1.605-.015 2.895-.015 3.3 0 .315
-                    .225.69.825.57A12.02 12.02 0 0024
-                    12c0-6.63-5.37-12-12-12z"/>
-                </svg>
-                SanjayFX
-              </a>
-              <span className="credits-dot">·</span>
-              <a
-                href="https://www.linkedin.com/in/sanjay-k-523120287"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="credits-link-footer">
-                <svg width="13" height="13"
-                  viewBox="0 0 24 24"
-                  fill="currentColor">
-                  <path d="M20.447 20.452h-3.554v-5.569
-                    c0-1.328-.027-3.037-1.852-3.037
-                    -1.853 0-2.136 1.445-2.136 2.939
-                    v5.667H9.351V9h3.414v1.561h.046
-                    c.477-.9 1.637-1.85 3.37-1.85
-                    3.601 0 4.267 2.37 4.267 5.455
-                    v6.286zM5.337 7.433a2.062 2.062 0
-                    01-2.063-2.065 2.064 2.064 0
-                    112.063 2.065zm1.782 13.019H3.555
-                    V9h3.564v11.452zM22.225 0H1.771
-                    C.792 0 0 .774 0 1.729v20.542
-                    C0 23.227.792 24 1.771 24h20.451
-                    C23.2 24 24 23.227 24 22.271V1.729
-                    C24 .774 23.2 0 22.222 0h.003z"/>
-                </svg>
-                Sanjay K
-              </a>
-            </div>
-          </div>
+            </section>
+          </>
         )}
-
         {screen === 'form' && (() => {
           const q = currentQuestion
           const localizedQuestion = questionCopy[currentStep]
