@@ -764,7 +764,7 @@ export default function YojanaAIPage() {
   }, [setLang])
 
   const renderLangDropdown = useCallback(() => (
-    <div className="relative z-[99999]">
+    <div className="relative z-[99999] lang-toggle-wrap">
       <button
         type="button"
         onClick={() => setLangOpen(p => !p)}
@@ -794,6 +794,7 @@ export default function YojanaAIPage() {
           border: '1px solid var(--border-mid)',
           borderRadius: 'var(--r-xl)',
           boxShadow: '0 8px 32px rgba(10,15,30,0.12)',
+          pointerEvents: 'auto',
           zIndex: 99999,
           overflow: 'hidden',
           minWidth: '180px',
@@ -811,6 +812,7 @@ export default function YojanaAIPage() {
                 width: '100%',
                 padding: '11px 16px',
                 display: 'flex',
+                pointerEvents: 'auto',
                 alignItems: 'center',
                 justifyContent: 'space-between',
                 gap: '10px',
