@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 
+import { Analytics } from "@vercel/analytics/next";
 import { LanguageProvider } from "@/lib/context/LanguageContext";
 import DynamicTitle from "@/components/DynamicTitle";
 
@@ -56,6 +57,7 @@ export default function RootLayout({
         <LanguageProvider>
           {children}
         </LanguageProvider>
+        <Analytics />
       </body>
     </html>
   );

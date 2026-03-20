@@ -1,0 +1,45 @@
+- generic [active] [ref=e1]:
+  - link "Skip to main content" [ref=e2] [cursor=pointer]:
+    - /url: "#main"
+  - main [ref=e3]:
+    - generic [ref=e158]:
+      - navigation [ref=e160]:
+        - button "← Wapas" [ref=e162] [cursor=pointer]
+        - generic [ref=e163]: Step 5 ka 7
+        - generic [ref=e164]:
+          - button "हिन्दी" [ref=e166] [cursor=pointer]:
+            - generic [ref=e167]: हिन्दी
+            - img [ref=e168]
+          - generic [ref=e170] [cursor=pointer]:
+            - generic:
+              - generic:
+                - img
+            - text: YojanaAI
+      - generic [ref=e292]:
+        - generic [ref=e294]:
+          - generic [ref=e295]: Q5
+          - heading "आपकी श्रेणी?" [level=2] [ref=e296]
+          - paragraph [ref=e297]: सामाजिक वर्ग चुनें
+        - button "General (सामान्य)" [ref=e298] [cursor=pointer]:
+          - generic [ref=e299]: General (सामान्य)
+        - button "OBC (पिछड़ा वर्ग)" [ref=e300] [cursor=pointer]:
+          - generic [ref=e301]: OBC (पिछड़ा वर्ग)
+        - button "SC (अनुसूचित जाति)" [ref=e302] [cursor=pointer]:
+          - generic [ref=e303]: SC (अनुसूचित जाति)
+        - button "ST (अनुसूचित जनजाति)" [ref=e304] [cursor=pointer]:
+          - generic [ref=e305]: ST (अनुसूचित जनजाति)
+        - button "EWS (आर्थिक रूप से कमज़ोर)" [ref=e306] [cursor=pointer]:
+          - generic [ref=e307]: EWS (आर्थिक रूप से कमज़ोर)
+      - button "Aage Badhein →" [disabled] [ref=e242]
+  - generic [ref=e53] [cursor=pointer]:
+    - button "Open Next.js Dev Tools" [ref=e54]:
+      - img [ref=e55]
+    - generic [ref=e58]:
+      - button "Open issues overlay" [ref=e59]:
+        - generic [ref=e60]:
+          - generic [ref=e61]: "0"
+          - generic [ref=e62]: "1"
+        - generic [ref=e63]: Issue
+      - button "Collapse issues badge" [ref=e64]:
+        - img [ref=e65]
+  - alert [ref=e67]

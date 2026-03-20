@@ -1,0 +1,87 @@
+- generic [ref=e1]:
+  - link "Skip to main content" [ref=e2] [cursor=pointer]:
+    - /url: "#main"
+  - main [ref=e3]:
+    - generic [ref=e4]:
+      - navigation [ref=e6]:
+        - generic [ref=e7] [cursor=pointer]:
+          - generic:
+            - generic:
+              - img
+          - text: YojanaAI
+        - generic [ref=e8]:
+          - button "English" [active] [ref=e98] [cursor=pointer]:
+            - generic [ref=e10]: English
+            - img [ref=e11]
+          - generic [ref=e99]:
+            - button "हिन्दी हिं" [ref=e100] [cursor=pointer]:
+              - generic [ref=e101]: हिन्दी
+              - generic [ref=e102]: हिं
+            - button "English EN ✓" [ref=e103] [cursor=pointer]:
+              - generic [ref=e104]: English
+              - generic [ref=e105]: EN
+              - generic [ref=e106]: ✓
+            - button "বাংলা বাং" [ref=e107] [cursor=pointer]:
+              - generic [ref=e108]: বাংলা
+              - generic [ref=e109]: বাং
+            - button "తెలుగు తె" [ref=e110] [cursor=pointer]:
+              - generic [ref=e111]: తెలుగు
+              - generic [ref=e112]: తె
+            - button "मराठी मर" [ref=e113] [cursor=pointer]:
+              - generic [ref=e114]: मराठी
+              - generic [ref=e115]: मर
+            - button "தமிழ் தமி" [ref=e116] [cursor=pointer]:
+              - generic [ref=e117]: தமிழ்
+              - generic [ref=e118]: தமி
+            - button "ગુજરાતી ગુ" [ref=e119] [cursor=pointer]:
+              - generic [ref=e120]: ગુજરાતી
+              - generic [ref=e121]: ગુ
+            - button "ಕನ್ನಡ ಕನ್" [ref=e122] [cursor=pointer]:
+              - generic [ref=e123]: ಕನ್ನಡ
+              - generic [ref=e124]: ಕನ್
+      - generic [ref=e13]:
+        - img [ref=e14]
+        - generic [ref=e20]: ✦ AI-powered • Free • No login
+        - heading "Find Your Government Schemes" [level=1] [ref=e125]:
+          - text: Find Your
+          - generic [ref=e22]: Government Schemes
+        - paragraph [ref=e23]: Just 6 questions — full list in 60 seconds
+        - button "Start Now →" [ref=e126] [cursor=pointer]
+        - paragraph [ref=e25]: Free • No login required
+        - generic [ref=e27]:
+          - generic: 🔍
+          - textbox "Farmer, health, education..." [ref=e127]
+        - generic [ref=e29]:
+          - generic [ref=e30]:
+            - generic [ref=e31]: 760+
+            - generic [ref=e32]: Govt Schemes
+          - generic [ref=e33]:
+            - generic [ref=e34]: "6"
+            - generic [ref=e35]: Questions only
+          - generic [ref=e36]:
+            - generic [ref=e37]: 60s
+            - generic [ref=e38]: Results in
+      - generic [ref=e39]:
+        - generic [ref=e40]: Built with ❤️ for India
+        - generic [ref=e41]: ·
+        - link "SanjayFX" [ref=e42] [cursor=pointer]:
+          - /url: https://github.com/SanjayFX
+          - img [ref=e43]
+          - text: SanjayFX
+        - generic [ref=e45]: ·
+        - link "Sanjay K" [ref=e46] [cursor=pointer]:
+          - /url: https://www.linkedin.com/in/sanjay-k-523120287
+          - img [ref=e47]
+          - text: Sanjay K
+  - generic [ref=e53] [cursor=pointer]:
+    - button "Open Next.js Dev Tools" [ref=e54]:
+      - img [ref=e55]
+    - generic [ref=e58]:
+      - button "Open issues overlay" [ref=e59]:
+        - generic [ref=e60]:
+          - generic [ref=e61]: "0"
+          - generic [ref=e62]: "1"
+        - generic [ref=e63]: Issue
+      - button "Collapse issues badge" [ref=e64]:
+        - img [ref=e65]
+  - alert [ref=e67]

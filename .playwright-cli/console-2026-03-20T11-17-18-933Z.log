@@ -1,0 +1,134 @@
+[     489ms] [ERROR] A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+%s%s https://react.dev/link/hydration-mismatch 
+
+  ...
+    <RedirectErrorBoundary router={{...}}>
+      <InnerLayoutRouter url="/" tree={[...]} params={{}} cacheNode={{rsc:{...}, ...}} segmentPath={[...]} ...>
+        <SegmentViewNode type="page" pagePath="page.tsx">
+          <SegmentTrieNode>
+          <ClientPageRoot Component={function YojanaAIPage} serverProvidedParams={{...}}>
+            <YojanaAIPage params={Promise} searchParams={Promise}>
+              <a>
+              <main id="main">
+                <div className="hero-wrap">
+                  <div>
+                  <div>
+                  <div>
+                  <div>
+                  <nav className="navbar-pil...">
+                    <span className="nav-logo" onClick={function onClick}>
+                      <span className="flag-wrap" aria-hidden="true">
+                        <span>
+                        <span className="flag-white">
+                          <svg width="6" height="6" viewBox="0 0 24 24" style={{position:"...", ...}} aria-hidden="true">
+                            <circle>
+                            <circle>
+                            <line>
+                            <line>
+                            <line>
+                            <line>
+                            <line>
+                            <line>
+                            <line>
+                            <line>
+                            <line>
+                            <line>
+                            <line>
+                            <line>
+                            <line>
+                            <line>
+                            <line>
+                            <line>
+                            <line
+                              x1="12"
+                              y1="12"
+                              x2={7.4999999999999964}
++                             y2={4.205771365940055}
+-                             y2="4.205771365940054"
+                              stroke="#000080"
+                              strokeWidth="0.8"
+                            >
+                            ...
+                        ...
+                      ...
+                    ...
+                  ...
+        ...
+      ...
+ @ http://localhost:3000/_next/static/chunks/0w39_next_dist_0nkkrwo._.js:3272
+[  954278ms] [ERROR] A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+%s%s https://react.dev/link/hydration-mismatch 
+
+  ...
+    <RedirectErrorBoundary router={{...}}>
+      <InnerLayoutRouter url="/" tree={[...]} params={{}} cacheNode={{rsc:{...}, ...}} segmentPath={[...]} ...>
+        <SegmentViewNode type="page" pagePath="page.tsx">
+          <SegmentTrieNode>
+          <ClientPageRoot Component={function YojanaAIPage} serverProvidedParams={{...}}>
+            <YojanaAIPage params={Promise} searchParams={Promise}>
+              <a>
+              <main id="main">
+                <div className="hero-wrap">
+                  <div>
+                  <div>
+                  <div>
+                  <div>
+                  <nav className="navbar-pil...">
+                    <span className="nav-logo" onClick={function onClick}>
+                      <span className="flag-wrap" aria-hidden="true">
+                        <span>
+                        <span className="flag-white">
+                          <svg width="6" height="6" viewBox="0 0 24 24" style={{position:"...", ...}} aria-hidden="true">
+                            <circle>
+                            <circle>
+                            <line>
+                            <line>
+                            <line>
+                            <line>
+                            <line>
+                            <line>
+                            <line>
+                            <line>
+                            <line>
+                            <line>
+                            <line>
+                            <line>
+                            <line>
+                            <line>
+                            <line>
+                            <line>
+                            <line
+                              x1="12"
+                              y1="12"
+                              x2={7.4999999999999964}
++                             y2={4.205771365940055}
+-                             y2="4.205771365940054"
+                              stroke="#000080"
+                              strokeWidth="0.8"
+                            >
+                            ...
+                        ...
+                      ...
+                    ...
+                  ...
+        ...
+      ...
+ @ http://localhost:3000/_next/static/chunks/0w39_next_dist_0nkkrwo._.js:3272

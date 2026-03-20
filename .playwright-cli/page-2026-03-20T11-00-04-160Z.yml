@@ -1,0 +1,60 @@
+- generic [active] [ref=e1]:
+  - link "Skip to main content" [ref=e2] [cursor=pointer]:
+    - /url: "#main"
+  - main [ref=e3]:
+    - generic [ref=e4]:
+      - navigation [ref=e6]:
+        - generic [ref=e7] [cursor=pointer]:
+          - generic:
+            - generic:
+              - img
+          - text: YojanaAI
+        - button "தமிழ்" [ref=e94] [cursor=pointer]:
+          - generic [ref=e10]: தமிழ்
+          - img [ref=e11]
+      - generic [ref=e13]:
+        - img [ref=e14]
+        - generic [ref=e20]: ✦ AI-powered • Free • No login
+        - heading "அரசு திட்டங்கள் கண்டறியுங்கள்" [level=1] [ref=e95]:
+          - text: அரசு திட்டங்கள்
+          - generic [ref=e22]: கண்டறியுங்கள்
+        - paragraph [ref=e23]: வெறும் 6 கேள்விகள் — 60 வினாடிகளில் முழு பட்டியல்
+        - button "தொடங்குங்கள் →" [ref=e96] [cursor=pointer]
+        - paragraph [ref=e25]: இலவசம் • உள்நுழைவு தேவையில்லை
+        - generic [ref=e27]:
+          - generic: 🔍
+          - textbox "விவசாயி, ஆரோக்கியம்..." [ref=e97]
+        - generic [ref=e29]:
+          - generic [ref=e30]:
+            - generic [ref=e31]: 760+
+            - generic [ref=e32]: அரசு திட்டங்கள்
+          - generic [ref=e33]:
+            - generic [ref=e34]: "6"
+            - generic [ref=e35]: கேள்விகள் மட்டும்
+          - generic [ref=e36]:
+            - generic [ref=e37]: 60s
+            - generic [ref=e38]: முடிவுகள்
+      - generic [ref=e39]:
+        - generic [ref=e40]: Built with ❤️ for India
+        - generic [ref=e41]: ·
+        - link "SanjayFX" [ref=e42] [cursor=pointer]:
+          - /url: https://github.com/SanjayFX
+          - img [ref=e43]
+          - text: SanjayFX
+        - generic [ref=e45]: ·
+        - link "Sanjay K" [ref=e46] [cursor=pointer]:
+          - /url: https://www.linkedin.com/in/sanjay-k-523120287
+          - img [ref=e47]
+          - text: Sanjay K
+  - generic [ref=e53] [cursor=pointer]:
+    - button "Open Next.js Dev Tools" [ref=e54]:
+      - img [ref=e55]
+    - generic [ref=e58]:
+      - button "Open issues overlay" [ref=e59]:
+        - generic [ref=e60]:
+          - generic [ref=e61]: "0"
+          - generic [ref=e62]: "1"
+        - generic [ref=e63]: Issue
+      - button "Collapse issues badge" [ref=e64]:
+        - img [ref=e65]
+  - alert [ref=e67]

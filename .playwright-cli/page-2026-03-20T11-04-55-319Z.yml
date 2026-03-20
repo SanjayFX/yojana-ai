@@ -1,0 +1,26 @@
+- generic [active] [ref=e1]:
+  - link "Skip to main content" [ref=e2] [cursor=pointer]:
+    - /url: "#main"
+  - main [ref=e3]:
+    - generic [ref=e341]:
+      - heading "AI खोज रहा है..." [level=2] [ref=e344]
+      - paragraph [ref=e345]: थोड़ी प्रतीक्षा करें
+      - generic [ref=e346]:
+        - generic [ref=e347]:
+          - generic [ref=e348]: ✓
+          - generic [ref=e349]: प्रोफ़ाइल बन रहा है...
+        - generic [ref=e352]: योजनाएं जाँची जा रही हैं...
+        - generic [ref=e355]: दस्तावेज़ सूची बन रही है...
+        - generic [ref=e358]: आवेदन चरण तैयार हो रहे हैं...
+  - generic [ref=e53] [cursor=pointer]:
+    - button "Open Next.js Dev Tools" [ref=e54]:
+      - img [ref=e55]
+    - generic [ref=e58]:
+      - button "Open issues overlay" [ref=e59]:
+        - generic [ref=e60]:
+          - generic [ref=e61]: "0"
+          - generic [ref=e62]: "1"
+        - generic [ref=e63]: Issue
+      - button "Collapse issues badge" [ref=e64]:
+        - img [ref=e65]
+  - alert [ref=e67]
