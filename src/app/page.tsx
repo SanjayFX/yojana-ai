@@ -764,10 +764,11 @@ export default function YojanaAIPage() {
   }, [setLang])
 
   const renderLangDropdown = useCallback(() => (
-    <div className="relative z-50">
+    <div className="relative z-[999] pointer-events-auto">
       <button
+        type="button"
         onClick={() => setLangOpen(p => !p)}
-        className="flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-full border border-gray-200 bg-white hover:shadow-sm text-xs font-medium text-gray-700 transition-all active:scale-95"
+        className="flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-full border border-gray-200 bg-white hover:shadow-sm text-xs font-medium text-gray-700 transition-all active:scale-95 cursor-pointer"
       >
         <span>{LANG_FULL_NAMES[lang]}</span>
         <svg width="10" height="10"
@@ -800,8 +801,10 @@ export default function YojanaAIPage() {
         }}>
           {SUPPORTED_LANGS.map((l, i) => (
             <button key={l}
-              onClick={() => {
-                handleLangSelect(l)
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                handleLangSelect(l);
               }}
               style={{
                 width: '100%',
