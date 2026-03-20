@@ -1,36 +1,27 @@
 <svg xmlns="http://www.w3.org/2000/svg"
   viewBox="0 0 64 64">
-  <!-- Dark circle background -->
-  <circle cx="32" cy="32" r="30"
+  <circle cx="32" cy="32" r="32"
     fill="#0F172A"/>
-  <!-- Saffron outer ring top -->
   <circle cx="32" cy="32" r="28"
     fill="none" stroke="#FF9933"
     stroke-width="4"
-    stroke-dasharray="59 118"
-    stroke-dashoffset="0"/>
-  <!-- White middle ring -->
+    stroke-dasharray="59 118"/>
   <circle cx="32" cy="32" r="28"
     fill="none" stroke="#FFFFFF"
     stroke-width="3"
     stroke-dasharray="59 118"
     stroke-dashoffset="-59"/>
-  <!-- Green bottom ring -->
   <circle cx="32" cy="32" r="28"
     fill="none" stroke="#138808"
     stroke-width="4"
     stroke-dasharray="59 118"
     stroke-dashoffset="-88"/>
-  <!-- Chakra outer ring -->
   <circle cx="32" cy="32" r="14"
     fill="none" stroke="#FFFFFF"
-    stroke-width="1.5" opacity="0.9"/>
-  <!-- Chakra center dot -->
+    stroke-width="1.5"/>
   <circle cx="32" cy="32" r="3"
-    fill="#FFFFFF" opacity="0.9"/>
-  <!-- 12 spokes (simplified for favicon) -->
-  <g stroke="#FFFFFF" stroke-width="1"
-    opacity="0.75">
+    fill="#FFFFFF"/>
+  <g stroke="#FFFFFF" stroke-width="1">
     <line x1="32" y1="32" x2="32" y2="18"/>
     <line x1="32" y1="32" x2="39" y2="20"/>
     <line x1="32" y1="32" x2="44" y2="26"/>
@@ -44,7 +35,6 @@
     <line x1="32" y1="32" x2="20" y2="26"/>
     <line x1="32" y1="32" x2="25" y2="20"/>
   </g>
-  <!-- Saffron AI dot -->
   <circle cx="32" cy="6" r="3"
     fill="#F97316"/>
 </svg>
