@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     siteName: "YojanaAI",
     images: [
       {
-        url: "/api/og",
+        url: "/og-image.png",
         width: 1200,
         height: 630,
         alt: "YojanaAI — Find Government Schemes",
@@ -35,7 +35,7 @@ export const metadata: Metadata = {
     title: "YojanaAI — Find Government Schemes",
     description:
       "Free AI. 770+ schemes. 8 languages." + " No login.",
-    images: ["/api/og"],
+    images: ["/og-image.png"],
   },
   icons: {
     icon: "/favicon.svg",
