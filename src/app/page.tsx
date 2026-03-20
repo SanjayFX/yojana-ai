@@ -795,7 +795,7 @@ export default function YojanaAIPage() {
           borderRadius: 'var(--r-xl)',
           boxShadow:
             '0 8px 32px rgba(10,15,30,0.12)',
-          zIndex: 200,
+          zIndex: 9999,
           overflow: 'hidden',
           minWidth: '180px',
         }}>
@@ -1305,8 +1305,8 @@ export default function YojanaAIPage() {
                 <line
                   key={i}
                   x1="12" y1="12"
-                  x2={12 + 9 * Math.cos(angle)}
-                  y2={12 + 9 * Math.sin(angle)}
+                  x2={parseFloat((12 + 9 * Math.cos(angle)).toFixed(10))}
+                  y2={parseFloat((12 + 9 * Math.sin(angle)).toFixed(10))}
                   stroke="#000080"
                   strokeWidth="0.8"
                 />
