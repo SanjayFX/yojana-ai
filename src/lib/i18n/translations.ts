@@ -104,8 +104,11 @@ export const translations = {
     stat1_num: "50+", stat1_label: "सरकारी योजनाएं",
     stat2_num: "6",   stat2_label: "सवाल सिर्फ",
     stat3_num: "60s", stat3_label: "में परिणाम",
-
-                                                                                          },
+    footer_tagline: "AI-powered scheme finder for every Indian",
+    footer_privacy: "Privacy Policy",
+    footer_data_sources: "Data Sources",
+    footer_data_note: "Data sourced from NIC & MyScheme.gov.in"
+  },
 
   en: {
     hero_badge: "AI-Powered • Free • No Login",
@@ -212,8 +215,11 @@ export const translations = {
     stat1_num: "50+", stat1_label: "Govt Schemes",
     stat2_num: "6",   stat2_label: "Questions only",
     stat3_num: "60s", stat3_label: "Results in",
-
-                                                                                          },
+    footer_tagline: "AI-powered scheme finder for every Indian",
+    footer_privacy: "Privacy Policy",
+    footer_data_sources: "Data Sources",
+    footer_data_note: "Data sourced from NIC & MyScheme.gov.in"
+  },
 
   bn: {
     hero_badge: "AI-Powered • বিনামূল্যে • লগইন নেই",
@@ -320,8 +326,11 @@ export const translations = {
     stat1_num: "৫০+", stat1_label: "সরকারি প্রকল্প",
     stat2_num: "৬",   stat2_label: "শুধু প্রশ্ন",
     stat3_num: "৬০s", stat3_label: "ফলাফল",
-
-                                                                                          },
+    footer_tagline: "AI-powered scheme finder for every Indian",
+    footer_privacy: "Privacy Policy",
+    footer_data_sources: "Data Sources",
+    footer_data_note: "Data sourced from NIC & MyScheme.gov.in"
+  },
 
   te: {
     hero_badge: "AI-Powered • ఉచితం • లాగిన్ లేదు",
@@ -428,8 +437,11 @@ export const translations = {
     stat1_num: "50+", stat1_label: "ప్రభుత్వ పథకాలు",
     stat2_num: "6",   stat2_label: "ప్రశ్నలు మాత్రమే",
     stat3_num: "60s", stat3_label: "ఫలితాలు",
-
-                                                                                          },
+    footer_tagline: "AI-powered scheme finder for every Indian",
+    footer_privacy: "Privacy Policy",
+    footer_data_sources: "Data Sources",
+    footer_data_note: "Data sourced from NIC & MyScheme.gov.in"
+  },
 
   mr: {
     hero_badge: "AI-Powered • मोफत • लॉगिन नाही",
@@ -536,8 +548,11 @@ export const translations = {
     stat1_num: "५०+", stat1_label: "सरकारी योजना",
     stat2_num: "६",   stat2_label: "फक्त प्रश्न",
     stat3_num: "६०s", stat3_label: "निकाल",
-
-                                                                                          },
+    footer_tagline: "AI-powered scheme finder for every Indian",
+    footer_privacy: "Privacy Policy",
+    footer_data_sources: "Data Sources",
+    footer_data_note: "Data sourced from NIC & MyScheme.gov.in"
+  },
 
   ta: {
     hero_badge: "AI-Powered • இலவசம் • உள்நுழைவு இல்லை",
@@ -644,8 +659,11 @@ export const translations = {
     stat1_num: "50+", stat1_label: "அரசு திட்டங்கள்",
     stat2_num: "6",   stat2_label: "கேள்விகள் மட்டும்",
     stat3_num: "60s", stat3_label: "முடிவுகள்",
-
-                                                                                          },
+    footer_tagline: "AI-powered scheme finder for every Indian",
+    footer_privacy: "Privacy Policy",
+    footer_data_sources: "Data Sources",
+    footer_data_note: "Data sourced from NIC & MyScheme.gov.in"
+  },
 
   gu: {
     hero_badge: "AI-Powered • મફત • લૉગિન નહીં",
@@ -752,8 +770,11 @@ export const translations = {
     stat1_num: "૫૦+", stat1_label: "સરકારી યોજનાઓ",
     stat2_num: "૬",   stat2_label: "માત્ર સવાલ",
     stat3_num: "૬૦s", stat3_label: "પરિણામ",
-
-                                                                                          },
+    footer_tagline: "AI-powered scheme finder for every Indian",
+    footer_privacy: "Privacy Policy",
+    footer_data_sources: "Data Sources",
+    footer_data_note: "Data sourced from NIC & MyScheme.gov.in"
+  },
 
   kn: {
     hero_badge: "AI-Powered • ಉಚಿತ • ಲಾಗಿನ್ ಇಲ್ಲ",
@@ -860,8 +881,11 @@ export const translations = {
     stat1_num: "50+", stat1_label: "ಸರ್ಕಾರಿ ಯೋಜನೆಗಳು",
     stat2_num: "6",   stat2_label: "ಪ್ರಶ್ನೆಗಳು ಮಾತ್ರ",
     stat3_num: "60s", stat3_label: "ಫಲಿತಾಂಶ",
-
-                                                                                          }
+    footer_tagline: "AI-powered scheme finder for every Indian",
+    footer_privacy: "Privacy Policy",
+    footer_data_sources: "Data Sources",
+    footer_data_note: "Data sourced from NIC & MyScheme.gov.in"
+  }
 }
 
 export type LangCode = keyof typeof translations

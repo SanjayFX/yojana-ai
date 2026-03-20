@@ -4,7 +4,6 @@ import React, { useState, useEffect, useMemo, useCallback, useRef } from 'react'
 import { SUPPORTED_LANGS, type LangCode } from '@/lib/i18n/translations'
 import { useLang } from '@/lib/context/LanguageContext'
 import { Typewriter } from "@/components/ui/typewriter"
-import { StickyCTA } from '@/components/ui/sticky-cta'
 import { SchemesMarchingSection } from "@/components/ui/schemes-marquee"
 import { ArrowRightIcon } from "lucide-react"
 
@@ -549,6 +548,88 @@ function getCategoryIcon(name: string, reason: string): string {
   if (txt.includes('rozgar') || txt.includes('employment') || txt.includes('job')) return '💼'
   if (txt.includes('viklang') || txt.includes('divyang') || txt.includes('disability')) return '♿'
   return '💰'
+}
+
+const previewSteps = [
+  {
+    question: "What is your annual family income?",
+    questionHi: "वार्षिक पारिवारिक आय?",
+    options: ["< ₹1 Lakh", "₹1-3 Lakh", "₹3-5 Lakh", "> ₹5 Lakh"],
+    selected: 1,
+    found: 47,
+  },
+  {
+    question: "Which state do you live in?",
+    questionHi: "आप किस राज्य में रहते हैं?",
+    options: ["Maharashtra", "Tamil Nadu", "Uttar Pradesh", "Karnataka"],
+    selected: 0,
+    found: 38,
+  },
+  {
+    question: "What is your occupation?",
+    questionHi: "आपका व्यवसाय क्या है?",
+    options: ["Farmer 🌾", "Student 📚", "Self Employed 💼", "Daily Wage 🏗️"],
+    selected: 2,
+    found: 29,
+  },
+  {
+    question: "What is your age group?",
+    questionHi: "आपकी आयु वर्ग?",
+    options: ["18-25", "26-40", "41-60", "60+"],
+    selected: 1,
+    found: 52,
+  },
+]
+
+function HeroPreviewCard({ currentLang }: { currentLang: string }) {
+  const [step, setStep] = useState(0)
+  const [animating, setAnimating] = useState(false)
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setAnimating(true)
+      setTimeout(() => {
+        setStep(prev => (prev + 1) % previewSteps.length)
+        setAnimating(false)
+      }, 300)
+    }, 2500)
+    return () => clearInterval(timer)
+  }, [])
+
+  const current = previewSteps[step]
+
+  return (
+    <div className="relative w-full max-w-sm mx-auto mt-8 mb-2 rounded-2xl border border-orange-100 bg-white shadow-xl shadow-orange-100/50 overflow-hidden pointer-events-none select-none">
+      <div className="bg-orange-500 px-4 py-3 flex items-center gap-2">
+        <div className="w-2 h-2 rounded-full bg-white/40"/>
+        <div className="w-2 h-2 rounded-full bg-white/40"/>
+        <div className="w-2 h-2 rounded-full bg-white/40"/>
+        <span className="text-white text-xs font-medium ml-2">YojanaAI</span>
+        <div className="ml-auto flex gap-1">
+          {previewSteps.map((_, i) => (
+            <div key={i} className={`w-1.5 h-1.5 rounded-full transition-all duration-300 ${i === step ? "bg-white" : "bg-white/30"}`} />
+          ))}
+        </div>
+      </div>
+      <div className={`px-4 py-4 transition-opacity duration-300 ${animating ? "opacity-0" : "opacity-100"}`}>
+        <p className="text-xs text-gray-400 mb-1">
+          Question {step + 1} of {previewSteps.length}
+        </p>
+        <p className="text-sm font-semibold text-gray-800 mb-3">
+          {currentLang === 'hi' ? current.questionHi : current.question}
+        </p>
+        {current.options.map((opt, i) => (
+          <div key={i} className={`mb-2 px-3 py-2 rounded-xl border text-xs font-medium transition-all duration-300 ${i === current.selected ? "border-orange-400 bg-orange-50 text-orange-700" : "border-gray-200 text-gray-600"}`}>
+            {opt}
+          </div>
+        ))}
+        <div className="mt-3 pt-3 border-t border-gray-100 flex items-center justify-between">
+          <span className="text-xs text-gray-400">Matching schemes...</span>
+          <span className="text-xs font-bold text-orange-500">{current.found} found ✓</span>
+        </div>
+      </div>
+    </div>
+  )
 }
 
 export default function YojanaAIPage() {
@@ -1374,27 +1455,7 @@ export default function YojanaAIPage() {
                 </p>
 
                 
-                <div className="relative w-full max-w-sm mx-auto mt-8 mb-2 rounded-2xl border border-orange-100 bg-white shadow-xl shadow-orange-100/50 overflow-hidden pointer-events-none select-none">
-                  <div className="bg-orange-500 px-4 py-3 flex items-center gap-2">
-                    <div className="w-2 h-2 rounded-full bg-white/40" />
-                    <div className="w-2 h-2 rounded-full bg-white/40" />
-                    <div className="w-2 h-2 rounded-full bg-white/40" />
-                    <span className="text-white text-xs font-medium ml-2">YojanaAI</span>
-                  </div>
-                  <div className="px-4 py-4 text-left">
-                    <p className="text-xs text-gray-400 mb-1">Question 2 of 6</p>
-                    <p className="text-sm font-semibold text-gray-800 mb-3">{(t as any).preview_question as string}</p>
-                    {["< ₹1 Lakh", "₹1-3 Lakh", "₹3-5 Lakh", "> ₹5 Lakh"].map((opt, i) => (
-                      <div key={i} className={`mb-2 px-3 py-2 rounded-xl border text-xs font-medium ${i === 1 ? "border-orange-400 bg-orange-50 text-orange-700" : "border-gray-200 text-gray-600"}`}>
-                        {opt}
-                      </div>
-                    ))}
-                    <div className="mt-3 pt-3 border-t border-gray-100 flex items-center justify-between">
-                      <span className="text-xs text-gray-400">Matching schemes...</span>
-                      <span className="text-xs font-bold text-orange-500">47 found ✓</span>
-                    </div>
-                  </div>
-                </div>
+                <HeroPreviewCard currentLang={lang as string} />
 <div className="flex flex-row justify-center gap-3 mb-10 w-full">
                   <div className="flex flex-col w-28 sm:w-32 items-center bg-white rounded-2xl border border-gray-100 px-4 sm:px-6 lg:px-8 py-4 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-200">
                     <span className="text-2xl mb-1">🏛️</span>
@@ -1465,18 +1526,18 @@ export default function YojanaAIPage() {
         <span className="text-lg">🇮🇳</span>
         <span className="font-bold text-gray-900">YojanaAI</span>
         <span className="text-gray-300">•</span>
-        <span className="text-sm text-gray-500">{(t as any).footer_tagline as string}</span>
+        <span className="text-sm text-gray-500">{(t as any).footer_tagline || "AI-powered scheme finder for every Indian"}</span>
       </div>
       <div className="flex items-center justify-center gap-3 text-xs text-gray-400 mb-3 flex-wrap">
-        <a href="#" className="hover:text-orange-500 transition-colors">{(t as any).footer_privacy as string}</a>
+        <a href="#" className="hover:text-orange-500 transition-colors">{(t as any).footer_privacy || "Privacy Policy"}</a>
         <span>•</span>
-        <a href="#" className="hover:text-orange-500 transition-colors">{(t as any).footer_data_sources as string}</a>
+        <a href="#" className="hover:text-orange-500 transition-colors">{(t as any).footer_data_sources || "Data Sources"}</a>
         <span>•</span>
         <a href="https://github.com/SanjayFX" target="_blank" className="hover:text-orange-500 transition-colors">GitHub</a>
         <span>•</span>
         <a href="https://linkedin.com/in/sanjay-k" target="_blank" className="hover:text-orange-500 transition-colors">LinkedIn</a>
       </div>
-      <p className="text-xs text-gray-400">{(t as any).footer_data_note as string}</p>
+      <p className="text-xs text-gray-400">{(t as any).footer_data_note || "Data sourced from NIC & MyScheme.gov.in"}</p>
     </div>
   </footer>
           </>
@@ -2045,16 +2106,20 @@ export default function YojanaAIPage() {
                       >
                         {t.apply_btn}
                       </button>
-                      <button 
-                        className="btn-wa"
+                      <button
+                        type="button"
+                        onClick={handleShareClick}
                         data-scheme-name={derivedName}
                         data-scheme-benefit={getSchemeBenefit(s.id, s.estimated_benefit)}
-                        onClick={handleShareClick}
-                      >
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style={{ verticalAlign: 'middle', marginRight: '6px' }}>
-                          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/>
+                        className="flex-1 inline-flex items-center justify-center gap-2 rounded-full bg-green-500 hover:bg-green-600 text-white font-semibold text-sm px-4 py-3 transition-all duration-200 active:scale-95 min-h-[44px]">
+                        <svg 
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="w-4 h-4 shrink-0 inline-block"
+                          viewBox="0 0 24 24" 
+                          fill="currentColor">
+                          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.118 1.528 5.855L.057 23.273a.75.75 0 00.924.924l5.355-1.473A11.95 11.95 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.891 0-3.667-.498-5.2-1.37l-.374-.214-3.878 1.067 1.049-3.793-.234-.386A9.958 9.958 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/>
                         </svg>
-                        {t.share_btn}
+                        <span>{(t as any).share_whatsapp || "Share"}</span>
                       </button>
                     </div>
                   </div>
@@ -2076,7 +2141,6 @@ export default function YojanaAIPage() {
             </div>
           </div>
         )}
-        <StickyCTA label={t.hero_cta as string} onClick={() => document.getElementById('start-quiz')?.click()} />
       </main>
     </>
   )
