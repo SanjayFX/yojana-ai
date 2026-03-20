@@ -49,64 +49,177 @@ const SEARCH_TRANSLATIONS: Record<string, string> = {
 const STATE_NAMES: Partial<Record<LangCode, Record<string, string>>> = {
   hi: {
     'Andhra Pradesh': 'आंध्र प्रदेश',
+    'Arunachal Pradesh': 'अरुणाचल प्रदेश',
+    'Assam': 'असम',
     'Bihar': 'बिहार',
+    'Chhattisgarh': 'छत्तीसगढ़',
     'Delhi': 'दिल्ली',
+    'Goa': 'गोवा',
     'Gujarat': 'गुजरात',
+    'Haryana': 'हरियाणा',
+    'Himachal Pradesh': 'हिमाचल प्रदेश',
+    'Jharkhand': 'झारखंड',
+    'Jammu & Kashmir': 'जम्मू और कश्मीर',
     'Karnataka': 'कर्नाटक',
     'Kerala': 'केरल',
+    'Ladakh': 'लद्दाख',
     'Madhya Pradesh': 'मध्य प्रदेश',
     'Maharashtra': 'महाराष्ट्र',
-    'Rajasthan': 'राजस्थान',
-    'Tamil Nadu': 'तमिलनाडु',
-    'Uttar Pradesh': 'उत्तर प्रदेश',
-    'West Bengal': 'पश्चिम बंगाल',
+    'Manipur': 'मणिपुर',
+    'Meghalaya': 'मेघालय',
+    'Mizoram': 'मिजोरम',
+    'Nagaland': 'नागालैंड',
+    'Odisha': 'ओडिशा',
     'Punjab': 'पंजाब',
-    'Haryana': 'हरियाणा',
+    'Rajasthan': 'राजस्थान',
+    'Sikkim': 'सिक्किम',
+    'Tamil Nadu': 'तमिलनाडु',
+    'Telangana': 'तेलंगाना',
+    'Tripura': 'त्रिपुरा',
+    'Uttar Pradesh': 'उत्तर प्रदेश',
+    'Uttarakhand': 'उत्तराखंड',
+    'West Bengal': 'पश्चिम बंगाल',
   },
   ta: {
     'Andhra Pradesh': 'ஆந்திர பிரதேசம்',
+    'Arunachal Pradesh': 'அருணாச்சல பிரதேசம்',
+    'Assam': 'அஸ்ஸாம்',
     'Bihar': 'பீகார்',
+    'Chhattisgarh': 'சத்தீஸ்கர்',
     'Delhi': 'டெல்லி',
+    'Goa': 'கோவா',
     'Gujarat': 'குஜராத்',
+    'Haryana': 'ஹரியானா',
+    'Himachal Pradesh': 'இமாச்சல பிரதேசம்',
+    'Jharkhand': 'ஜார்கண்ட்',
+    'Jammu & Kashmir': 'ஜம்மு காஷ்மீர்',
     'Karnataka': 'கர்நாடகா',
     'Kerala': 'கேரளா',
     'Madhya Pradesh': 'மத்திய பிரதேசம்',
     'Maharashtra': 'மகாராஷ்டிரா',
-    'Rajasthan': 'ராஜஸ்தான்',
-    'Tamil Nadu': 'தமிழ் நாடு',
-    'Uttar Pradesh': 'உத்தர பிரதேசம்',
-    'West Bengal': 'மேற்கு வங்காளம்',
-    'Chhattisgarh': 'சத்தீஸ்கர்',
+    'Manipur': 'மணிப்பூர்',
+    'Meghalaya': 'மேகாலயா',
+    'Mizoram': 'மிசோரம்',
+    'Nagaland': 'நாகாலாந்து',
+    'Odisha': 'ஒடிஸா',
     'Punjab': 'பஞ்சாப்',
+    'Rajasthan': 'ராஜஸ்தான்',
+    'Sikkim': 'சிக்கிம்',
+    'Tamil Nadu': 'தமிழ் நாடு',
+    'Telangana': 'தெலுங்கானா',
+    'Tripura': 'திரிபுரா',
+    'Uttar Pradesh': 'உத்தர பிரதேசம்',
+    'Uttarakhand': 'உத்தராகண்ட்',
+    'West Bengal': 'மேற்கு வங்காளம்',
   },
   bn: {
-    'Bihar': 'বিহার',
-    'West Bengal': 'পশ্চিমবঙ্গ',
-    'Uttar Pradesh': 'উত্তর প্রদেশ',
-    'Delhi': 'দিল্লি',
+    'Andhra Pradesh': 'অন্ধ্র প্রদেশ',
     'Assam': 'আসাম',
+    'Bihar': 'বিহার',
+    'Chhattisgarh': 'ছত্তিশগড়',
+    'Delhi': 'দিল্লি',
+    'Gujarat': 'গুজরাট',
+    'Haryana': 'হরিয়ানা',
+    'Jharkhand': 'ঝাড়খণ্ড',
+    'Jammu & Kashmir': 'জম্মু ও কাশ্মীর',
+    'Karnataka': 'কর্ণাটক',
+    'Kerala': 'কেরালা',
+    'Madhya Pradesh': 'মধ্যপ্রদেশ',
+    'Maharashtra': 'মহারাষ্ট্র',
     'Odisha': 'ওড়িশা',
+    'Punjab': 'পাঞ্জাব',
+    'Rajasthan': 'রাজস্থান',
+    'Tamil Nadu': 'তামিলনাড়ু',
+    'Telangana': 'তেলেঙ্গানা',
+    'Uttar Pradesh': 'উত্তর প্রদেশ',
+    'Uttarakhand': 'উত্তরাখণ্ড',
+    'West Bengal': 'পশ্চিমবঙ্গ',
   },
   te: {
     'Andhra Pradesh': 'ఆంధ్రప్రదేశ్',
-    'Telangana': 'తెలంగాణ',
+    'Assam': 'అస్సాం',
+    'Bihar': 'బీహార్',
+    'Chhattisgarh': 'ఛత్తీస్‌గఢ్',
+    'Delhi': 'ఢిల్లీ',
+    'Gujarat': 'గుజరాత్',
+    'Haryana': 'హర్యానా',
+    'Jharkhand': 'జార్ఖండ్',
     'Karnataka': 'కర్ణాటక',
-    'Tamil Nadu': 'తమిళనాడు',
     'Kerala': 'కేరళ',
+    'Madhya Pradesh': 'మధ్యప్రదేశ్',
+    'Maharashtra': 'మహారాష్ట్ర',
+    'Odisha': 'ఒడిశా',
+    'Punjab': 'పంజాబ్',
+    'Rajasthan': 'రాజస్థాన్',
+    'Tamil Nadu': 'తమిళనాడు',
+    'Telangana': 'తెలంగాణ',
+    'Uttar Pradesh': 'ఉత్తర ప్రదేశ్',
+    'West Bengal': 'పశ్చిమ బెంగాల్',
   },
   kn: {
-    'Karnataka': 'ಕರ್ನಾಟಕ',
     'Andhra Pradesh': 'ಆಂಧ್ರ ಪ್ರದೇಶ',
-    'Tamil Nadu': 'ತಮಿಳು ನಾಡು',
+    'Assam': 'ಅಸ್ಸಾಂ',
+    'Bihar': 'ಬಿಹಾರ್',
+    'Chhattisgarh': 'ಛತ್ತೀಸ್‌ಗಢ',
+    'Delhi': 'ದೆಹಲಿ',
+    'Gujarat': 'ಗುಜರಾತ್',
+    'Haryana': 'ಹರಿಯಾಣ',
+    'Jharkhand': 'ಜಾರ್ಖಂಡ್',
+    'Karnataka': 'ಕರ್ನಾಟಕ',
     'Kerala': 'ಕೇರಳ',
+    'Madhya Pradesh': 'ಮಧ್ಯಪ್ರದೇಶ',
+    'Maharashtra': 'ಮಹಾರಾಷ್ಟ್ರ',
+    'Odisha': 'ಒಡಿಶಾ',
+    'Punjab': 'ಪಂಜಾಬ್',
+    'Rajasthan': 'ರಾಜಸ್ಥಾನ',
+    'Tamil Nadu': 'ತಮಿಳು ನಾಡು',
+    'Telangana': 'ತೆಲಂಗಾಣ',
+    'Uttar Pradesh': 'ಉತ್ತರ ಪ್ರದೇಶ',
+    'West Bengal': 'ಪಶ್ಚಿಮ ಬಂಗಾಳ',
   },
   mr: {
-    'Maharashtra': 'महाराष्ट्र',
+    'Andhra Pradesh': 'आंध्र प्रदेश',
+    'Assam': 'आसाम',
+    'Bihar': 'बिहार',
+    'Chhattisgarh': 'छत्तीसगड',
+    'Delhi': 'दिल्ली',
     'Goa': 'गोवा',
+    'Gujarat': 'गुजरात',
+    'Haryana': 'हरियाणा',
+    'Jharkhand': 'झारखंड',
+    'Karnataka': 'कर्नाटक',
+    'Kerala': 'केरळ',
+    'Madhya Pradesh': 'मध्य प्रदेश',
+    'Maharashtra': 'महाराष्ट्र',
+    'Odisha': 'ओडिशा',
+    'Punjab': 'पंजाब',
+    'Rajasthan': 'राजस्थान',
+    'Tamil Nadu': 'तामिळनाडू',
+    'Telangana': 'तेलंगणा',
+    'Uttar Pradesh': 'उत्तर प्रदेश',
+    'West Bengal': 'पश्चिम बंगाल',
   },
   gu: {
+    'Andhra Pradesh': 'આંધ્ર પ્રદેશ',
+    'Assam': 'આસામ',
+    'Bihar': 'બિહાર',
+    'Chhattisgarh': 'છત્તીસગઢ',
+    'Delhi': 'દિલ્હી',
+    'Goa': 'ગોવા',
     'Gujarat': 'ગુજરાત',
+    'Haryana': 'હરિયાણા',
+    'Jharkhand': 'ઝારખંડ',
+    'Karnataka': 'કર્ણાટક',
+    'Kerala': 'કેરળ',
+    'Madhya Pradesh': 'મધ્ય પ્રદેશ',
+    'Maharashtra': 'મહારાષ્ટ્ર',
+    'Odisha': 'ઓડિશા',
+    'Punjab': 'પંજાબ',
     'Rajasthan': 'રાજસ્થાન',
+    'Tamil Nadu': 'તમિલનાડુ',
+    'Telangana': 'તેલંગાણા',
+    'Uttar Pradesh': 'ઉત્તર પ્રદેશ',
+    'West Bengal': 'પશ્ચિમ બંગાળ',
   },
 }
 
@@ -281,57 +394,7 @@ const normalizeState = (input: string): string => {
   return match ?? trimmed
 }
 
-const OCCUPATION_TO_API: Record<string, string> = {
-  'Kisan (Farmer)': 'farmer',
-  'Farmer': 'farmer',
-  'రైతు': 'farmer',
-  'ರೈತ': 'farmer',
-  'ખેડૂત': 'farmer',
-  'शेतकरी': 'farmer',
-  'விவசாயி': 'farmer',
-  'কৃষক': 'farmer',
-  'Student': 'student',
-  'విద్యార్థి': 'student',
-  'ವಿದ್ಯಾರ್ಥಿ': 'student',
-  'વિદ્યાર્થી': 'student',
-  'विद्यार्थी': 'student',
-  'மாணவர்': 'student',
-  'ছাত্র': 'student',
-  'Sarkari Naukri': 'govt_employee',
-  'Sarkari Naukri (Govt Job)': 'govt_employee',
-  'Government Job': 'govt_employee',
-  'సర్కారీ ఉద్యోగి': 'govt_employee',
-  'ಸರ್ಕಾರಿ ಉದ್ಯೋಗ': 'govt_employee',
-  'સરકારી નોકરી': 'govt_employee',
-  'सरकारी नोकरी': 'govt_employee',
-  'அரசு வேலை': 'govt_employee',
-  'সরকারি চাকরি': 'govt_employee',
-  'Private Job': 'private_job',
-  'ప్రైవేట్ ఉద్యోగి': 'private_job',
-  'ಖಾಸಗಿ ನೌಕರಿ': 'private_job',
-  'ખાનગી નોકરી': 'private_job',
-  'खाजगी नोकरी': 'private_job',
-  'தனியார் வேலை': 'private_job',
-  'বেসরকারি চাকরি': 'private_job',
-  'Business': 'business',
-  'వ్యాపారి': 'business',
-  'ವ್ಯಾಪಾರ': 'business',
-  ' વ્યવસાય': 'business',
-  'व्यवसाय': 'business',
-  'வணிகம்': 'business',
-  'ব্যবসা': 'business',
-  'Kaam nahi (Unemployed)': 'unemployed',
-  'Unemployed': 'unemployed',
-  'నిరుద్యోగి': 'unemployed',
-  'ನಿರುದ್ಯೋಗಿ': 'unemployed',
-  'બેરોઝગાર': 'unemployed',
-  'बेरोजगार': 'unemployed',
-  'வேலையில்லாதவர்': 'unemployed',
-  'বেকার': 'unemployed'
-}
-
-const mapOccupation = (display: string): string =>
-  OCCUPATION_TO_API[display] ?? 'unemployed'
+const mapOccupation = (val: string): string => val
 
 const INCOME_TO_API: Record<string, string> = {
   '0 – 1 lakh': '0-1 lakh',
@@ -386,9 +449,9 @@ const QUESTIONS_DATA = [
     type:"select", options:["General","OBC","SC","ST","EWS"] },
   { id:"occupation", hi:"Aap kya kaam karte hain?",
     en:"Your occupation?", type:"select",
-    options:["Kisan (Farmer)","Student",
-    "Sarkari Naukri (Govt Job)","Private Job",
-    "Business","Kaam nahi (Unemployed)"] },
+    options:["farmer","student",
+    "govt_employee","private_job",
+    "business","unemployed"] },
   { id:"gender", hi:"Aapka gender?", en:"Your gender?",
     type:"select", options:["Male","Female","Other"] }
 ]
@@ -407,22 +470,9 @@ const langLabels: Record<LangCode, string> = {
 const FALLBACK_COPY = {
   hi: {
     heroBadge: 'AI-powered • Free • No login',
-    searchPlaceholder: 'Rajya type karke khojiye',
-    showMore: 'Aur padhein',
-    showLess: 'Kam dikhayein',
-    showDetails: 'Details dekhein',
-    hideDetails: 'Details chhupayein',
-    resultsIntro: 'Aapko',
   },
   en: {
     heroBadge: 'AI-powered • Free • No login',
-    searchPlaceholder: 'Type to search state',
-    showMore: 'Read more',
-    showLess: 'Show less',
-    showDetails: 'Show details',
-    hideDetails: 'Hide details',
-    stopAudio: 'Stop',
-    resultsIntro: 'You found',
   }
 } as const
 
@@ -468,6 +518,14 @@ export default function YojanaAIPage() {
 
   const uiCopy = lang === 'en' ? FALLBACK_COPY.en : FALLBACK_COPY.hi
   const currentQuestion = QUESTIONS_DATA[currentStep]
+  const occupationOptions = useMemo(() => ([
+    { display: t.occ_farmer, value: 'farmer' },
+    { display: t.occ_student, value: 'student' },
+    { display: t.occ_govt, value: 'govt_employee' },
+    { display: t.occ_private, value: 'private_job' },
+    { display: t.occ_business, value: 'business' },
+    { display: t.occ_unemployed, value: 'unemployed' },
+  ]), [t])
   const getStateDisplayName = useCallback((englishName: string): string => {
     if (lang === 'en') return englishName
     return STATE_NAMES[lang]?.[englishName] ?? englishName
@@ -830,14 +888,6 @@ export default function YojanaAIPage() {
       if (opt.includes("3 – 6")) return t.income_opt3 || opt
       if (opt.includes("6 lakh")) return t.income_opt4 || opt
     }
-    if (q.id === 'occupation') {
-      if (opt.includes("Kisan")) return t.occ_farmer || opt
-      if (opt.includes("Student")) return t.occ_student || opt
-      if (opt.includes("Sarkari")) return t.occ_govt || opt
-      if (opt.includes("Private")) return t.occ_private || opt
-      if (opt.includes("Business")) return t.occ_business || opt
-      if (opt.includes("Kaam nahi")) return t.occ_unemployed || opt
-    }
     if (q.id === 'category') {
       return CATEGORY_LABELS[lang]?.[opt] ?? CATEGORY_LABELS.en?.[opt] ?? opt
     }
@@ -845,7 +895,7 @@ export default function YojanaAIPage() {
       return GENDER_LABELS[lang]?.[opt] ?? GENDER_LABELS.en?.[opt] ?? opt
     }
     return opt
-  }, [getStateDisplayName, lang, t])
+  }, [getStateDisplayName, lang])
 
   const getApplyUrl = (schemeId: string): string => {
     const VERIFIED_URLS: Record<string, string> = {
@@ -1417,7 +1467,26 @@ export default function YojanaAIPage() {
                     </div>
                   )}
 
-                  {q.type === 'select' && filteredQuestionOptions.map((opt, idx) => {
+                  {q.id === 'occupation' && occupationOptions.map((opt) => {
+                    const isSelected = answers.occupation === opt.value
+
+                    return (
+                      <button
+                        key={opt.value}
+                        role="button"
+                        className={`opt-btn ${isSelected ? 'selected' : ''}`}
+                        onClick={() => setAnswers(prev => ({
+                          ...prev,
+                          occupation: opt.value
+                        }))}
+                      >
+                        <span style={{ minWidth: 0 }}>{opt.display}</span>
+                        {isSelected && <span className="opt-check" aria-hidden="true">✓</span>}
+                      </button>
+                    )
+                  })}
+
+                  {q.type === 'select' && q.id !== 'occupation' && filteredQuestionOptions.map((opt, idx) => {
                     const isSelected = answers[q.id] === opt
                     const text = getTranslatedOption(q, opt)
                     
@@ -1540,7 +1609,7 @@ export default function YojanaAIPage() {
             <div className="results-banner">
               <div className="results-banner-content">
                 <p className="results-eyebrow">
-                  Results
+                  {t.results_label}
                 </p>
                 <h2 className="results-heading">
                   🎉 {results.matched_schemes.length}{' '}
@@ -1649,9 +1718,7 @@ export default function YojanaAIPage() {
                           }}>
                           {loadingExplain
                             ? '...'
-                            : lang === 'hi'
-                              ? 'Mujhe kyon qualify karta hai? →'
-                              : 'Why do I qualify? →'}
+                            : t.why_qualify_btn}
                         </button>
 
                         {schemeExpl && (
