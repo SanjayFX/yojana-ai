@@ -5,6 +5,7 @@ import { SUPPORTED_LANGS, type LangCode } from '@/lib/i18n/translations'
 import { useLang } from '@/lib/context/LanguageContext'
 
 type Screen = 'hero' | 'form' | 'loading' | 'results'
+type SchemeTypeFilter = 'all' | 'central' | 'state'
 
 type SchemeExplanation = {
   why_you_qualify?: string
@@ -548,6 +549,8 @@ export default function YojanaAIPage() {
   const [expandedCards, setExpandedCards] = useState<Record<string, boolean>>({})
 
   const [pulseAnswerId, setPulseAnswerId] = useState<string | null>(null)
+  const [schemeTypeFilter, setSchemeTypeFilter] =
+    useState<SchemeTypeFilter>('all')
   const [stateSearchQuery, setStateSearchQuery] = useState('')
   const searchTimeout = useRef<ReturnType<typeof setTimeout> | null>(null)
 
@@ -636,7 +639,7 @@ export default function YojanaAIPage() {
         }
       })
       .catch(() => {})
-  }, [])
+  }, [lang, schemeTypeFilter])
 
   useEffect(() => {
     const handleClick = (e: MouseEvent) => {
@@ -688,9 +691,7 @@ export default function YojanaAIPage() {
   const submitForm = useCallback(async (finalAnswers: Record<string, any>) => {
     setScreen('loading')
 
-    const answersFromForm = {
-      ...finalAnswers
-    }
+    const answersFromForm = { ...finalAnswers }
     const apiAnswers = {
       state: normalizeState(answersFromForm.state ?? ''),
       age: answersFromForm.age,
@@ -702,7 +703,8 @@ export default function YojanaAIPage() {
       answersFromForm.gender === 'Other'
         ? answersFromForm.gender
         : 'Male',
-      language: lang
+      language: lang,
+      scheme_type_filter: schemeTypeFilter,
     }
   
     try {
@@ -843,6 +845,7 @@ export default function YojanaAIPage() {
     setExpandedCards({})
     setCurrentStep(0)
     setStateSearchQuery('')
+    setSchemeTypeFilter('all')
     setScreen('form')
   }, [])
 
@@ -874,6 +877,7 @@ export default function YojanaAIPage() {
     setResults(null)
     setCurrentStep(0)
     setStateSearchQuery('')
+    setSchemeTypeFilter('all')
   }, [])
 
   const handleFormBack = useCallback(() => {
@@ -895,6 +899,9 @@ export default function YojanaAIPage() {
     const normalizedValue = questionId === 'state'
       ? normalizeState(value)
       : value
+    if (questionId === 'state') {
+      setSchemeTypeFilter('all')
+    }
     setPulseAnswerId(value)
     setAnswers((prev) => ({
       ...prev,
@@ -1428,6 +1435,71 @@ export default function YojanaAIPage() {
                 </div>
               </div>
             </div>
+
+            <div className="credits-footer">
+              <span>
+                {lang === 'hi' ? 'बनाया' : 'Built'} with ❤️
+                {lang === 'hi' ? ' भारत के लिए' : ' for India'}
+              </span>
+              <span className="credits-dot">·</span>
+              <a
+                href="https://github.com/SanjayFX"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="credits-link-footer">
+                <svg width="13" height="13"
+                  viewBox="0 0 24 24"
+                  fill="currentColor">
+                  <path d="M12 0C5.37 0 0 5.37 0 12c0
+                    5.31 3.435 9.795 8.205 11.385.6.105
+                    .825-.255.825-.57 0-.285-.015-1.23
+                    -.015-2.235-3.015.555-3.795-.735
+                    -4.035-1.41-.135-.345-.72-1.41-1.23
+                    -1.695-.42-.225-1.02-.78-.015-.795
+                    .945-.015 1.62.87 1.845 1.23 1.08
+                    1.815 2.805 1.305 3.495.99.105-.78
+                    .42-1.305.765-1.605-2.67-.3-5.46
+                    -1.335-5.46-5.925 0-1.305.465-2.385
+                    1.23-3.225-.12-.3-.54-1.53.12-3.18
+                    0 0 1.005-.315 3.3 1.23.96-.27 1.98
+                    -.405 3-.405s2.04.135 3 .405c2.295
+                    -1.56 3.3-1.23 3.3-1.23.66 1.65.24
+                    2.88.12 3.18.765.84 1.23 1.905 1.23
+                    3.225 0 4.605-2.805 5.625-5.475
+                    5.925.435.375.81 1.095.81 2.22 0
+                    1.605-.015 2.895-.015 3.3 0 .315
+                    .225.69.825.57A12.02 12.02 0 0024
+                    12c0-6.63-5.37-12-12-12z"/>
+                </svg>
+                SanjayFX
+              </a>
+              <span className="credits-dot">·</span>
+              <a
+                href="https://www.linkedin.com/in/sanjay-k-523120287"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="credits-link-footer">
+                <svg width="13" height="13"
+                  viewBox="0 0 24 24"
+                  fill="currentColor">
+                  <path d="M20.447 20.452h-3.554v-5.569
+                    c0-1.328-.027-3.037-1.852-3.037
+                    -1.853 0-2.136 1.445-2.136 2.939
+                    v5.667H9.351V9h3.414v1.561h.046
+                    c.477-.9 1.637-1.85 3.37-1.85
+                    3.601 0 4.267 2.37 4.267 5.455
+                    v6.286zM5.337 7.433a2.062 2.062 0
+                    01-2.063-2.065 2.064 2.064 0
+                    112.063 2.065zm1.782 13.019H3.555
+                    V9h3.564v11.452zM22.225 0H1.771
+                    C.792 0 0 .774 0 1.729v20.542
+                    C0 23.227.792 24 1.771 24h20.451
+                    C23.2 24 24 23.227 24 22.271V1.729
+                    C24 .774 23.2 0 22.222 0h.003z"/>
+                </svg>
+                Sanjay K
+              </a>
+            </div>
           </div>
         )}
 
@@ -1490,6 +1562,79 @@ export default function YojanaAIPage() {
                         onChange={handleStateSearchChange}
                       />
                       <span className="search-icon">🔍</span>
+                    </div>
+                  )}
+
+                  {answers.state && currentStep === 0 && (
+                    <div style={{
+                      display: 'flex',
+                      gap: '8px',
+                      marginTop: '16px',
+                      justifyContent: 'center',
+                      flexWrap: 'wrap',
+                    }}>
+                      <p style={{
+                        width: '100%',
+                        fontSize: '11px',
+                        color: 'var(--subtle)',
+                        textAlign: 'center',
+                        fontWeight: 600,
+                        textTransform: 'uppercase',
+                        letterSpacing: '0.06em',
+                        marginBottom: '4px'
+                      }}>
+                        {lang === 'hi'
+                          ? 'कौन सी योजनाएं देखें?'
+                          : lang === 'ta'
+                          ? 'எந்த திட்டங்கள் பார்க்கணும்?'
+                          : 'Which schemes to include?'}
+                      </p>
+                      {([
+                        {
+                          key: 'all',
+                          hi: 'सभी योजनाएं',
+                          ta: 'அனைத்தும்',
+                          en: 'All Schemes'
+                        },
+                        {
+                          key: 'central',
+                          hi: 'केंद्र सरकार',
+                          ta: 'மத்திய அரசு',
+                          en: 'Central Govt'
+                        },
+                        {
+                          key: 'state',
+                          hi: 'राज्य सरकार',
+                          ta: 'மாநில அரசு',
+                          en: 'State Govt'
+                        },
+                      ] as const).map(opt => (
+                        <button
+                          key={opt.key}
+                          onClick={() =>
+                            setSchemeTypeFilter(opt.key)}
+                          style={{
+                            padding: '8px 16px',
+                            borderRadius: 'var(--r-full)',
+                            fontSize: '13px',
+                            fontWeight: 600,
+                            cursor: 'pointer',
+                            border: schemeTypeFilter === opt.key
+                              ? '2px solid var(--ink)'
+                              : '1.5px solid var(--border-mid)',
+                            background: schemeTypeFilter === opt.key
+                              ? 'var(--ink)'
+                              : 'white',
+                            color: schemeTypeFilter === opt.key
+                              ? 'white'
+                              : 'var(--muted)',
+                            transition: 'all 0.15s ease',
+                          }}>
+                          {lang === 'hi' ? opt.hi
+                            : lang === 'ta' ? opt.ta
+                            : opt.en}
+                        </button>
+                      ))}
                     </div>
                   )}
 

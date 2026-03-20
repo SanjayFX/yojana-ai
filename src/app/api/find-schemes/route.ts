@@ -44,6 +44,7 @@ export async function POST(request: NextRequest) {
 
     const body = (await request.json()) as {
       answers?: Record<string, string>;
+      scheme_type_filter?: string;
     };
 
     if (!body.answers || typeof body.answers !== "object") {
@@ -51,6 +52,8 @@ export async function POST(request: NextRequest) {
         "Missing required field: answers (Record<string, string>)"
       );
     }
+
+    const schemeTypeFilter = body.answers?.scheme_type_filter ?? "all";
 
     // Step 1 — Profile Agent
     const profileRes = await fetch(`${baseUrl}/api/profile`, {
@@ -89,7 +92,10 @@ export async function POST(request: NextRequest) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         profile,
-        answers: { language: body.answers.language },
+        answers: {
+          language: body.answers.language,
+          scheme_type_filter: schemeTypeFilter,
+        },
       }),
     });
 

@@ -1,9 +1,10 @@
 import { NextRequest } from "next/server";
+import { createClient } from "@supabase/supabase-js";
 import { callAI, PRO } from "@/lib/ai";
 import { buildEligibilityPrompt } from "@/lib/prompts";
 import { checkRateLimit, getClientIp } from "@/lib/ratelimit";
 import type { UserProfile, SchemeData, SchemeMatch } from "@/lib/types";
-import { getSchemes, incrementSchemeHit } from "@/lib/supabase";
+import { incrementSchemeHit } from "@/lib/supabase";
 import { mergeAutomaticMatches } from "@/lib/eligibility";
 import {
   methodNotAllowed,
@@ -12,6 +13,14 @@ import {
   successResponse,
   parseAIResponse,
 } from "@/lib/api-utils";
+
+function getSupabase() {
+  return createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!,
+    { auth: { autoRefreshToken: false, persistSession: false } }
+  );
+}
 
 export async function POST(request: NextRequest) {
   const startTime = Date.now();
@@ -28,7 +37,7 @@ export async function POST(request: NextRequest) {
 
     const body = (await request.json()) as {
       profile?: UserProfile;
-      answers?: { language?: string };
+      answers?: { language?: string; scheme_type_filter?: string };
     };
 
     const profile = body.profile;
@@ -40,7 +49,28 @@ export async function POST(request: NextRequest) {
 
     profile.preferred_language = answers.language ?? profile.preferred_language ?? "hi";
 
-    const schemes = (await getSchemes()) as SchemeData[];
+    const typeFilter = answers.scheme_type_filter ?? "all";
+    const supabase = getSupabase();
+    let query = supabase
+      .from("schemes")
+      .select("*")
+      .eq("is_active", true);
+
+    if (typeFilter === "central") {
+      query = query.eq("scheme_type", "central");
+    } else if (typeFilter === "state") {
+      query = query.or(
+        `scheme_type.eq.state,scheme_type.eq.both,` +
+          `eligible_states.cs.{"${profile.state}"}`
+      );
+    }
+
+    const { data, error } = await query;
+    if (error || !data) {
+      return agentFailed();
+    }
+
+    const schemes = data as unknown as SchemeData[];
     const prompt = buildEligibilityPrompt(profile, schemes);
     const aiResponse = await callAI(PRO, prompt);
     const parsed = parseAIResponse(aiResponse) as {
@@ -56,16 +86,16 @@ export async function POST(request: NextRequest) {
       profile,
       schemes,
       parsed.matched_schemes
-      .map((scheme) => ({
-        ...scheme,
-        confidence:
-          typeof scheme.confidence === "number"
-            ? scheme.confidence
-            : scheme.confidence === "high"
-            ? 0.9
-            : 0.6,
-      }))
-      .sort((a, b) => b.confidence - a.confidence)
+        .map((scheme) => ({
+          ...scheme,
+          confidence:
+            typeof scheme.confidence === "number"
+              ? scheme.confidence
+              : scheme.confidence === "high"
+              ? 0.9
+              : 0.6,
+        }))
+        .sort((a, b) => b.confidence - a.confidence)
     );
 
     if (matchedSchemes.length > 0) {

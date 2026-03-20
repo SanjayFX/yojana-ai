@@ -176,15 +176,15 @@ body {
 /* Pill-shaped navbar for hero — Sarvam style */
 .navbar-pill {
   position: sticky;
-  top: 8px;
+  top: 10px;
   z-index: 100;
-  height: 48px;
-  margin: 8px 10px 0;
-  padding: 0 12px;
+  min-height: 58px;
+  margin: 10px 12px 0;
+  padding: 0 14px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 6px;
+  gap: 10px;
   border-radius: var(--r-full);
   background: rgba(255,255,255,0.72);
   backdrop-filter: blur(24px) saturate(2);
@@ -234,40 +234,42 @@ body {
 
 .navbar-pill .lang-row {
   display: flex;
-  gap: 3px;
+  gap: 6px;
   overflow-x: auto;
   scrollbar-width: none;
   -webkit-overflow-scrolling: touch;
   flex: 1;
   justify-content: flex-end;
-  padding: 1px 0;
+  padding: 3px 0;
   min-width: 0;
 }
 .navbar-pill .lang-row::-webkit-scrollbar { display:none; }
 
 .navbar-pill .nav-logo {
-  font-size: 13px;
+  font-size: 16px;
   font-weight: 700;
   flex-shrink: 0;
   white-space: nowrap;
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 8px;
 }
 
 .lang-pill {
-  padding: 3px 8px;
+  padding: 0 12px;
   border-radius: var(--r-full);
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 600;
   white-space: nowrap;
   cursor: pointer;
   border: 1px solid var(--border-mid);
   background: transparent;
   color: var(--muted);
-  min-height: 26px;
+  min-height: 36px;
+  min-width: 36px;
   display: flex;
   align-items: center;
+  justify-content: center;
   flex-shrink: 0;
   transition: opacity 0.15s ease;
 }
@@ -275,6 +277,28 @@ body {
   background: var(--ink);
   color: white;
   border-color: var(--ink);
+}
+
+@media (min-width: 640px) {
+  .navbar-pill {
+    top: 14px;
+    min-height: 66px;
+    margin: 14px 18px 0;
+    padding: 0 20px;
+    gap: 16px;
+    max-width: calc(100vw - 36px);
+  }
+
+  .navbar-pill .nav-logo {
+    font-size: 18px;
+  }
+
+  .lang-pill {
+    min-height: 42px;
+    min-width: 42px;
+    padding: 0 14px;
+    font-size: 13px;
+  }
 }
 
 .nav-back-btn,
@@ -409,9 +433,8 @@ body {
   font-family: var(--font-display);
 }
 .hero-display-accent {
-  /* Gradient text — the Sarvam signature */
   background: linear-gradient(135deg,
-    #F97316 0%, #DC2626 50%, #7C3AED 100%);
+    #F97316 0%, #DC2626 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -435,6 +458,11 @@ body {
   .hero-body {
     font-size: 15px;
   }
+
+  .credits-footer {
+    font-size: 11px;
+    padding-bottom: 16px;
+  }
 }
 
 /* Primary CTA button */
@@ -447,8 +475,7 @@ body {
   padding: 0 var(--space-8);
   width: min(100%, 300px);
   border-radius: var(--r-full);
-  background: linear-gradient(135deg,
-    var(--saffron) 0%, var(--saffron-mid) 100%);
+  background: #0F172A;
   color: white;
   font-size: 15px;
   font-weight: 700;
@@ -496,6 +523,47 @@ body {
   color: var(--subtle);
   margin-top: var(--space-4);
   letter-spacing: 0.01em;
+}
+
+.credits-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 10px 20px;
+  padding-bottom: calc(10px + env(safe-area-inset-bottom, 0px));
+  background: rgba(248,250,252,0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-top: 1px solid var(--border);
+  font-size: 12px;
+  color: var(--subtle);
+  flex-wrap: wrap;
+}
+
+.credits-dot {
+  color: var(--border-mid);
+  font-size: 14px;
+}
+
+.credits-link-footer {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: var(--muted);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 12px;
+  transition: color 0.15s ease;
+}
+
+.credits-link-footer:hover {
+  color: var(--ink);
 }
 
 /* Stats row */
