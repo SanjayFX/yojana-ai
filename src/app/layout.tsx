@@ -3,6 +3,7 @@ import "./globals.css";
 
 import { LanguageProvider } from "@/lib/context/LanguageContext";
 import DynamicTitle from "@/components/DynamicTitle";
+import { Analytics } from "@vercel/analytics/next";
 
 export const metadata: Metadata = {
   title: "YojanaAI — Find Government Schemes",
@@ -56,6 +57,7 @@ export default function RootLayout({
         <LanguageProvider>
           {children}
         </LanguageProvider>
+        <Analytics />
       </body>
     </html>
   );
