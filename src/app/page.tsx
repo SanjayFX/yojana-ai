@@ -439,15 +439,23 @@ const SCHEME_TRANSLATIONS: Partial<Record<LangCode, Record<string, string>>> = {
     'Pradhan Mantri Fasal Bima Yojana': 'प्रधानमंत्री फसल बीमा योजना',
     'Pradhan Mantri Awas Yojana': 'प्रधानमंत्री आवास योजना',
     'Ayushman Bharat': 'आयुष्मान भारत',
-    'PM Jan Dhan Yojana': 'प्रधानमंत्री जन धन योजना',
+    'PM Jan Dhan Yojana': 'PM जन धन योजना',
     MGNREGA: 'मनरेगा',
+    MGNREGS: 'मनरेगा',
     'Kisan Credit Card': 'किसान क्रेडिट कार्ड',
     'PM Ujjwala Yojana': 'PM उज्ज्वला योजना',
+    'Pradhan Mantri Ujjwala Yojana': 'प्रधानमंत्री उज्ज्वला योजना',
     'Sukanya Samriddhi Yojana': 'सुकन्या समृद्धि योजना',
     'Atal Pension Yojana': 'अटल पेंशन योजना',
     'PM Mudra Yojana': 'प्रधानमंत्री मुद्रा योजना',
-    'National Scholarship Portal': 'राष्ट्रीय छात्रवृत्ति पोर्टल',
+    'National Scholarship Portal': 'राष्ट्रीय छात्रवृत्ति पोर्टाल',
     'Stand Up India': 'स्टैंड अप इंडिया',
+    'Mukhyamantri Kisan Samriddhi Yojana': 'मुख्यमंत्री किसान समृद्धि योजना',
+    'Rythu Bharosa Scheme': 'रयतू भरोसा योजना',
+    'PM Fasal Bima Yojana': 'PM फसल बीमा योजना',
+    'Ayushman Bharat PM-JAY': 'आयुष्मान भारत PM-JAY',
+    'Indira Gandhi Old Age Pension': 'इंदिरा गांधी वृद्धावस्था पेंशन',
+    'PM Surya Ghar Muft Bijli Yojana': 'PM सूर्य घर मुफ्त बिजली योजना',
   },
   ta: {
     'PM Kisan Samman Nidhi': 'PM கிசான் சம்மான் நிதி',
@@ -506,6 +514,17 @@ const langLabels: Record<LangCode, string> = {
   kn: 'ಕನ್'
 }
 
+const LANG_FULL_NAMES: Record<string, string> = {
+  hi: 'हिन्दी',
+  en: 'English',
+  bn: 'বাংলা',
+  te: 'తెలుగు',
+  mr: 'मराठी',
+  ta: 'தமிழ்',
+  gu: 'ગુજરાતી',
+  kn: 'ಕನ್ನಡ',
+}
+
 const FALLBACK_COPY = {
   hi: {
     heroBadge: 'AI-powered • Free • No login',
@@ -547,7 +566,13 @@ export default function YojanaAIPage() {
     apply_url: string
   }>>([])
   const [searching, setSearching] = useState(false)
-  
+  const [langOpen, setLangOpen] = useState(false)
+  const [schemeTranslations, setSchemeTranslations] =
+    useState<Record<string, {
+      name: string
+      benefit: string
+    }>>({})
+
   const [activeWaitTimer, setActiveWaitTimer] = useState(0)
   const [expandedCards, setExpandedCards] = useState<Record<string, boolean>>({})
 
@@ -588,10 +613,17 @@ export default function YojanaAIPage() {
   }, [lang])
 
   const getSchemeDisplayName = useCallback((schemeId: string, englishName: string): string => {
-    void schemeId
     if (lang === 'en') return englishName
+    if (schemeTranslations[schemeId]?.name) {
+      return schemeTranslations[schemeId].name
+    }
     return SCHEME_TRANSLATIONS[lang]?.[englishName] ?? englishName
-  }, [lang])
+  }, [lang, schemeTranslations])
+
+  const getSchemeBenefit = useCallback((schemeId: string, englishBenefit: string): string => {
+    if (lang === 'en') return englishBenefit
+    return schemeTranslations[schemeId]?.benefit ?? englishBenefit
+  }, [lang, schemeTranslations])
 
   const getReasonPlaceholder = useCallback((): string => {
     if (lang === 'ta') return 'தகுதி காரணம் ஏற்றப்படுகிறது...'
@@ -657,6 +689,19 @@ export default function YojanaAIPage() {
     return () => document.removeEventListener('mousedown', handleClick)
   }, [])
 
+  useEffect(() => {
+    if (!langOpen) return
+    const close = (e: MouseEvent) => {
+      const t = e.target as HTMLElement
+      if (!t.closest('.lang-toggle-wrap')) {
+        setLangOpen(false)
+      }
+    }
+    document.addEventListener('mousedown', close)
+    return () =>
+      document.removeEventListener('mousedown', close)
+  }, [langOpen])
+
   const formatCount = (n: number): string => {
     if (n >= 1000) return `${(n / 1000).toFixed(1)}k+`
     if (n >= 100) return `${Math.floor(n / 10) * 10}+`
@@ -691,6 +736,120 @@ export default function YojanaAIPage() {
       }
     }, 300)
   }
+
+  const fetchSchemeTranslations = useCallback(async (
+    ids: string[],
+    language: string
+  ) => {
+    if (language === 'en') return
+    try {
+      const res = await fetch(
+        `/api/schemes/translations?ids=${encodeURIComponent(ids.join(','))}&lang=${language}`
+      )
+      const data = await res.json()
+      if (data.translations) {
+        setSchemeTranslations(data.translations)
+      }
+    } catch {
+      // ignore translation hydration failures
+    }
+  }, [])
+
+  const handleLangSelect = useCallback((nextLang: LangCode) => {
+    setLang(nextLang)
+    setLangOpen(false)
+  }, [setLang])
+
+  const renderLangDropdown = useCallback(() => (
+    <div className="lang-toggle-wrap"
+      style={{ position: 'relative' }}>
+      <button
+        onClick={() => setLangOpen(p => !p)}
+        style={{
+          display: 'flex', alignItems: 'center',
+          gap: '6px', padding: '6px 12px',
+          borderRadius: 'var(--r-full)',
+          border: '1.5px solid var(--border-mid)',
+          background: 'white', cursor: 'pointer',
+          fontSize: '12px', fontWeight: 600,
+          color: 'var(--ink)',
+          transition: 'all 0.15s ease',
+        }}
+      >
+        <span>{LANG_FULL_NAMES[lang]}</span>
+        <svg width="10" height="10"
+          viewBox="0 0 10 10"
+          style={{
+            transform: langOpen
+              ? 'rotate(180deg)' : 'rotate(0)',
+            transition: 'transform 0.2s ease'
+          }}
+        >
+          <path d="M2 3L5 7L8 3"
+            stroke="currentColor" strokeWidth="1.5"
+            fill="none" strokeLinecap="round" />
+        </svg>
+      </button>
+
+      {langOpen && (
+        <div style={{
+          position: 'absolute',
+          top: 'calc(100% + 8px)',
+          right: 0,
+          background: 'white',
+          border: '1px solid var(--border-mid)',
+          borderRadius: 'var(--r-xl)',
+          boxShadow:
+            '0 8px 32px rgba(10,15,30,0.12)',
+          zIndex: 200,
+          overflow: 'hidden',
+          minWidth: '180px',
+        }}>
+          {SUPPORTED_LANGS.map((l, i) => (
+            <button key={l}
+              onClick={() => {
+                handleLangSelect(l)
+              }}
+              style={{
+                width: '100%',
+                padding: '11px 16px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                gap: '10px',
+                border: 'none',
+                borderBottom: i < SUPPORTED_LANGS.length - 1
+                  ? '1px solid var(--border)'
+                  : 'none',
+                background: lang === l
+                  ? 'var(--saffron-soft)' : 'white',
+                cursor: 'pointer',
+                fontSize: '13px',
+                fontWeight: lang === l ? 700 : 500,
+                color: lang === l
+                  ? 'var(--saffron-mid)'
+                  : 'var(--ink)',
+                textAlign: 'left',
+              }}
+            >
+              <span>{LANG_FULL_NAMES[l]}</span>
+              <span style={{
+                fontSize: '11px',
+                color: 'var(--subtle)',
+                fontWeight: 400
+              }}>{langLabels[l]}</span>
+              {lang === l && (
+                <span style={{
+                  fontSize: '12px',
+                  color: 'var(--saffron)'
+                }}>✓</span>
+              )}
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  ), [handleLangSelect, lang, langOpen])
 
   const submitForm = useCallback(async (finalAnswers: Record<string, any>) => {
     setScreen('loading')
@@ -781,6 +940,19 @@ export default function YojanaAIPage() {
   }
 
   useEffect(() => {
+    if (!results?.matched_schemes?.length || lang === 'en') {
+      setSchemeTranslations({})
+      return
+    }
+
+    setSchemeTranslations({})
+    void fetchSchemeTranslations(
+      results.matched_schemes.map((scheme: any) => scheme.id),
+      lang
+    )
+  }, [fetchSchemeTranslations, lang, results])
+
+  useEffect(() => {
     if (screen !== 'results' || !results?.profile || !results?.matched_schemes?.length) {
       return
     }
@@ -847,6 +1019,7 @@ export default function YojanaAIPage() {
     setAnswers({})
     setExplanation({})
     setExpandedCards({})
+    setSchemeTranslations({})
     setCurrentStep(0)
     setStateSearchQuery('')
     setSchemeTypeFilter('all')
@@ -1167,16 +1340,7 @@ export default function YojanaAIPage() {
                 onClick={() => setScreen('hero')}>
                 {navBrand}
               </span>
-              <div className="lang-row"
-                aria-label="Select language">
-                {SUPPORTED_LANGS.map(l => (
-                  <button key={l}
-                    className={`lang-pill${lang===l?' active':''}`}
-                    onClick={() => setLang(l as LangCode)}>
-                    {langLabels[l]}
-                  </button>
-                ))}
-              </div>
+              {renderLangDropdown()}
             </nav>
           
             <div className="hero-content">
@@ -1527,7 +1691,9 @@ export default function YojanaAIPage() {
                 <div className="navbar-center">
                   {t.step_label} {currentStep+1} {t.step_of} {TOTAL_STEPS}
                 </div>
-                <div className="navbar-right">
+                <div className="navbar-right"
+                  style={{ gap: '10px' }}>
+                  {renderLangDropdown()}
                   <span className="nav-logo"
                     style={{fontSize:'13px'}}
                     onClick={() => setScreen('hero')}>
@@ -1870,7 +2036,9 @@ export default function YojanaAIPage() {
                   ← {t.back_btn}
                 </button>
               </div>
-              <div className="navbar-right">
+              <div className="navbar-right"
+                style={{ gap: '10px' }}>
+                {renderLangDropdown()}
                 <span className="nav-logo"
                   style={{fontSize:'13px'}}
                   onClick={() => {
@@ -1931,7 +2099,7 @@ export default function YojanaAIPage() {
                         <h3 className="card-name">{derivedName}</h3>
                       </div>
                       <div className="benefit-chip">
-                        {s.estimated_benefit}
+                        {getSchemeBenefit(s.id, s.estimated_benefit)}
                       </div>
                     </div>
 
@@ -2070,7 +2238,7 @@ export default function YojanaAIPage() {
                       <button 
                         className="btn-wa"
                         data-scheme-name={derivedName}
-                        data-scheme-benefit={s.estimated_benefit}
+                        data-scheme-benefit={getSchemeBenefit(s.id, s.estimated_benefit)}
                         onClick={handleShareClick}
                       >
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style={{ verticalAlign: 'middle', marginRight: '6px' }}>

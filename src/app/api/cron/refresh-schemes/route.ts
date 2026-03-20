@@ -99,6 +99,45 @@ async function processState(
   }
 }
 
+async function triggerTranslationSeed(
+  baseUrl: string,
+  now: Date
+) {
+  const CRON_LANGS =
+    ['hi', 'ta', 'bn', 'te', 'mr', 'gu', 'kn']
+  const cronLang =
+    CRON_LANGS[now.getUTCDay() % CRON_LANGS.length]
+
+  await fetch(`${baseUrl}/api/schemes/translate`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization':
+        `Bearer ${process.env.SEED_SECRET ??
+          'yojana2026secret'}`
+    },
+    body: JSON.stringify({
+      offset: Math.floor(Math.random() * 200),
+      limit: 10,
+      lang: cronLang
+    })
+  }).catch(() => {})
+}
+
+function getBaseUrl(req: Request): string {
+  if (process.env.NEXT_PUBLIC_BASE_URL) {
+    return process.env.NEXT_PUBLIC_BASE_URL
+  }
+
+  if (process.env.VERCEL_URL) {
+    return process.env.VERCEL_URL.startsWith('http')
+      ? process.env.VERCEL_URL
+      : `https://${process.env.VERCEL_URL}`
+  }
+
+  return new URL(req.url).origin
+}
+
 export async function GET(req: Request) {
   const authHeader = req.headers.get('authorization') ?? ''
   const cronSecret =
@@ -141,6 +180,8 @@ export async function GET(req: Request) {
         // silent
       }
     }
+
+    await triggerTranslationSeed(getBaseUrl(req), now)
   }
 
   if (ctx.waitUntil) {
