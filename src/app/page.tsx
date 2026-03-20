@@ -476,7 +476,7 @@ const SCHEME_TRANSLATIONS: Partial<Record<LangCode, Record<string, string>>> = {
 }
 
 const QUESTIONS_DATA = [
-  { id:"state", hi:"Aap kahan rehte hain?", en:"Which state?",
+  { id:"state", hi:"आप कहाँ रहते हैं?", en:"Which state?",
     type:"select", options:["Andhra Pradesh","Arunachal Pradesh",
     "Assam","Bihar","Chhattisgarh","Goa","Gujarat","Haryana",
     "Himachal Pradesh","Jharkhand","Karnataka","Kerala",
@@ -485,19 +485,19 @@ const QUESTIONS_DATA = [
     "Tamil Nadu","Telangana","Tripura","Uttar Pradesh",
     "Uttarakhand","West Bengal","Delhi","Jammu & Kashmir"] },
   { id:"scheme_type", type:"choice" },
-  { id:"age", hi:"Aapki umar kya hai?", en:"What is your age?",
-    type:"number", placeholder:"Jaise: 35" },
-  { id:"income", hi:"Saal bhar ki kamai?", en:"Annual income?",
+  { id:"age", hi:"आपकी उम्र क्या है?", en:"What is your age?",
+    type:"number", placeholder:"जैसे: 35" },
+  { id:"income", hi:"साल भर की कमाई?", en:"Annual income?",
     type:"select", options:["0 – 1 lakh","1 – 3 lakh",
     "3 – 6 lakh","6 lakh se zyada"] },
-  { id:"category", hi:"Aapka category?", en:"Your category?",
+  { id:"category", hi:"आपकी श्रेणी?", en:"Your category?",
     type:"select", options:["General","OBC","SC","ST","EWS"] },
-  { id:"occupation", hi:"Aap kya kaam karte hain?",
+  { id:"occupation", hi:"आप क्या काम करते हैं?",
     en:"Your occupation?", type:"select",
     options:["farmer","student",
     "govt_employee","private_job",
     "business","unemployed"] },
-  { id:"gender", hi:"Aapka gender?", en:"Your gender?",
+  { id:"gender", hi:"आपका लिंग?", en:"Your gender?",
     type:"select", options:["Male","Female","Other"] }
 ]
 
@@ -1685,7 +1685,7 @@ export default function YojanaAIPage() {
               <nav className="navbar no-print">
                 <div className="navbar-left">
                   <button className="nav-back-btn" onClick={handleFormBack}>
-                    ← {t.back_btn}
+                    {t.back_btn}
                   </button>
                 </div>
                 <div className="navbar-center">
@@ -2033,7 +2033,7 @@ export default function YojanaAIPage() {
                     setScreen('hero')
                     setResults(null)
                   }}>
-                  ← {t.back_btn}
+                  {t.back_btn}
                 </button>
               </div>
               <div className="navbar-right"

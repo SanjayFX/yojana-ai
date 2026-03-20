@@ -68,7 +68,7 @@ export async function POST(req: Request) {
     for (const item of results) {
       if (!item.id) continue
 
-      const { error } = await supabase
+      const { error: upsertError } = await supabase
         .from('scheme_translations')
         .upsert({
           scheme_id: item.id,
@@ -77,7 +77,9 @@ export async function POST(req: Request) {
           benefit: item.benefit ?? null,
         }, { onConflict: 'scheme_id,lang' })
 
-      if (!error) {
+      if (upsertError) {
+        console.error('Upsert error:', upsertError)
+      } else {
         translated += 1
       }
     }
