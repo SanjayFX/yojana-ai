@@ -431,6 +431,41 @@ const INCOME_TO_API: Record<string, string> = {
 const mapIncome = (display: string): string =>
   INCOME_TO_API[display] ?? display
 
+const SCHEME_TRANSLATIONS: Partial<Record<LangCode, Record<string, string>>> = {
+  hi: {
+    'PM Kisan Samman Nidhi': 'PM किसान सम्मान निधि',
+    'Pradhan Mantri Kisan Samman Nidhi': 'PM किसान सम्मान निधि',
+    'Pradhan Mantri Fasal Bima Yojana': 'प्रधानमंत्री फसल बीमा योजना',
+    'Pradhan Mantri Awas Yojana': 'प्रधानमंत्री आवास योजना',
+    'Ayushman Bharat': 'आयुष्मान भारत',
+    'PM Jan Dhan Yojana': 'प्रधानमंत्री जन धन योजना',
+    MGNREGA: 'मनरेगा',
+    'Kisan Credit Card': 'किसान क्रेडिट कार्ड',
+    'PM Ujjwala Yojana': 'PM उज्ज्वला योजना',
+    'Sukanya Samriddhi Yojana': 'सुकन्या समृद्धि योजना',
+    'Atal Pension Yojana': 'अटल पेंशन योजना',
+    'PM Mudra Yojana': 'प्रधानमंत्री मुद्रा योजना',
+    'National Scholarship Portal': 'राष्ट्रीय छात्रवृत्ति पोर्टल',
+    'Stand Up India': 'स्टैंड अप इंडिया',
+  },
+  ta: {
+    'PM Kisan Samman Nidhi': 'PM கிசான் சம்மான் நிதி',
+    'Pradhan Mantri Kisan Samman Nidhi': 'PM கிசான் சம்மான் நிதி',
+    'Ayushman Bharat': 'ஆயுஷ்மான் பாரத்',
+    MGNREGA: 'மக்னரேகா',
+    'Kisan Credit Card': 'கிசான் கிரெடிட் கார்டு',
+    'PM Ujjwala Yojana': 'PM உஜ்வலா திட்டம்',
+    'National Scholarship Portal': 'தேசிய உதவித்தொகை இணையதளம்',
+  },
+  bn: {
+    'PM Kisan Samman Nidhi': 'পিএম কিষান সম্মান নিধি',
+    'Pradhan Mantri Kisan Samman Nidhi': 'পিএম কিষান সম্মান নিধি',
+    'Ayushman Bharat': 'আয়ুষ্মান ভারত',
+    MGNREGA: 'মনরেগা',
+    'National Scholarship Portal': 'জাতীয় বৃত্তি পোর্টাল',
+  },
+}
+
 const QUESTIONS_DATA = [
   { id:"state", hi:"Aap kahan rehte hain?", en:"Which state?",
     type:"select", options:["Andhra Pradesh","Arunachal Pradesh",
@@ -518,6 +553,14 @@ export default function YojanaAIPage() {
 
   const uiCopy = lang === 'en' ? FALLBACK_COPY.en : FALLBACK_COPY.hi
   const currentQuestion = QUESTIONS_DATA[currentStep]
+  const questionCopy = useMemo(() => ([
+    { heading: t.q1_text, sub: t.q1_sub },
+    { heading: t.q2_text, sub: t.q2_sub },
+    { heading: t.q3_text, sub: t.q3_sub },
+    { heading: t.q4_text, sub: t.q4_sub },
+    { heading: t.q5_text, sub: t.q5_sub },
+    { heading: t.q6_text, sub: t.q6_sub },
+  ]), [t])
   const occupationOptions = useMemo(() => ([
     { display: t.occ_farmer, value: 'farmer' },
     { display: t.occ_student, value: 'student' },
@@ -526,20 +569,21 @@ export default function YojanaAIPage() {
     { display: t.occ_business, value: 'business' },
     { display: t.occ_unemployed, value: 'unemployed' },
   ]), [t])
+  const incomeOptions = useMemo(() => ([
+    { display: t.income_1, value: '0-1 lakh' },
+    { display: t.income_2, value: '1-3 lakh' },
+    { display: t.income_3, value: '3-6 lakh' },
+    { display: t.income_4, value: '6+ lakh' },
+  ]), [t])
   const getStateDisplayName = useCallback((englishName: string): string => {
     if (lang === 'en') return englishName
     return STATE_NAMES[lang]?.[englishName] ?? englishName
   }, [lang])
 
-  const getStateSearchPlaceholder = useCallback((): string => {
-    if (lang === 'ta') return 'மாநிலம் தேடுங்கள்...'
-    if (lang === 'hi') return 'राज्य खोजें...'
-    if (lang === 'bn') return 'রাজ্য খুঁজুন...'
-    if (lang === 'te') return 'రాష్ట్రం వెతకండి...'
-    if (lang === 'kn') return 'ರಾಜ್ಯ ಹುಡುಕಿ...'
-    if (lang === 'mr') return 'राज्य शोधा...'
-    if (lang === 'gu') return 'રાજ્ય શોધો...'
-    return 'Search state...'
+  const getSchemeDisplayName = useCallback((schemeId: string, englishName: string): string => {
+    void schemeId
+    if (lang === 'en') return englishName
+    return SCHEME_TRANSLATIONS[lang]?.[englishName] ?? englishName
   }, [lang])
 
   const getReasonPlaceholder = useCallback((): string => {
@@ -1192,23 +1236,7 @@ export default function YojanaAIPage() {
                       type="text"
                       value={searchQuery}
                       onChange={e => handleSearch(e.target.value)}
-                      placeholder={
-                        lang === 'hi'
-                          ? 'किसान, स्वास्थ्य, शिक्षा...'
-                          : lang === 'bn'
-                            ? 'কৃষক, স্বাস্থ্য, শিক্ষা...'
-                            : lang === 'ta'
-                              ? 'விவசாயி, ஆரோக்கியம்...'
-                              : lang === 'te'
-                                ? 'రైతు, ఆరోగ్యం...'
-                                : lang === 'mr'
-                                  ? 'शेतकरी, आरोग्य...'
-                                  : lang === 'gu'
-                                    ? 'ખેડૂત, આરોગ્ય...'
-                                    : lang === 'kn'
-                                      ? 'ರೈತ, ಆರೋಗ್ಯ...'
-                                      : 'Search schemes... e.g. PM Kisan'
-                      }
+                      placeholder={t.search_placeholder}
                     style={{
                       width: '100%',
                       height: '50px',
@@ -1326,7 +1354,7 @@ export default function YojanaAIPage() {
                               letterSpacing: '-0.01em',
                               marginBottom: '3px'
                             }}>
-                              {scheme.name}
+                              {getSchemeDisplayName(scheme.id, scheme.name)}
                             </div>
                             <div style={{
                               fontSize: '11px',
@@ -1405,9 +1433,7 @@ export default function YojanaAIPage() {
 
         {screen === 'form' && (() => {
           const q = currentQuestion
-          const qTextKey = `q_${q.id}_hi` as keyof typeof t
-          const qText = lang === 'en' ? q.en : t[qTextKey] || q.hi || q.en
-          const qEn = q.en
+          const localizedQuestion = questionCopy[currentStep]
           
           const hasAnswer = answers[q.id] !== undefined && answers[q.id] !== ''
 
@@ -1444,10 +1470,10 @@ export default function YojanaAIPage() {
                       Q{currentStep+1}
                     </span>
                       <h2 className="q-heading">
-                        {lang !== 'en' ? qText : q.en}
+                        {localizedQuestion?.heading ?? q.en}
                       </h2>
                       <p className="q-sub">
-                        {lang!=='en' ? q.en : ''}
+                        {localizedQuestion?.sub ?? ''}
                       </p>
                     </div>
                   </div>
@@ -1458,8 +1484,8 @@ export default function YojanaAIPage() {
                         type="text"
                         autoFocus
                         className="search-input"
-                        aria-label={qText as string}
-                        placeholder={getStateSearchPlaceholder()}
+                        aria-label={localizedQuestion?.heading ?? q.en}
+                        placeholder={t.state_search_placeholder}
                         value={stateSearchQuery}
                         onChange={handleStateSearchChange}
                       />
@@ -1486,7 +1512,26 @@ export default function YojanaAIPage() {
                     )
                   })}
 
-                  {q.type === 'select' && q.id !== 'occupation' && filteredQuestionOptions.map((opt, idx) => {
+                  {q.id === 'income' && incomeOptions.map((opt) => {
+                    const isSelected = answers.income === opt.value
+
+                    return (
+                      <button
+                        key={opt.value}
+                        role="button"
+                        className={`opt-btn ${isSelected ? 'selected' : ''}`}
+                        onClick={() => setAnswers(prev => ({
+                          ...prev,
+                          income: opt.value
+                        }))}
+                      >
+                        <span style={{ minWidth: 0 }}>{opt.display}</span>
+                        {isSelected && <span className="opt-check" aria-hidden="true">✓</span>}
+                      </button>
+                    )
+                  })}
+
+                  {q.type === 'select' && q.id !== 'occupation' && q.id !== 'income' && filteredQuestionOptions.map((opt, idx) => {
                     const isSelected = answers[q.id] === opt
                     const text = getTranslatedOption(q, opt)
                     
@@ -1513,7 +1558,7 @@ export default function YojanaAIPage() {
                         inputMode="numeric"
                         pattern="[0-9]*"
                         className="num-input"
-                        aria-label={t.q_age_hi || q.en}
+                        aria-label={localizedQuestion?.heading ?? q.en}
                         value={answers.age ?? ''}
                         onChange={e => setAnswers(prev =>
                           ({...prev, age: e.target.value}))}
@@ -1540,10 +1585,10 @@ export default function YojanaAIPage() {
 
         {screen === 'loading' && (() => {
           const agentRows = [
-            { time: 0, doneTime: 3, label: t.agent1 },
-            { time: 3, doneTime: 8, label: t.agent2 },
-            { time: 8, doneTime: 11, label: t.agent3 },
-            { time: 11, doneTime: 999, label: t.agent4 }
+            { time: 0, doneTime: 3, label: t.agent1_label },
+            { time: 3, doneTime: 8, label: t.agent2_label },
+            { time: 8, doneTime: 11, label: t.agent3_label },
+            { time: 11, doneTime: 999, label: t.agent4_label }
           ].map(r => ({
             ...r,
             status: activeWaitTimer >= r.doneTime ? 'done' : activeWaitTimer >= r.time ? 'active' : 'pending'
@@ -1631,7 +1676,7 @@ export default function YojanaAIPage() {
                 const schemeExpl = explanation[s.id]
                 const isExpanded = expandedCards[i.toString()]
                 
-                const derivedName = s.name || s.id
+                const derivedName = getSchemeDisplayName(s.id, s.name || s.id)
                 const schemeReason = s.reason || s.reasoning || ''
                 const displayReason =
                   lang !== 'hi' && lang !== 'en'
