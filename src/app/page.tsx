@@ -764,7 +764,7 @@ export default function YojanaAIPage() {
   }, [setLang])
 
   const renderLangDropdown = useCallback(() => (
-    <div className="relative z-[999] pointer-events-auto">
+    <div className="relative z-[99999]">
       <button
         type="button"
         onClick={() => setLangOpen(p => !p)}
@@ -793,15 +793,16 @@ export default function YojanaAIPage() {
           background: 'white',
           border: '1px solid var(--border-mid)',
           borderRadius: 'var(--r-xl)',
-          boxShadow:
-            '0 8px 32px rgba(10,15,30,0.12)',
-          zIndex: 9999,
+          boxShadow: '0 8px 32px rgba(10,15,30,0.12)',
+          zIndex: 99999,
           overflow: 'hidden',
           minWidth: '180px',
+          isolation: 'isolate'
         }}>
           {SUPPORTED_LANGS.map((l, i) => (
             <button key={l}
               type="button"
+              className="cursor-pointer"
               onClick={(e) => {
                 e.stopPropagation();
                 handleLangSelect(l);
