@@ -40,3 +40,13 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+.playwright-cli/
+docs/plans/
+tests/
+fix_*.js
+*.tiff
+*.tif
+Gemini_Generated_Image*
+playwright-report/
+test-results/

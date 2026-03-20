@@ -1,2 +1,0 @@
-[    1143ms] [ERROR] Failed to load resource: the server responded with a status of 404 () @ https://api.whatsapp.com/data/manifest.json:0
-[    1427ms] [ERROR] Manifest fetch from https://api.whatsapp.com/data/manifest.json failed, code 404 @ https://api.whatsapp.com/send/?text=Mujhe+AI+ne+bataya+ki+main+Bihar+Fasal+Sahayata+Yojana+ke+liye+eligible+hoon%21+Benefit%3A+Financial+compensation+for+crop+loss.+Tum+bhi+check+karo+%28free%29%3A+https%3A%2F%2Fyojanaai.vercel.app&type=custom_url&app_absent=0:0
