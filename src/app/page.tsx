@@ -764,20 +764,10 @@ export default function YojanaAIPage() {
   }, [setLang])
 
   const renderLangDropdown = useCallback(() => (
-    <div className="lang-toggle-wrap"
-      style={{ position: 'relative' }}>
+    <div className="relative z-50">
       <button
         onClick={() => setLangOpen(p => !p)}
-        style={{
-          display: 'flex', alignItems: 'center',
-          gap: '6px', padding: '6px 12px',
-          borderRadius: 'var(--r-full)',
-          border: '1.5px solid var(--border-mid)',
-          background: 'white', cursor: 'pointer',
-          fontSize: '12px', fontWeight: 600,
-          color: 'var(--ink)',
-          transition: 'all 0.15s ease',
-        }}
+        className="flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-full border border-gray-200 bg-white hover:shadow-sm text-xs font-medium text-gray-700 transition-all active:scale-95"
       >
         <span>{LANG_FULL_NAMES[lang]}</span>
         <svg width="10" height="10"
@@ -1332,24 +1322,24 @@ export default function YojanaAIPage() {
       <main id="main">
         {screen === 'hero' && (
           <>
-            <nav className="navbar-pill no-print">
+            <nav className="navbar-pill no-print border-b border-gray-100 backdrop-blur-md bg-white/90 sticky top-0 z-50">
               <span className="nav-logo" onClick={() => setScreen('hero')}>
                 {navBrand}
               </span>
               {renderLangDropdown()}
             </nav>
 
-            <section className="relative flex flex-col items-center px-4 sm:px-6 pt-16 pb-12 overflow-hidden bg-gradient-to-b from-orange-50 to-white">
+            <section className="relative flex flex-col items-center px-4 sm:px-6 lg:px-8 pt-16 pb-12 overflow-hidden bg-gradient-to-b from-orange-50 to-white">
               <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_80%_50%_at_50%_0%,rgba(255,107,0,0.1),transparent)]" />
               
               <div className="w-full max-w-2xl mx-auto flex flex-col items-center text-center">
-                <div className="mb-6 flex items-center gap-2 rounded-full border border-orange-200 bg-white px-4 py-1.5 text-sm font-medium text-orange-600 shadow-sm">
+                <div className="mb-6 flex items-center gap-2 rounded-full border border-orange-200 bg-white px-4 py-1.5 text-xs font-semibold tracking-wide uppercase text-orange-600 shadow-sm">
                   🇮🇳 <span>{t.hero_badge}</span>
                 </div>
 
-                <h1 className="font-[Noto_Sans_Devanagari,sans-serif] text-5xl md:text-6xl font-black text-gray-900 leading-tight mb-4">
+                <h1 className="font-[Noto_Sans_Devanagari,sans-serif] text-5xl md:text-6xl font-black tracking-tight leading-[1.1] text-gray-900 mb-4">
                   {t.hero_headline}{" "}
-                  <span className="text-orange-500">
+                  <span className="text-orange-500 inline-block min-w-[120px]">
                     <Typewriter
                       text={t.hero_typewriter as any}
                       speed={80}
@@ -1367,7 +1357,7 @@ export default function YojanaAIPage() {
 
                 <button 
                   onClick={() => setScreen('form')}
-                  className="group flex items-center justify-center gap-2 rounded-full bg-orange-500 hover:bg-orange-600 text-white font-semibold text-lg px-8 py-4 shadow-lg hover:shadow-orange-200 transition-all duration-200 mb-4 w-full sm:w-auto">
+                  className="group flex items-center justify-center gap-2 rounded-full bg-orange-500 hover:bg-orange-600 text-white font-semibold text-lg px-8 py-4 shadow-lg hover:shadow-orange-200 transition-all duration-200 active:scale-95 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2 mb-4 w-full sm:w-auto">
                   {t.hero_cta}
                   <ArrowRightIcon className="size-5 group-hover:translate-x-1 transition-transform" />
                 </button>
@@ -1377,17 +1367,17 @@ export default function YojanaAIPage() {
                 </p>
 
                 <div className="flex flex-row justify-center gap-3 mb-10 w-full">
-                  <div className="flex flex-col flex-1 max-w-[120px] items-center bg-white rounded-2xl shadow-md px-4 sm:px-6 py-4 border border-orange-100">
+                  <div className="flex flex-col w-28 sm:w-32 items-center bg-white rounded-2xl border border-gray-100 px-4 sm:px-6 lg:px-8 py-4 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-200">
                     <span className="text-2xl mb-1">🏛️</span>
                     <span className="text-xl sm:text-2xl font-black text-orange-500">780+</span>
                     <span className="text-xs text-center text-gray-500 mt-1">{t.stats_schemes_label}</span>
                   </div>
-                  <div className="flex flex-col flex-1 max-w-[120px] items-center bg-white rounded-2xl shadow-md px-4 sm:px-6 py-4 border border-orange-100">
+                  <div className="flex flex-col w-28 sm:w-32 items-center bg-white rounded-2xl border border-gray-100 px-4 sm:px-6 lg:px-8 py-4 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-200">
                     <span className="text-2xl mb-1">❓</span>
                     <span className="text-xl sm:text-2xl font-black text-orange-500">6</span>
                     <span className="text-xs text-center text-gray-500 mt-1">{t.stats_questions_label}</span>
                   </div>
-                  <div className="flex flex-col flex-1 max-w-[120px] items-center bg-white rounded-2xl shadow-md px-4 sm:px-6 py-4 border border-orange-100">
+                  <div className="flex flex-col w-28 sm:w-32 items-center bg-white rounded-2xl border border-gray-100 px-4 sm:px-6 lg:px-8 py-4 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-200">
                     <span className="text-2xl mb-1">⚡</span>
                     <span className="text-xl sm:text-2xl font-black text-orange-500">60s</span>
                     <span className="text-xs text-center text-gray-500 mt-1">{t.stats_result_label}</span>
@@ -1405,9 +1395,9 @@ export default function YojanaAIPage() {
 
             <SchemesMarchingSection />
 
-            <section className="pt-8 pb-12 px-4 sm:px-6 bg-white flex flex-col items-center mt-2">
+            <section className="py-16 px-4 sm:px-6 lg:px-8 bg-white flex flex-col items-center mt-2">
               <div className="w-full max-w-2xl mx-auto">
-                <h2 className="text-center text-2xl font-bold text-gray-800 mb-10">
+                <h2 className="text-center text-2xl font-bold text-gray-900 mb-10">
                   {t.steps_heading}
                 </h2>
                 <div className="flex flex-col md:flex-row items-center justify-center gap-4">
@@ -1417,11 +1407,11 @@ export default function YojanaAIPage() {
                     
                     return (
                     <div key={n} className="flex flex-col md:flex-row items-center gap-4">
-                      <div className="flex flex-col items-center bg-orange-50 border border-orange-100 rounded-2xl px-6 py-5 w-52 text-center">
-                        <span className="text-3xl font-black text-orange-400 mb-2">
+                      <div className="flex flex-col items-center bg-white border border-orange-100 rounded-2xl px-6 py-5 w-52 text-center hover:shadow-md transition-all duration-200">
+                        <span className="text-4xl font-black text-orange-400 mb-2">
                           0{n}
                         </span>
-                        <p className="font-bold text-gray-800 text-sm">
+                        <p className="font-bold text-gray-900 text-sm">
                           {(t as any)[titleKey]}
                         </p>
                         <p className="text-xs text-gray-500 mt-1">

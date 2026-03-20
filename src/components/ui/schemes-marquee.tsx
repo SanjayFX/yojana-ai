@@ -1,4 +1,4 @@
-'use client'
+import { useLang } from '@/lib/context/LanguageContext'
 
 const row1 = [
   "🌾 PM किसान सम्मान", "🏥 आयुष्मान भारत", "🏠 PM आवास योजना",
@@ -29,13 +29,13 @@ function MarqueeRow({ items, reverse = false, duration = "40s" }: {
   return (
     <div className="overflow-hidden" style={{ "--gap": "0.75rem" } as React.CSSProperties}>
       <div
-        className={`flex w-max gap-3 hover:[animation-play-state:paused] ${reverse ? "animate-marquee-reverse" : "animate-marquee"}`}
+        className={`flex w-max gap-3 hover:[animation-play-state:paused] [will-change:transform] [transform:translateZ(0)] ${reverse ? "animate-marquee-reverse" : "animate-marquee"}`}
         style={{ "--duration": duration } as React.CSSProperties}
       >
         {[...items, ...items].map((item, i) => (
           <span
             key={i}
-            className="whitespace-nowrap rounded-full border border-orange-200 bg-white px-4 py-2 text-sm font-medium text-orange-800 shadow-sm"
+            className="whitespace-nowrap rounded-full border border-orange-100 bg-white shadow-sm px-4 py-1.5 text-sm font-medium text-gray-700 cursor-default"
           >
             {item}
           </span>
@@ -46,17 +46,19 @@ function MarqueeRow({ items, reverse = false, duration = "40s" }: {
 }
 
 export function SchemesMarchingSection() {
+  const { t } = useLang();
+  
   return (
-    <section className="relative py-8 bg-orange-50 overflow-hidden mt-2">
+    <section className="relative py-16 bg-orange-50 overflow-hidden mt-2">
       <div className="absolute left-0 top-0 z-10 h-full w-24 bg-gradient-to-r from-orange-50 to-transparent pointer-events-none" />
       <div className="absolute right-0 top-0 z-10 h-full w-24 bg-gradient-to-l from-orange-50 to-transparent pointer-events-none" />
 
-      <div className="text-center mb-6 px-4">
+      <div className="text-center mb-6 px-4 sm:px-6 lg:px-8">
         <p className="text-sm font-semibold text-orange-500 uppercase tracking-widest mb-1">
-          780+ योजनाओं का डेटाबेस
+          {t.schemes_section_label}
         </p>
-        <h2 className="text-2xl font-bold text-gray-800">
-          हर भाषा में, हर राज्य के लिए
+        <h2 className="text-2xl font-bold text-gray-900">
+          {t.schemes_section_heading}
         </h2>
       </div>
 
