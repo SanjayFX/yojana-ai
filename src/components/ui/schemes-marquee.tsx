@@ -1,5 +1,26 @@
 'use client'
 
+const row1 = [
+  "🌾 PM किसान सम्मान", "🏥 आयुष्मान भारत", "🏠 PM आवास योजना",
+  "👧 बेटी बचाओ बेटी पढ़ाओ", "🔥 उज्ज्वला योजना", "💰 मुद्रा लोन",
+  "📚 छात्रवृत्ति योजना", "💊 सुकन्या समृद्धि", "🌱 फसल बीमा योजना",
+  "🏗️ ग्राम आवास योजना"
+]
+
+const row2 = [
+  "🌾 விவசாயி திட்டம்", "🏥 ஆயுஷ்மான் பாரத்", "📚 தொழில் கல்வி",
+  "👧 பெண் கல்வி திட்டம்", "🌾 రైతు నిధి పథకం", "🏠 గృహ నిర్మాణ పథకం",
+  "💊 ఆరోగ్య భీమా", "👧 బాలికా సంరక్షణ", "💰 వ్యాపార రుణం",
+  "📚 విద్యార్థి స్కాలర్షిప్"
+]
+
+const row3 = [
+  "🌾 কৃষক সম্মান নিধি", "🏥 আয়ুষ্মান ভারত", "🏠 আবাস যোজনা",
+  "📚 শিক্ষা বৃত্তি", "🌾 शेतकरी सन्मान निधी", "🏥 आरोग्य भारत",
+  "💰 मुद्रा कर्ज", "👩 महिला बचत योजना", "📚 शिष्यवृत्ती योजना",
+  "🔥 उज्ज्वला योजना"
+]
+
 function MarqueeRow({ items, reverse = false, duration = "40s" }: {
   items: string[]
   reverse?: boolean
@@ -24,28 +45,25 @@ function MarqueeRow({ items, reverse = false, duration = "40s" }: {
   )
 }
 
-import { useLang } from '@/lib/context/LanguageContext'
-
 export function SchemesMarchingSection() {
-  const { t } = useLang();
   return (
-    <section className="relative py-14 bg-orange-50 overflow-hidden">
+    <section className="relative py-8 bg-orange-50 overflow-hidden mt-2">
       <div className="absolute left-0 top-0 z-10 h-full w-24 bg-gradient-to-r from-orange-50 to-transparent pointer-events-none" />
       <div className="absolute right-0 top-0 z-10 h-full w-24 bg-gradient-to-l from-orange-50 to-transparent pointer-events-none" />
 
-      <div className="text-center mb-8 px-4">
+      <div className="text-center mb-6 px-4">
         <p className="text-sm font-semibold text-orange-500 uppercase tracking-widest mb-1">
-          {t.schemes_section_label}
+          780+ योजनाओं का डेटाबेस
         </p>
         <h2 className="text-2xl font-bold text-gray-800">
-          {t.schemes_section_heading}
+          हर भाषा में, हर राज्य के लिए
         </h2>
       </div>
 
       <div className="flex flex-col gap-3">
-        <MarqueeRow items={t.marquee_row1 as any} duration="60s" />
-        <MarqueeRow items={t.marquee_row2 as any} reverse duration="75s" />
-        <MarqueeRow items={t.marquee_row3 as any} duration="65s" />
+        <MarqueeRow items={row1} duration="60s" />
+        <MarqueeRow items={row2} reverse duration="75s" />
+        <MarqueeRow items={row3} duration="65s" />
       </div>
     </section>
   )
