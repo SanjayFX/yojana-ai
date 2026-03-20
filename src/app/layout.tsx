@@ -1,22 +1,21 @@
 import type { Metadata } from "next";
 import "./globals.css";
 
-export const metadata: Metadata = {
-  title: "YojanAI — Find Government Schemes You Deserve",
-  description:
-    "AI-powered tool to discover Indian government welfare schemes you are eligible for. Answer a few questions and get matched with benefits, documents, and application steps.",
-  keywords: [
-    "government schemes",
-    "welfare",
-    "India",
-    "AI",
-    "yojana",
-    "benefits",
-    "eligibility",
-  ],
-};
-
 import { LanguageProvider } from "@/lib/context/LanguageContext";
+import DynamicTitle from "@/components/DynamicTitle";
+
+export const metadata: Metadata = {
+  title: "YojanaAI — Find Government Schemes",
+  description:
+    "Free AI tool that finds every Indian" +
+    " government scheme you qualify for." +
+    " 770+ schemes, 8 languages, no login.",
+  icons: {
+    icon: "/favicon.svg",
+    shortcut: "/favicon.svg",
+    apple: "/favicon.svg",
+  },
+};
 
 export default function RootLayout({
   children,
@@ -26,6 +25,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body suppressHydrationWarning>
+        <DynamicTitle />
         <LanguageProvider>
           {children}
         </LanguageProvider>
