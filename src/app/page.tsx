@@ -4,6 +4,7 @@ import React, { useState, useEffect, useMemo, useCallback, useRef } from 'react'
 import { SUPPORTED_LANGS, type LangCode } from '@/lib/i18n/translations'
 import { useLang } from '@/lib/context/LanguageContext'
 import { Typewriter } from "@/components/ui/typewriter"
+import { StickyCTA } from '@/components/ui/sticky-cta'
 import { SchemesMarchingSection } from "@/components/ui/schemes-marquee"
 import { ArrowRightIcon } from "lucide-react"
 
@@ -1343,7 +1344,7 @@ export default function YojanaAIPage() {
                   🇮🇳 <span>{t.hero_badge}</span>
                 </div>
 
-                <h1 className="font-[Noto_Sans_Devanagari,sans-serif] text-5xl md:text-6xl font-black tracking-tight leading-[1.1] text-gray-900 mb-4">
+                <h1 className="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight leading-[1.1] text-gray-900 mb-4">
                   {t.hero_headline}{" "}
                   <span className="text-orange-500 inline-block min-w-[120px]">
                     <Typewriter
@@ -1357,7 +1358,7 @@ export default function YojanaAIPage() {
                   </span>
                 </h1>
 
-                <p className="max-w-xl text-lg md:text-xl text-gray-600 mb-8 leading-relaxed">
+                <p className="text-base sm:text-lg text-gray-500 font-normal leading-relaxed max-w-md mx-auto mb-8">
                   {t.hero_subtext}
                 </p>
 
@@ -1372,7 +1373,29 @@ export default function YojanaAIPage() {
                   {t.hero_microtrust}
                 </p>
 
-                <div className="flex flex-row justify-center gap-3 mb-10 w-full">
+                
+                <div className="relative w-full max-w-sm mx-auto mt-8 mb-2 rounded-2xl border border-orange-100 bg-white shadow-xl shadow-orange-100/50 overflow-hidden pointer-events-none select-none">
+                  <div className="bg-orange-500 px-4 py-3 flex items-center gap-2">
+                    <div className="w-2 h-2 rounded-full bg-white/40" />
+                    <div className="w-2 h-2 rounded-full bg-white/40" />
+                    <div className="w-2 h-2 rounded-full bg-white/40" />
+                    <span className="text-white text-xs font-medium ml-2">YojanaAI</span>
+                  </div>
+                  <div className="px-4 py-4 text-left">
+                    <p className="text-xs text-gray-400 mb-1">Question 2 of 6</p>
+                    <p className="text-sm font-semibold text-gray-800 mb-3">{(t as any).preview_question as string}</p>
+                    {["< ₹1 Lakh", "₹1-3 Lakh", "₹3-5 Lakh", "> ₹5 Lakh"].map((opt, i) => (
+                      <div key={i} className={`mb-2 px-3 py-2 rounded-xl border text-xs font-medium ${i === 1 ? "border-orange-400 bg-orange-50 text-orange-700" : "border-gray-200 text-gray-600"}`}>
+                        {opt}
+                      </div>
+                    ))}
+                    <div className="mt-3 pt-3 border-t border-gray-100 flex items-center justify-between">
+                      <span className="text-xs text-gray-400">Matching schemes...</span>
+                      <span className="text-xs font-bold text-orange-500">47 found ✓</span>
+                    </div>
+                  </div>
+                </div>
+<div className="flex flex-row justify-center gap-3 mb-10 w-full">
                   <div className="flex flex-col w-28 sm:w-32 items-center bg-white rounded-2xl border border-gray-100 px-4 sm:px-6 lg:px-8 py-4 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-200">
                     <span className="text-2xl mb-1">🏛️</span>
                     <span className="text-xl sm:text-2xl font-black text-orange-500">780+</span>
@@ -1390,11 +1413,18 @@ export default function YojanaAIPage() {
                   </div>
                 </div>
 
-                <div className="flex flex-wrap justify-center gap-4 text-xs text-gray-400 border-t border-gray-100 pt-6 w-full max-w-lg">
-                  <span className="w-[45%] sm:w-auto text-left sm:text-center">✅ {t.trust_nic}</span>
-                  <span className="w-[45%] sm:w-auto text-left sm:text-center">✅ {t.trust_nologin}</span>
-                  <span className="w-[45%] sm:w-auto text-left sm:text-center">✅ {t.trust_free}</span>
-                  <span className="w-[45%] sm:w-auto text-left sm:text-center">✅ {t.trust_languages}</span>
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 w-full max-w-lg mx-auto mt-6 px-2">
+                  {[
+                    { icon: "🏛️", key: "trust_nic" },
+                    { icon: "🔓", key: "trust_nologin" },
+                    { icon: "💚", key: "trust_free" },
+                    { icon: "🌐", key: "trust_languages" },
+                  ].map((item, i) => (
+                    <div key={i} className="flex items-center gap-2 bg-white rounded-xl px-3 py-2.5 border border-gray-100 shadow-sm">
+                      <span className="text-base shrink-0">{item.icon}</span>
+                      <span className="text-xs font-medium text-gray-700 leading-tight">{(t as any)[item.key]}</span>
+                    </div>
+                  ))}
                 </div>
               </div>
             </section>
@@ -1403,29 +1433,25 @@ export default function YojanaAIPage() {
 
             <section className="py-16 px-4 sm:px-6 lg:px-8 bg-white flex flex-col items-center mt-2">
               <div className="w-full max-w-2xl mx-auto">
-                <h2 className="text-center text-2xl font-bold text-gray-900 mb-10">
+                <h2 className="text-center text-2xl sm:text-3xl font-bold tracking-tight text-gray-900 mb-10">
                   {t.steps_heading}
                 </h2>
-                <div className="flex flex-col md:flex-row items-center justify-center gap-4">
+                <div className="flex flex-col md:flex-row items-center justify-center gap-0 md:gap-4 max-w-3xl mx-auto">
                   {[1, 2, 3].map((n, i) => {
                     const titleKey = `steps_${n}_title`;
                     const descKey = `steps_${n}_desc`;
-                    
                     return (
-                    <div key={n} className="flex flex-col md:flex-row items-center gap-4">
-                      <div className="flex flex-col items-center bg-white border border-orange-100 rounded-2xl px-6 py-5 w-52 text-center hover:shadow-md transition-all duration-200">
-                        <span className="text-4xl font-black text-orange-400 mb-2">
-                          0{n}
-                        </span>
-                        <p className="font-bold text-gray-900 text-sm">
-                          {(t as any)[titleKey]}
-                        </p>
-                        <p className="text-xs text-gray-500 mt-1">
-                          {(t as any)[descKey]}
-                        </p>
+                    <div key={n} className="flex flex-col md:flex-row items-center w-full md:w-auto">
+                      <div className="flex flex-col items-center text-center bg-white rounded-2xl border border-orange-100 shadow-sm px-6 py-6 w-full md:w-48 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200">
+                        <span className="text-4xl font-black text-orange-400 mb-3 leading-none">0{n}</span>
+                        <p className="font-bold text-gray-800 text-sm">{(t as any)[titleKey]}</p>
+                        <p className="text-xs text-gray-500 mt-1">{(t as any)[descKey]}</p>
                       </div>
                       {i < 2 && (
-                        <ArrowRightIcon className="size-5 text-orange-300 hidden md:block shrink-0" />
+                        <>
+                          <div className="w-px h-6 bg-orange-200 md:hidden mx-auto my-1" />
+                          <ArrowRightIcon className="size-5 text-orange-300 hidden md:block shrink-0 mx-1" />
+                        </>
                       )}
                     </div>
                   )})}
@@ -1433,70 +1459,26 @@ export default function YojanaAIPage() {
               </div>
             </section>
 
-            <div className="credits-footer">
-              <span>
-                {lang === 'hi' ? 'बनाया' : 'Built'} with ❤️
-                {lang === 'hi' ? ' भारत के लिए' : ' for India'}
-              </span>
-              <span className="credits-dot">·</span>
-              <a
-                href="https://github.com/SanjayFX"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="credits-link-footer">
-                <svg width="13" height="13"
-                  viewBox="0 0 24 24"
-                  fill="currentColor">
-                  <path d="M12 0C5.37 0 0 5.37 0 12c0
-                    5.31 3.435 9.795 8.205 11.385.6.105
-                    .825-.255.825-.57 0-.285-.015-1.23
-                    -.015-2.235-3.015.555-3.795-.735
-                    -4.035-1.41-.135-.345-.72-1.41-1.23
-                    -1.695-.42-.225-1.02-.78-.015-.795
-                    .945-.015 1.62.87 1.845 1.23 1.08
-                    1.815 2.805 1.305 3.495.99.105-.78
-                    .42-1.305.765-1.605-2.67-.3-5.46
-                    -1.335-5.46-5.925 0-1.305.465-2.385
-                    1.23-3.225-.12-.3-.54-1.53.12-3.18
-                    0 0 1.005-.315 3.3 1.23.96-.27 1.98
-                    -.405 3-.405s2.04.135 3 .405c2.295
-                    -1.56 3.3-1.23 3.3-1.23.66 1.65.24
-                    2.88.12 3.18.765.84 1.23 1.905 1.23
-                    3.225 0 4.605-2.805 5.625-5.475
-                    5.925.435.375.81 1.095.81 2.22 0
-                    1.605-.015 2.895-.015 3.3 0 .315
-                    .225.69.825.57A12.02 12.02 0 0024
-                    12c0-6.63-5.37-12-12-12z"/>
-                </svg>
-                SanjayFX
-              </a>
-              <span className="credits-dot">·</span>
-              <a
-                href="https://www.linkedin.com/in/sanjay-k-523120287"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="credits-link-footer">
-                <svg width="13" height="13"
-                  viewBox="0 0 24 24"
-                  fill="currentColor">
-                  <path d="M20.447 20.452h-3.554v-5.569
-                    c0-1.328-.027-3.037-1.852-3.037
-                    -1.853 0-2.136 1.445-2.136 2.939
-                    v5.667H9.351V9h3.414v1.561h.046
-                    c.477-.9 1.637-1.85 3.37-1.85
-                    3.601 0 4.267 2.37 4.267 5.455
-                    v6.286zM5.337 7.433a2.062 2.062 0
-                    01-2.063-2.065 2.064 2.064 0
-                    112.063 2.065zm1.782 13.019H3.555
-                    V9h3.564v11.452zM22.225 0H1.771
-                    C.792 0 0 .774 0 1.729v20.542
-                    C0 23.227.792 24 1.771 24h20.451
-                    C23.2 24 24 23.227 24 22.271V1.729
-                    C24 .774 23.2 0 22.222 0h.003z"/>
-                </svg>
-                Sanjay K
-              </a>
-            </div>
+            <footer className="border-t border-gray-100 bg-white py-8 px-4 mt-8 w-full z-10 relative">
+    <div className="max-w-2xl mx-auto text-center">
+      <div className="flex items-center justify-center gap-2 mb-3">
+        <span className="text-lg">🇮🇳</span>
+        <span className="font-bold text-gray-900">YojanaAI</span>
+        <span className="text-gray-300">•</span>
+        <span className="text-sm text-gray-500">{(t as any).footer_tagline as string}</span>
+      </div>
+      <div className="flex items-center justify-center gap-3 text-xs text-gray-400 mb-3 flex-wrap">
+        <a href="#" className="hover:text-orange-500 transition-colors">{(t as any).footer_privacy as string}</a>
+        <span>•</span>
+        <a href="#" className="hover:text-orange-500 transition-colors">{(t as any).footer_data_sources as string}</a>
+        <span>•</span>
+        <a href="https://github.com/SanjayFX" target="_blank" className="hover:text-orange-500 transition-colors">GitHub</a>
+        <span>•</span>
+        <a href="https://linkedin.com/in/sanjay-k" target="_blank" className="hover:text-orange-500 transition-colors">LinkedIn</a>
+      </div>
+      <p className="text-xs text-gray-400">{(t as any).footer_data_note as string}</p>
+    </div>
+  </footer>
           </>
         )}
         {screen === 'form' && (() => {
@@ -2094,6 +2076,7 @@ export default function YojanaAIPage() {
             </div>
           </div>
         )}
+        <StickyCTA label={t.hero_cta as string} onClick={() => document.getElementById('start-quiz')?.click()} />
       </main>
     </>
   )
