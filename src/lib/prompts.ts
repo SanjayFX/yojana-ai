@@ -38,26 +38,17 @@ export function buildEligibilityPrompt(
   profile: UserProfile,
   schemes: SchemeData[]
 ): string {
-  const language = (profile.preferred_language || 'en').toLowerCase();
-
-  const reasonLanguage =
-    language === "en" || language === "english"
-      ? "clear simple English"
-      : language === "hi" || language === "hindi"
-      ? "casual Hindi mixed with English (Hinglish)"
-      : language === "bn" || language === "bengali"
-      ? "Bengali mixed with English"
-      : language === "ta" || language === "tamil"
-      ? "Tamil mixed with English"
-      : language === "te" || language === "telugu"
-      ? "Telugu mixed with English"
-      : language === "mr" || language === "marathi"
-      ? "Marathi mixed with English"
-      : language === "gu" || language === "gujarati"
-      ? "Gujarati mixed with English"
-      : language === "kn" || language === "kannada"
-      ? "Kannada mixed with English"
-      : "simple English";
+  const langMap: Record<string, string> = {
+    en: "Clear English only. No Hindi words.",
+    hi: "Hindi + English mix (Hinglish). Use Devanagari for Hindi words.",
+    bn: "Bengali + English mix.",
+    ta: "Tamil + English mix.",
+    te: "Telugu + English mix.",
+    mr: "Marathi + English mix.",
+    gu: "Gujarati + English mix.",
+    kn: "Kannada + English mix.",
+  };
+  const reasonLang = langMap[profile.preferred_language ?? "hi"] ?? "Hindi + English mix";
 
   const normalize = (value?: string | null) => value?.toLowerCase().trim() || "";
 
@@ -176,7 +167,7 @@ ADDITIONAL ACCURACY RULES:
     These must be checked even if not in
     top pre-filtered results.
 
-REASON: Write the reason in ${reasonLanguage}.
+REASON FORMAT: Write the reason in ${reasonLang}.
 Keep it 2 sentences max. Be specific about why they qualify — mention their age, income, state, category where relevant.
 Example: "Aap qualify karte hain kyunki income Rs 2L hai jo limit se kam hai."
 

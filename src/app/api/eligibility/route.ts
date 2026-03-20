@@ -26,14 +26,22 @@ export async function POST(request: NextRequest) {
       return Response.json({ error: "Too many requests" }, { status: 429 });
     }
 
-    const body = (await request.json()) as { profile?: UserProfile };
+    const body = (await request.json()) as {
+      profile?: UserProfile;
+      answers?: { language?: string };
+    };
 
-    if (!body.profile || typeof body.profile !== "object") {
+    const profile = body.profile;
+    const answers = body.answers ?? {};
+
+    if (!profile || typeof profile !== "object") {
       return badRequest("Missing required field: profile (UserProfile)");
     }
 
+    profile.preferred_language = answers.language ?? profile.preferred_language ?? "hi";
+
     const schemes = (await getSchemes()) as SchemeData[];
-    const prompt = buildEligibilityPrompt(body.profile, schemes);
+    const prompt = buildEligibilityPrompt(profile, schemes);
     const aiResponse = await callAI(PRO, prompt);
     const parsed = parseAIResponse(aiResponse) as {
       matched_schemes: Array<
@@ -45,7 +53,7 @@ export async function POST(request: NextRequest) {
       important_note: string | null;
     };
     const matchedSchemes = mergeAutomaticMatches(
-      body.profile,
+      profile,
       schemes,
       parsed.matched_schemes
       .map((scheme) => ({

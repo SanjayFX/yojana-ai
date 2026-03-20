@@ -67,6 +67,9 @@ export async function POST(request: NextRequest) {
       profile: UserProfile;
     };
 
+    profile.preferred_language =
+      body.answers.language ?? profile.preferred_language ?? "hi";
+
     // Fire background scheme update — no await
     // This runs silently while user gets their results
     const autoUpdateBaseUrl = process.env.NEXT_PUBLIC_BASE_URL ??
@@ -84,7 +87,10 @@ export async function POST(request: NextRequest) {
     const eligRes = await fetch(`${baseUrl}/api/eligibility`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ profile }),
+      body: JSON.stringify({
+        profile,
+        answers: { language: body.answers.language },
+      }),
     });
 
     if (!eligRes.ok) {
