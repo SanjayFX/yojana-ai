@@ -476,6 +476,7 @@ const QUESTIONS_DATA = [
     "Mizoram","Nagaland","Odisha","Punjab","Rajasthan","Sikkim",
     "Tamil Nadu","Telangana","Tripura","Uttar Pradesh",
     "Uttarakhand","West Bengal","Delhi","Jammu & Kashmir"] },
+  { id:"scheme_type", type:"choice" },
   { id:"age", hi:"Aapki umar kya hai?", en:"What is your age?",
     type:"number", placeholder:"Jaise: 35" },
   { id:"income", hi:"Saal bhar ki kamai?", en:"Annual income?",
@@ -491,6 +492,8 @@ const QUESTIONS_DATA = [
   { id:"gender", hi:"Aapka gender?", en:"Your gender?",
     type:"select", options:["Male","Female","Other"] }
 ]
+
+const TOTAL_STEPS = 7
 
 const langLabels: Record<LangCode, string> = {
   hi: 'हिं',
@@ -558,6 +561,7 @@ export default function YojanaAIPage() {
   const currentQuestion = QUESTIONS_DATA[currentStep]
   const questionCopy = useMemo(() => ([
     { heading: t.q1_text, sub: t.q1_sub },
+    { heading: '', sub: '' },
     { heading: t.q2_text, sub: t.q2_sub },
     { heading: t.q3_text, sub: t.q3_sub },
     { heading: t.q4_text, sub: t.q4_sub },
@@ -639,7 +643,7 @@ export default function YojanaAIPage() {
         }
       })
       .catch(() => {})
-  }, [lang, schemeTypeFilter])
+  }, [])
 
   useEffect(() => {
     const handleClick = (e: MouseEvent) => {
@@ -752,7 +756,7 @@ export default function YojanaAIPage() {
     } finally {
       setScreen('results')
     }
-  }, [])
+  }, [lang, schemeTypeFilter])
 
   const getExplanation = async (scheme: any) => {
     if (!results?.profile) return
@@ -1507,7 +1511,9 @@ export default function YojanaAIPage() {
           const q = currentQuestion
           const localizedQuestion = questionCopy[currentStep]
           
-          const hasAnswer = answers[q.id] !== undefined && answers[q.id] !== ''
+          const hasAnswer =
+            currentStep === 1 ||
+            (answers[q.id] !== undefined && answers[q.id] !== '')
 
           return (
             <div className="form-screen">
@@ -1519,7 +1525,7 @@ export default function YojanaAIPage() {
                   </button>
                 </div>
                 <div className="navbar-center">
-                  {t.step_label} {currentStep+1} {t.step_of} 6
+                  {t.step_label} {currentStep+1} {t.step_of} {TOTAL_STEPS}
                 </div>
                 <div className="navbar-right">
                   <span className="nav-logo"
@@ -1531,190 +1537,269 @@ export default function YojanaAIPage() {
               </nav>
               <div className="progress-track">
                 <div className="progress-fill"
-                  style={{width:`${(currentStep/6)*100}%`}}/>
+                  style={{width:`${(currentStep/TOTAL_STEPS)*100}%`}}/>
               </div>
               <div className="form-body">
-                <div className="form-inner a-slide-left"
-                  key={currentStep}>
-                <div className="q-header-row">
-                  <div className="q-header-left">
-                    <span className="q-eyebrow">
-                      Q{currentStep+1}
-                    </span>
-                      <h2 className="q-heading">
-                        {localizedQuestion?.heading ?? q.en}
-                      </h2>
-                      <p className="q-sub">
-                        {localizedQuestion?.sub ?? ''}
-                      </p>
-                    </div>
-                  </div>
-                  
-                  {q.id === 'state' && (
-                    <div className="search-wrap">
-                      <input
-                        type="text"
-                        autoFocus
-                        className="search-input"
-                        aria-label={localizedQuestion?.heading ?? q.en}
-                        placeholder={t.state_search_placeholder}
-                        value={stateSearchQuery}
-                        onChange={handleStateSearchChange}
-                      />
-                      <span className="search-icon">🔍</span>
-                    </div>
-                  )}
+                {currentStep === 1 ? (
+                  <div className="form-inner a-slide-left"
+                    key={currentStep}>
+                    <span className="q-eyebrow">Q2</span>
+                    <h2 className="q-heading">
+                      {lang === 'hi'
+                        ? 'कौन सी योजनाएं देखें?'
+                        : lang === 'ta'
+                        ? 'எந்த திட்டங்கள் பார்க்கணும்?'
+                        : lang === 'bn'
+                        ? 'কোন প্রকল্প দেখতে চান?'
+                        : lang === 'te'
+                        ? 'ఏ పథకాలు చూడాలి?'
+                        : lang === 'mr'
+                        ? 'कोणत्या योजना पहायच्या?'
+                        : lang === 'gu'
+                        ? 'કઈ યોજનાઓ જોવી છે?'
+                        : lang === 'kn'
+                        ? 'ಯಾವ ಯೋಜನೆಗಳನ್ನು ನೋಡಬೇಕು?'
+                        : 'Which schemes to show?'}
+                    </h2>
+                    <p className="q-sub">
+                      {lang === 'hi'
+                        ? 'केंद्र, राज्य, या दोनों'
+                        : lang === 'ta'
+                        ? 'மத்திய, மாநில, அல்லது இரண்டும்'
+                        : 'Central, State, or Both'}
+                    </p>
 
-                  {answers.state && currentStep === 0 && (
                     <div style={{
-                      display: 'flex',
-                      gap: '8px',
-                      marginTop: '16px',
-                      justifyContent: 'center',
-                      flexWrap: 'wrap',
+                      display:'flex',
+                      flexDirection:'column',
+                      gap:'10px',
+                      marginTop:'8px'
                     }}>
-                      <p style={{
-                        width: '100%',
-                        fontSize: '11px',
-                        color: 'var(--subtle)',
-                        textAlign: 'center',
-                        fontWeight: 600,
-                        textTransform: 'uppercase',
-                        letterSpacing: '0.06em',
-                        marginBottom: '4px'
-                      }}>
-                        {lang === 'hi'
-                          ? 'कौन सी योजनाएं देखें?'
-                          : lang === 'ta'
-                          ? 'எந்த திட்டங்கள் பார்க்கணும்?'
-                          : 'Which schemes to include?'}
-                      </p>
-                      {([
+                      {[
                         {
-                          key: 'all',
+                          value: 'all',
+                          emoji: '🇮🇳',
                           hi: 'सभी योजनाएं',
-                          ta: 'அனைத்தும்',
-                          en: 'All Schemes'
+                          ta: 'அனைத்து திட்டங்கள்',
+                          bn: 'সব প্রকল্প',
+                          te: 'అన్ని పథకాలు',
+                          mr: 'सर्व योजना',
+                          gu: 'તમામ યોજનાઓ',
+                          kn: 'ಎಲ್ಲಾ ಯೋಜನೆಗಳು',
+                          en: 'All Schemes',
+                          sub_hi: 'केंद्र + राज्य दोनों',
+                          sub_en: 'Central + State both',
+                          sub_ta: 'மத்திய + மாநில இரண்டும்',
                         },
                         {
-                          key: 'central',
+                          value: 'central',
+                          emoji: '🏛️',
                           hi: 'केंद्र सरकार',
                           ta: 'மத்திய அரசு',
-                          en: 'Central Govt'
+                          bn: 'কেন্দ্রীয় সরকার',
+                          te: 'కేంద్ర ప్రభుత్వం',
+                          mr: 'केंद्र सरकार',
+                          gu: 'કેન્દ્ર સરકાર',
+                          kn: 'ಕೇಂದ್ರ ಸರ್ಕಾರ',
+                          en: 'Central Government',
+                          sub_hi: 'PM Kisan, Ayushman जैसी योजनाएं',
+                          sub_en: 'PM Kisan, Ayushman etc',
+                          sub_ta: 'PM கிசான், ஆயுஷ்மான் போன்றவை',
                         },
                         {
-                          key: 'state',
+                          value: 'state',
+                          emoji: '🏠',
                           hi: 'राज्य सरकार',
                           ta: 'மாநில அரசு',
-                          en: 'State Govt'
+                          bn: 'রাজ্য সরকার',
+                          te: 'రాష్ట్ర ప్రభుత్వం',
+                          mr: 'राज्य सरकार',
+                          gu: 'રાજ્ય સરકાર',
+                          kn: 'ರಾಜ್ಯ ಸರ್ಕಾರ',
+                          en: 'State Government',
+                          sub_hi: 'आपके राज्य की विशेष योजनाएं',
+                          sub_en: 'Schemes specific to your state',
+                          sub_ta: 'உங்கள் மாநில சிறப்பு திட்டங்கள்',
                         },
-                      ] as const).map(opt => (
+                      ].map(opt => {
+                        const label = lang === 'hi' ? opt.hi
+                          : lang === 'ta' ? opt.ta
+                          : lang === 'bn' ? opt.bn
+                          : lang === 'te' ? opt.te
+                          : lang === 'mr' ? opt.mr
+                          : lang === 'gu' ? opt.gu
+                          : lang === 'kn' ? opt.kn
+                          : opt.en
+
+                        const sub = lang === 'hi' ? opt.sub_hi
+                          : lang === 'ta' ? opt.sub_ta
+                          : opt.sub_en
+
+                        const isSelected =
+                          schemeTypeFilter === opt.value
+
+                        return (
+                          <button
+                            key={opt.value}
+                            className={`opt-btn ${
+                              isSelected ? 'selected' : ''
+                            }`}
+                            onClick={() => {
+                              setSchemeTypeFilter(
+                                opt.value as SchemeTypeFilter
+                              )
+                              setAnswers(prev => ({
+                                ...prev,
+                                scheme_type: opt.value
+                              }))
+                            }}>
+                            <div style={{
+                              display:'flex',
+                              alignItems:'center',
+                              gap:'12px',
+                              flex:1
+                            }}>
+                              <span style={{fontSize:'24px'}}>
+                                {opt.emoji}
+                              </span>
+                              <div style={{textAlign:'left'}}>
+                                <div style={{
+                                  fontSize:'15px',
+                                  fontWeight:600,
+                                  color: isSelected
+                                    ? 'var(--saffron-mid)'
+                                    : 'var(--ink)'
+                                }}>
+                                  {label}
+                                </div>
+                                <div style={{
+                                  fontSize:'12px',
+                                  color:'var(--subtle)',
+                                  marginTop:'2px',
+                                  fontWeight:400
+                                }}>
+                                  {sub}
+                                </div>
+                              </div>
+                            </div>
+                            {isSelected && (
+                              <span className="opt-check">✓</span>
+                            )}
+                          </button>
+                        )
+                      })}
+                    </div>
+                  </div>
+                ) : (
+                  <div className="form-inner a-slide-left"
+                    key={currentStep}>
+                  <div className="q-header-row">
+                    <div className="q-header-left">
+                      <span className="q-eyebrow">
+                        Q{currentStep+1}
+                      </span>
+                        <h2 className="q-heading">
+                          {localizedQuestion?.heading ?? q.en}
+                        </h2>
+                        <p className="q-sub">
+                          {localizedQuestion?.sub ?? ''}
+                        </p>
+                      </div>
+                    </div>
+                  
+                    {q.id === 'state' && (
+                      <div className="search-wrap">
+                        <input
+                          type="text"
+                          autoFocus
+                          className="search-input"
+                          aria-label={localizedQuestion?.heading ?? q.en}
+                          placeholder={t.state_search_placeholder}
+                          value={stateSearchQuery}
+                          onChange={handleStateSearchChange}
+                        />
+                        <span className="search-icon">🔍</span>
+                      </div>
+                    )}
+
+                    {q.id === 'occupation' && occupationOptions.map((opt) => {
+                      const isSelected = answers.occupation === opt.value
+
+                      return (
                         <button
-                          key={opt.key}
-                          onClick={() =>
-                            setSchemeTypeFilter(opt.key)}
-                          style={{
-                            padding: '8px 16px',
-                            borderRadius: 'var(--r-full)',
-                            fontSize: '13px',
-                            fontWeight: 600,
-                            cursor: 'pointer',
-                            border: schemeTypeFilter === opt.key
-                              ? '2px solid var(--ink)'
-                              : '1.5px solid var(--border-mid)',
-                            background: schemeTypeFilter === opt.key
-                              ? 'var(--ink)'
-                              : 'white',
-                            color: schemeTypeFilter === opt.key
-                              ? 'white'
-                              : 'var(--muted)',
-                            transition: 'all 0.15s ease',
-                          }}>
-                          {lang === 'hi' ? opt.hi
-                            : lang === 'ta' ? opt.ta
-                            : opt.en}
+                          key={opt.value}
+                          role="button"
+                          className={`opt-btn ${isSelected ? 'selected' : ''}`}
+                          onClick={() => setAnswers(prev => ({
+                            ...prev,
+                            occupation: opt.value
+                          }))}
+                        >
+                          <span style={{ minWidth: 0 }}>{opt.display}</span>
+                          {isSelected && <span className="opt-check" aria-hidden="true">✓</span>}
                         </button>
-                      ))}
-                    </div>
-                  )}
+                      )
+                    })}
 
-                  {q.id === 'occupation' && occupationOptions.map((opt) => {
-                    const isSelected = answers.occupation === opt.value
+                    {q.id === 'income' && incomeOptions.map((opt) => {
+                      const isSelected = answers.income === opt.value
 
-                    return (
-                      <button
-                        key={opt.value}
-                        role="button"
-                        className={`opt-btn ${isSelected ? 'selected' : ''}`}
-                        onClick={() => setAnswers(prev => ({
-                          ...prev,
-                          occupation: opt.value
-                        }))}
-                      >
-                        <span style={{ minWidth: 0 }}>{opt.display}</span>
-                        {isSelected && <span className="opt-check" aria-hidden="true">✓</span>}
-                      </button>
-                    )
-                  })}
+                      return (
+                        <button
+                          key={opt.value}
+                          role="button"
+                          className={`opt-btn ${isSelected ? 'selected' : ''}`}
+                          onClick={() => setAnswers(prev => ({
+                            ...prev,
+                            income: opt.value
+                          }))}
+                        >
+                          <span style={{ minWidth: 0 }}>{opt.display}</span>
+                          {isSelected && <span className="opt-check" aria-hidden="true">✓</span>}
+                        </button>
+                      )
+                    })}
 
-                  {q.id === 'income' && incomeOptions.map((opt) => {
-                    const isSelected = answers.income === opt.value
+                    {q.type === 'select' && q.id !== 'occupation' && q.id !== 'income' && filteredQuestionOptions.map((opt, idx) => {
+                      const isSelected = answers[q.id] === opt
+                      const text = getTranslatedOption(q, opt)
+                      
+                      return (
+                        <button
+                          key={idx}
+                          role="button"
+                          className={`opt-btn ${isSelected ? 'selected' : ''}`}
+                          data-question-id={q.id}
+                          data-option-value={opt}
+                          aria-pressed={isSelected}
+                          onClick={handleAnswerSelect}
+                        >
+                          <span style={{ minWidth: 0 }}>{text}</span>
+                          {isSelected && <span className="opt-check" aria-hidden="true">✓</span>}
+                        </button>
+                      )
+                    })}
 
-                    return (
-                      <button
-                        key={opt.value}
-                        role="button"
-                        className={`opt-btn ${isSelected ? 'selected' : ''}`}
-                        onClick={() => setAnswers(prev => ({
-                          ...prev,
-                          income: opt.value
-                        }))}
-                      >
-                        <span style={{ minWidth: 0 }}>{opt.display}</span>
-                        {isSelected && <span className="opt-check" aria-hidden="true">✓</span>}
-                      </button>
-                    )
-                  })}
-
-                  {q.type === 'select' && q.id !== 'occupation' && q.id !== 'income' && filteredQuestionOptions.map((opt, idx) => {
-                    const isSelected = answers[q.id] === opt
-                    const text = getTranslatedOption(q, opt)
-                    
-                    return (
-                      <button
-                        key={idx}
-                        role="button"
-                        className={`opt-btn ${isSelected ? 'selected' : ''}`}
-                        data-question-id={q.id}
-                        data-option-value={opt}
-                        aria-pressed={isSelected}
-                        onClick={handleAnswerSelect}
-                      >
-                        <span style={{ minWidth: 0 }}>{text}</span>
-                        {isSelected && <span className="opt-check" aria-hidden="true">✓</span>}
-                      </button>
-                    )
-                  })}
-
-                  {q.type === 'number' && (
-                    <div style={{width:'100%'}}>
-                      <input
-                        type="number"
-                        inputMode="numeric"
-                        pattern="[0-9]*"
-                        className="num-input"
-                        aria-label={localizedQuestion?.heading ?? q.en}
-                        value={answers.age ?? ''}
-                        onChange={e => setAnswers(prev =>
-                          ({...prev, age: e.target.value}))}
-                        placeholder="35"
-                        min="1"
-                        max="120"
-                        style={{width:'100%'}}
-                      />
-                    </div>
-                  )}
-                </div>
+                    {q.type === 'number' && (
+                      <div style={{width:'100%'}}>
+                        <input
+                          type="number"
+                          inputMode="numeric"
+                          pattern="[0-9]*"
+                          className="num-input"
+                          aria-label={localizedQuestion?.heading ?? q.en}
+                          value={answers.age ?? ''}
+                          onChange={e => setAnswers(prev =>
+                            ({...prev, age: e.target.value}))}
+                          placeholder="35"
+                          min="1"
+                          max="120"
+                          style={{width:'100%'}}
+                        />
+                      </div>
+                    )}
+                  </div>
+                )}
               </div>
               <div className="bottom-bar no-print">
                 <button className="btn-cta"
